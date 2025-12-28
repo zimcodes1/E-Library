@@ -1,1 +1,13 @@
 @import 'tailwindcss';
+
+.yusei-magic-regular {
+    font-family: "Yusei Magic", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.gradient{
+    background: linear-gradient(90deg, #f54129 0%, #561ac5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
