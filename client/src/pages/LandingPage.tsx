@@ -1,5 +1,6 @@
 import HeroSection from "../components/HeroSection";
 import AllInOne from "../components/AllInOne";
+import Reviews from "../components/Reviews";
 
 function LandingPage() {
     return (
@@ -8,6 +9,8 @@ function LandingPage() {
         <HeroSection></HeroSection>
         {/* All In One Section */}
         <AllInOne></AllInOne>
+        {/* Reviews Section */}
+        <Reviews></Reviews>
     </div>)
 }
 
