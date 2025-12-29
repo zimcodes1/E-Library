@@ -9,7 +9,7 @@ import SignUp from './pages/SignUp';
 const router  = createBrowserRouter([
   {path:"/", element:<LandingPage />},
   {path:'/login', element: <LoginPage/>},
-  {path:'/signup', element: <SignUp/>}
+  {path:'/signup', element: <SignUp/>},
 ]
 )
 createRoot(document.getElementById('root')!).render(

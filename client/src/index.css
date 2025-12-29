@@ -12,3 +12,17 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+/* Custom class to hide scrollbars */
+.no-scrollbar {
+    /* For Firefox */
+    scrollbar-width: none;
+    
+    /* For Internet Explorer and older Edge */
+    -ms-overflow-style: none;
+}
+
+/* For Chrome, Safari, and newer Edge (WebKit/Blink) */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}

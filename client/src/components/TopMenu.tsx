@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Button from "./ui/Button";
 
 function TopMenu() {
@@ -9,7 +10,7 @@ function TopMenu() {
                 <h1 className="text-4xl max-sm:text-3xl yusei-magic-regular gradient">Libronet</h1>
             </span>
             <span>
-                <Button text="Sign In"></Button>
+                <Link to="/login"><Button text="Sign In"></Button></Link>
             </span>
         </div>
     )
