@@ -1,14 +1,14 @@
-import HeroSection from "../components/HeroSection";
-import AllInOne from "../components/AllInOne";
-import Reviews from "../components/Reviews";
-import BooksBanner from "../components/BooksBanner";
+import HeroSection from "../components/landing_page/HeroSection";
+import AllInOne from "../components/landing_page/AllInOne";
+import Reviews from "../components/landing_page/Reviews";
+import BooksBanner from "../components/landing_page/BooksBanner";
 import Button from "../components/ui/Button";
-import Footer from "../components/Footer";
+import Footer from "../components/landing_page/Footer";
 
 function LandingPage() {
     return (
         <>
-            <div className="w-full h-fit px-20 bg-orange-50 pt-5 -z-10">
+            <div className="w-full h-fit px-20 max-sm:px-5 max-[900px]:px-10  bg-orange-50 pt-5 ">
                 {/* Hero Section */}
                 <HeroSection></HeroSection>
                 {/* All In One Section */}
