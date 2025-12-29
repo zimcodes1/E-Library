@@ -7,7 +7,7 @@ function HeroLeft() {
             {/* Quick Search */}
             <div className="w-100 max-sm:w-90 max-sm:mx-auto h-15 bg-white border-pink-200 flex justify-between items-center rounded-2xl shadow-xl mt-4">
                 <input type="text" placeholder="Search for a book..." className="w-[80%] h-full pl-4 rounded-l-2xl outline-0 focus:ring-0 caret-purple-800" />
-                <span className="w-[20%] bg-purple-950 h-full flex justify-center items-center rounded-r-2xl cursor-pointer"><i className="fa fa-search text-gray-50 text-2xl"></i></span>
+                <span className="w-[20%] bg-purple-600 h-full flex justify-center items-center rounded-r-2xl cursor-pointer"><i className="fa fa-search text-gray-50 text-2xl"></i></span>
             </div>
 
             {/* Get Started Button */}
