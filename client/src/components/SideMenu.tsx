@@ -5,8 +5,6 @@ function SideMenu() {
         <div className="w-1/7 bg-white h-full flex flex-col justify-start items-center px-2 fixed left-0 top-0">
             <span className="flex w-full h-15 justify-start items-center">
                 <img src="/images/logo.png" alt="Logo" className="h-10" />
-                <h1 className="text-xl max-sm:text-3xl yusei-magic-regular gradient">Libronet</h1>
-
             </span>
 
             <span className="w-full h-fit mt-5 flex flex-col">
