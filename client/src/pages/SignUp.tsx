@@ -17,9 +17,13 @@ function SignUp() {
                     <h1 className="text-3xl yusei-magic-regular  font-semibold text-purple-950 mt-5">Welcome to <br /><span className="yusei-magic-regular gradient">Libronet</span></h1>
                     <p className="text-xs text-gray-800 mt-3">Fill in your information to create your account.  </p>
                     <form action="#" className="flex w-[60%] pt-5 flex-col">
-                        <span className="w-20 h-20 rounded-full mx-auto my-2 cursor-pointer overflow-hidden border-2 border-purple-300 flex justify-center items-center">
+                        <span onClick={()=>{
+                            let inputElement = document.getElementById('imgInput');
+                            inputElement?.click();
+                        }} className="w-20 h-20 rounded-full mx-auto my-2 cursor-pointer overflow-hidden border-2 border-purple-300 flex justify-center items-center">
                             <img src="/images/user.jpg" className="w-full h-auto" alt=" User" />
                         </span>
+                        <input type="file" className="invisible" id='imgInput' name="imageInput" />
                         <input type="text" placeholder="Username..." className="h-10 rounded-lg pl-2 w-full bg-purple-200 focus:ring-0 outline-0 active:bg-purple-300 focus:bg-purple-300" />
                         <input type="email" placeholder="Your email..." className="h-10 rounded-lg pl-2 w-full mt-4 bg-purple-200 focus:ring-0 outline-0 active:bg-purple-300 focus:bg-purple-300" />
                         <input type="password" placeholder="Password" className="h-10 rounded-lg pl-2 w-full mt-4 bg-purple-200 focus:ring-0 outline-0 active:bg-purple-300 focus:bg-purple-300" />
