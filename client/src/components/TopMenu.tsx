@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import Button from "./ui/Button";
 
+
+//Topmenu for landing page
 function TopMenu() {
 
     return (
@@ -16,4 +18,11 @@ function TopMenu() {
     )
 }
 
+export function TopBar(){
+    return(
+        <div className="w-full h-15 max-sm:h-10 flex justify-between items-center fixed top-0">
+
+        </div>
+    )
+}
 export default TopMenu;
