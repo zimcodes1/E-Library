@@ -10,7 +10,7 @@ function HomePage() {
         else if (hour > 16) return 'Evening'
         else return 'Morning'
     })
-    const [containerHeight, setContainerHeight] = useState('h-44');
+    const [containerHeight, setContainerHeight] = useState(['h-44', 'Show More', 'fa-plus']);
     return (
         <div className="w-full flex justify-end items-center bg-purple-100 min-h-screen pb-10">
             {/* Side Navigation Menu */}
@@ -56,10 +56,10 @@ function HomePage() {
                     <div className="w-full h-150 flex flex-col">
                         <span className="flex justify-between items-center text-gray-600">
                             <h3>Recommended for you</h3>
-                            <p className="cursor-pointer text-sm" onClick={()=>{(containerHeight=='h-44')? setContainerHeight('h-fit'): setContainerHeight('h-44')}}> <i className="fa fa-plus"></i> Show More</p>
+                            <p className="cursor-pointer text-sm" onClick={()=>{(containerHeight[0]=='h-44')? setContainerHeight(['h-fit','Show Less', 'fa-minus']): setContainerHeight(['h-44', 'Show More', 'fa-plus'])}}> <i className={`fa ${containerHeight[2]}`}></i> {containerHeight[1]}</p>
                         </span>
                         <div className="w-full h-fit mt-2 flex flex-col">
-                            <div className={`w-full ${containerHeight} overflow-hidden flex justify-between flex-wrap gap-2 transition-all duration-300`}>
+                            <div className={`w-full ${containerHeight[0]} overflow-hidden flex justify-between flex-wrap gap-2 transition-all duration-300`}>
                                 <BookItem bookImage="/images/books/audience.png" bookDetails={{ title: 'Influencing Marketing', author: 'John Doe', year: 2000, rating: 4.3 }}></BookItem>
                                 <BookItem bookImage="/images/books/google_adsense.png" bookDetails={{ title: 'Google Adsense explained', author: 'Jane Doe', year: 2015, rating: 3.9 }}></BookItem>
                                 <BookItem bookImage="/images/books/rc_cars.png" bookDetails={{ title: 'Your Guide To RC Cars', author: 'David Doe', year: 2025, rating: 4.9 }}></BookItem>
