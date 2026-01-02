@@ -5,11 +5,12 @@ import { useState } from "react";
 
 function HomePage() {
     let hour = new Date().getHours();
-    const [HourTime, setHourTime] = useState(()=>{
+    const [HourTime, setHourTime] = useState(() => {
         if (hour > 11) return 'Afternoon'
         else if (hour > 16) return 'Evening'
         else return 'Morning'
     })
+    const [containerHeight, setContainerHeight] = useState('h-44');
     return (
         <div className="w-full flex justify-end items-center bg-purple-100 min-h-screen pb-10">
             {/* Side Navigation Menu */}
@@ -55,11 +56,21 @@ function HomePage() {
                     <div className="w-full h-150 flex flex-col">
                         <span className="flex justify-between items-center text-gray-600">
                             <h3>Recommended for you</h3>
-                            <p className="cursor-pointer text-sm"> <i className="fa fa-plus"></i> Show More</p>
+                            <p className="cursor-pointer text-sm" onClick={()=>{(containerHeight=='h-44')? setContainerHeight('h-fit'): setContainerHeight('h-44')}}> <i className="fa fa-plus"></i> Show More</p>
                         </span>
                         <div className="w-full h-fit mt-2 flex flex-col">
-                            <div className="w-full h-40 flex justify-between">
+                            <div className={`w-full ${containerHeight} overflow-hidden flex justify-between flex-wrap gap-2 transition-all duration-300`}>
                                 <BookItem bookImage="/images/books/audience.png" bookDetails={{ title: 'Influencing Marketing', author: 'John Doe', year: 2000, rating: 4.3 }}></BookItem>
+                                <BookItem bookImage="/images/books/google_adsense.png" bookDetails={{ title: 'Google Adsense explained', author: 'Jane Doe', year: 2015, rating: 3.9 }}></BookItem>
+                                <BookItem bookImage="/images/books/rc_cars.png" bookDetails={{ title: 'Your Guide To RC Cars', author: 'David Doe', year: 2025, rating: 4.9 }}></BookItem>
+                                <BookItem bookImage="/images/books/book2.png" bookDetails={{ title: 'Web Traffic Explosion', author: 'Jane Doe', year: 2021, rating: 3.2 }}></BookItem>
+                                <BookItem bookImage="/images/books/books.jpeg" bookDetails={{ title: 'Two Boy Gold Miners', author: 'Azimeh Doe', year: 2005, rating: 3.9 }}></BookItem>
+                                <BookItem bookImage="/images/books/energy_hacks.png" bookDetails={{ title: 'Top 10 Energy Hacks', author: 'Jane Doe', year: 2010, rating: 2.9 }}></BookItem>
+                                <BookItem bookImage="/images/books/audience.png" bookDetails={{ title: 'Influencing Marketing', author: 'John Doe', year: 2000, rating: 4.3 }}></BookItem>
+                                <BookItem bookImage="/images/books/books.jpeg" bookDetails={{ title: 'Two Boy Gold Miners', author: 'Azimeh Doe', year: 2005, rating: 3.9 }}></BookItem>
+                                <BookItem bookImage="/images/books/energy_hacks.png" bookDetails={{ title: 'Top 10 Energy Hacks', author: 'Jane Doe', year: 2010, rating: 2.9 }}></BookItem>
+                                {/* Overflowing Elements */}
+                                <BookItem bookImage="/images/books/energy_hacks.png" bookDetails={{ title: 'Top 10 Energy Hacks', author: 'Jane Doe', year: 2010, rating: 2.9 }}></BookItem>
                                 <BookItem bookImage="/images/books/google_adsense.png" bookDetails={{ title: 'Google Adsense explained', author: 'Jane Doe', year: 2015, rating: 3.9 }}></BookItem>
                                 <BookItem bookImage="/images/books/rc_cars.png" bookDetails={{ title: 'Your Guide To RC Cars', author: 'David Doe', year: 2025, rating: 4.9 }}></BookItem>
                                 <BookItem bookImage="/images/books/book2.png" bookDetails={{ title: 'Web Traffic Explosion', author: 'Jane Doe', year: 2021, rating: 3.2 }}></BookItem>
