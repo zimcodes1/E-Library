@@ -13,7 +13,7 @@ function HeroLeft() {
             {/* Get Started Button */}
             <span className="flex justify-between items-center gap-2 mt-5">
                 <Button text="Get Started" styles="max-sm:mx-auto"></Button>
-                <Button text="Guest" styles="bg-linear-to-r from-purple-600 to-purple-400 text-gray-50"></Button>
+                <Button text="Guest" styles="bg-linear-to-r from-purple-600 to-purple-400 text-gray-50 border-none"></Button>
             </span>
 
         </div>

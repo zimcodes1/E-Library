@@ -6,6 +6,8 @@ import BooksBanner from "../components/landing_page/BooksBanner";
 import Button from "../components/ui/Button";
 import Footer from "../components/landing_page/Footer";
 import Categories from "../components/landing_page/Categories";
+import NewTitles from "../components/landing_page/NewTitles";
+import Reading from "../components/landing_page/Reading";
 
 function LandingPage() {
     useEffect(()=>{
@@ -21,6 +23,10 @@ function LandingPage() {
                 <PoweredBy></PoweredBy>
                 {/* Categories */}
                 <Categories></Categories>
+                {/* Our Library */}
+                <Reading></Reading>
+                {/* New titles */}
+                <NewTitles></NewTitles>
                 {/* Reviews Section */}
                 <Reviews></Reviews>
                 {/* Books Banner Section */}

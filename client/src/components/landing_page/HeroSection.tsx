@@ -3,7 +3,7 @@ import HeroLeft from "./HeroLeft";
 import HeroRight from "./HeroRight";
 const HeroSection = () => {
     return (
-        <div className="w-full h-fit max-sm:h-fit flex relative flex-col">
+        <div className="w-full h-fit max-sm:h-fit flex flex-col">
             {/* Top Menu */}
             <TopMenu></TopMenu>
             {/* Hero Content */}
