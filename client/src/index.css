@@ -5,13 +5,13 @@
     src: url(/fonts/DS-DIGI.TTF);
 }
 
-.yusei-magic-regular {
-    font-family: "Yusei Magic", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+@font-face {
+    font-family: Super;
+    src: url(/fonts/UbuntuSans.ttf);
+    font-weight: bold;
 }
 
-.gradient{
+.gradient {
     background: linear-gradient(90deg, #f54129 0%, #561ac5 100%);
     -webkit-background-clip: text;
     background-clip: text;
@@ -22,7 +22,7 @@
 .no-scrollbar {
     /* For Firefox */
     scrollbar-width: none;
-    
+
     /* For Internet Explorer and older Edge */
     -ms-overflow-style: none;
 }
@@ -30,4 +30,11 @@
 /* For Chrome, Safari, and newer Edge (WebKit/Blink) */
 .no-scrollbar::-webkit-scrollbar {
     display: none;
+
+}
+
+.bgImage {
+    background-color: #060410;
+    background-image: radial-gradient(ellipse 50% 100% at 50% -10%, #222c6880, #060410);
+    background-repeat: no-repeat;
 }

@@ -7,12 +7,15 @@ import CustomSelect from "./ui/CustomSelect";
 function TopMenu() {
 
     return (
-        <div className="w-full h-15 max-sm:h-10 flex justify-between items-center absolute top-0">
+        <div className="w-9/10 right-auto h-15 px-5 rounded-4xl max-sm:h-10 flex justify-between items-center fixed top-5 bg-transparent border border-gray-700 backdrop-blur-2xl">
             <span className="w-auto h-full flex justify-between items-center">
-                <img src="/images/logo.png" alt="Logo" className="w-15 max-sm:w-10" />
-                <h1 className="text-4xl max-sm:text-3xl yusei-magic-regular gradient">Libronet</h1>
+                <img src="/images/logo.png" alt="Logo" className="w-10 max-sm:w-10" />
+                <h1 className="text-xl max-sm:text-3xl font-[Super] gradient">Libronet</h1>
             </span>
             <span>
+                <Link to="/" className="text-gray-400 text-sm p-2 mx-2">Home</Link>
+                <Link to="#" className="text-gray-400 text-sm p-2 mx-2">Search</Link>
+                <Link to="#" className="text-gray-400 text-sm p-2 mx-2">About</Link>
                 <Link to="/login"><Button text="Sign In"></Button></Link>
             </span>
         </div>

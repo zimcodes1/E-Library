@@ -3,7 +3,7 @@ import HeroLeft from "./HeroLeft";
 import HeroRight from "./HeroRight";
 const HeroSection = () => {
     return (
-        <div className="w-full h-130 max-sm:h-fit flex relative max-sm:flex-col">
+        <div className="w-full h-fit max-sm:h-fit flex relative flex-col">
             {/* Top Menu */}
             <TopMenu></TopMenu>
             {/* Hero Content */}
@@ -13,4 +13,4 @@ const HeroSection = () => {
     )
 }
 
-export default HeroSection;
+export default HeroSection; 

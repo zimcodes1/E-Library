@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import HeroSection from "../components/landing_page/HeroSection";
-import AllInOne from "../components/landing_page/AllInOne";
+import PoweredBy from "../components/landing_page/PoweredBy";
 import Reviews from "../components/landing_page/Reviews";
 import BooksBanner from "../components/landing_page/BooksBanner";
 import Button from "../components/ui/Button";
@@ -13,11 +13,11 @@ function LandingPage() {
 
     return (
         <>
-            <div className="w-full h-fit px-20 max-sm:px-5 max-[900px]:px-10  bg-purple-100 pt-5 ">
+            <div className="w-full h-fit max-sm:px-5 max-[900px]:px-10 px-20 bgImage pt-5 ">
                 {/* Hero Section */}
                 <HeroSection></HeroSection>
-                {/* All In One Section */}
-                <AllInOne></AllInOne>
+                {/* Powered-By Section */}
+                <PoweredBy></PoweredBy>
                 {/* Reviews Section */}
                 <Reviews></Reviews>
                 {/* Books Banner Section */}

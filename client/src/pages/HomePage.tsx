@@ -56,7 +56,7 @@ function HomePage() {
                     <div className="w-full h-150 flex flex-col">
                         <span className="flex justify-between items-center text-gray-600">
                             <h3>Recommended for you</h3>
-                            <p className="cursor-pointer text-sm" onClick={()=>{(containerHeight[0]=='h-44')? setContainerHeight(['h-fit','Show Less', 'fa-minus']): setContainerHeight(['h-44', 'Show More', 'fa-plus'])}}> <i className={`fa ${containerHeight[2]}`}></i> {containerHeight[1]}</p>
+                            <p className="cursor-pointer text-sm" onClick={() => { (containerHeight[0] == 'h-44') ? setContainerHeight(['h-fit', 'Show Less', 'fa-minus']) : setContainerHeight(['h-44', 'Show More', 'fa-plus']) }}> <i className={`fa ${containerHeight[2]}`}></i> {containerHeight[1]}</p>
                         </span>
                         <div className="w-full h-fit mt-2 flex flex-col">
                             <div className={`w-full ${containerHeight[0]} overflow-hidden flex justify-between flex-wrap gap-2 transition-all duration-300`}>
@@ -81,7 +81,19 @@ function HomePage() {
                                 <BookItem bookImage="/images/books/energy_hacks.png" bookDetails={{ title: 'Top 10 Energy Hacks', author: 'Jane Doe', year: 2010, rating: 2.9 }}></BookItem>
                             </div>
                         </div>
+
+                        {/* Recent Readings */}
+                        <span className="flex justify-between items-center text-gray-600 mt-4">
+                            <h3>Recent Readings</h3>
+                            <p className="cursor-pointer text-sm">Show More <i className='fa fa-plus'></i></p>
+                        </span>
+                        <div className="w-full h-fit mt-2 flex flex-col">
+                            <div className='w-full overflow-hidden flex justify-between flex-wrap gap-2 transition-all duration-300'>
+
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
