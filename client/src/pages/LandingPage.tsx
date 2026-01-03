@@ -5,6 +5,7 @@ import Reviews from "../components/landing_page/Reviews";
 import BooksBanner from "../components/landing_page/BooksBanner";
 import Button from "../components/ui/Button";
 import Footer from "../components/landing_page/Footer";
+import Categories from "../components/landing_page/Categories";
 
 function LandingPage() {
     useEffect(()=>{
@@ -18,6 +19,8 @@ function LandingPage() {
                 <HeroSection></HeroSection>
                 {/* Powered-By Section */}
                 <PoweredBy></PoweredBy>
+                {/* Categories */}
+                <Categories></Categories>
                 {/* Reviews Section */}
                 <Reviews></Reviews>
                 {/* Books Banner Section */}
