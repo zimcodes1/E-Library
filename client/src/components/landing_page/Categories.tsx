@@ -2,9 +2,9 @@ import Button from "../ui/Button"
 
 function Categories() {
     return (
-        <div className="flex flex-col justify-between items-center mt-10">
-            <h1 className="text-3xl max-[900px]:text-2xl text-gray-400 font-semibold mb-5">Books Of Different Categories</h1>
-            <div className="flex max-sm:flex-wrap gap-5 justify-evenly items-center w-full h-fit max-sm:py-5">
+        <div className="flex flex-col justify-between items-center mt-20">
+            <h1 className="text-3xl max-[900px]:text-2xl text-gray-400 font-semibold">Books Of Different Categories</h1>
+            <div className="flex max-sm:flex-wrap gap-5 mt-20 justify-evenly items-center w-full h-fit max-sm:py-5">
                 <div className="hover:scale-105 transition duration-300 w-1/4 h-fit flex relative rounded-3xl flex-col backdrop-blur-2xl overflow-hidden px-5 py-6 border bg-[#48576019] border-gray-800">
                     <h2 className="text-gray-100 text-2xl font-semibold"> <i className="fas fa-wand-magic-sparkles text-amber-300"></i> Story Books</h2>
                     <p className="text-sm text-gray-400 leading-relaxed my-5">Dive into a world of imagination and wonder. From whimsical bedtime stories to vibrant fables, these collections are crafted to spark creativity and bring joy to readers young and old.</p>
