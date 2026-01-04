@@ -10,18 +10,18 @@ function SignUp() {
         // Changed bg-purple-100 to bgImage and h-screen
         <div className="w-full flex justify-center items-center bgImage h-screen max-sm:h-dvh">
             {/* Changed background and border to match Login dark theme */}
-            <div className="w-[80%] max-sm:w-full max-sm:h-full max-sm:rounded-none h-[90%] border bg-[#48576019] max-sm:bg-transparent max-sm:border-none border-gray-800 rounded-3xl flex justify-between items-center overflow-hidden p-2">
-                <div className="w-1/2 max-sm:w-full h-full flex flex-col items-start max-sm:items-center justify-start pt-10 max-sm:pt-0 pl-20 max-sm:pl-0 overflow-scroll no-scrollbar">
-                    <span className="w-full h-fit flex justify-start items-center max-sm:hidden">
-                        <img src="/images/logo.png" alt="Logo" className="w-10 max-sm:w-10" />
+            <div className="w-[80%] max-[900px]:w-[60%] max-[900px]:h-200 max-sm:w-full max-sm:h-full max-sm:rounded-none h-[90%] border bg-[#48576019] max-sm:bg-transparent max-sm:border-none border-gray-800 rounded-3xl flex justify-between items-center overflow-hidden p-2">
+                <div className="w-1/2 max-[900px]:w-full h-full flex flex-col items-start max-sm:items-center justify-start pt-10 max-sm:pt-0 pl-20 max-[900px]:pl-0 overflow-scroll no-scrollbar">
+                    <span className="w-full h-fit flex justify-start max-[900px]:justify-center items-center max-sm:hidden">
+                        <img src="/images/logo.png" alt="Logo" className="w-10" />
                         <h1 className="text-lg max-sm:text-3xl font-[Super] gradient">Libronet</h1>
                     </span>
                     
                     {/* Changed text color to gray-50 to match Login header */}
-                    <h1 className="text-3xl font-[Super] font-semibold text-gray-50 mt-5">Welcome to <br className="max-sm:hidden"/><span className="font-[Super] gradient">Libronet</span></h1>
-                    <p className="text-xs text-gray-400 mt-3">Fill in your information to create your account.</p>
+                    <h1 className="text-3xl font-[Super] font-semibold text-gray-50 mt-5 max-[900px]:mx-auto">Welcome to <br className="max-[900px]:hidden"/><span className="font-[Super] gradient">Libronet</span></h1>
+                    <p className="text-xs text-gray-400 mt-3 max-[900px]:mx-auto">Fill in your information to create your account.</p>
                     
-                    <form action="#" className="flex w-[60%] max-sm:w-[80%] pt-5 flex-col">
+                    <form action="#" className="flex w-[60%] max-[900px]:mx-auto max-[900px]:w-[80%] pt-5 flex-col">
                         <span onClick={()=>{
                             let inputElement = document.getElementById('imgInput');
                             inputElement?.click();
@@ -55,11 +55,11 @@ function SignUp() {
                             </span>
                         </span>
                     </form>
-                    <p className="text-xs mt-[10%] text-gray-400">Have an account? <Link to={'/login'} className="text-purple-500">Login</Link></p>
+                    <p className="text-xs mt-[10%] text-gray-400 max-[900px]:mx-auto">Have an account? <Link to={'/login'} className="text-purple-500">Login</Link></p>
                 </div>
 
                 {/* Right side background changed to match Login right panel */}
-                <div className="w-1/2 max-sm:hidden h-full flex bg-[#48576019] overflow-hidden justify-center items-center rounded-3xl">
+                <div className="w-1/2 max-[900px]:hidden h-full flex bg-[#48576019] overflow-hidden justify-center items-center rounded-3xl">
                     <img src="/images/reading4.png" alt="Person Reading" className="w-full h-auto" />
                 </div>
             </div>
