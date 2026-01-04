@@ -5,7 +5,7 @@ function HeroLeft() {
             <h1 className="font-[Super] text-5xl text-center max-[900px]:text-4xl text-blue-50 font-semibold mx-auto">Experience the Freedom of <br /> a <span className="gradient">Boundless</span> Library</h1>
             <p className="text-gray-400 text-md mt-5 max-sm:text-center">Access Thousands of Books and Resources From the Comfort of Your Device.</p>
             {/* Quick Search */}
-            <div className="w-100 max-sm:w-90 max-sm:mx-auto h-13 border border-gray-700 flex justify-between items-center rounded-3xl shadow-xl mt-4 p-1">
+            <div className="w-100 max-sm:w-full max-sm:mx-auto h-13 border border-gray-700 flex justify-between items-center rounded-3xl shadow-xl mt-4 p-1">
                 <input type="text" placeholder="Search for a book..." className="w-[85%] h-full pl-4 rounded-l-2xl outline-0 focus:ring-0 caret-purple-800 text-gray-200" />
                 <span className="w-13 bg-purple-50 h-full flex justify-center items-center rounded-full cursor-pointer"><i className="fa fa-search text-gray-800 text-lg"></i></span>
             </div>
