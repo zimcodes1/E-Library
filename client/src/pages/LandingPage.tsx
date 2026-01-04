@@ -35,7 +35,7 @@ function LandingPage() {
                 {/* Reviews Section */}
                 <Reviews></Reviews>
                 {/* Call to Action Section */}
-                <span className="flex mt-20">
+                <span className="flex mt-20 max-sm:mt-5">
                     <Button text='30 days free trial' styles="mx-auto mb-10"></Button>
                 </span>
 

@@ -14,12 +14,12 @@ function Footer() {
                     <p className="text-sm mt-2">Help Center</p>
                     <p className="text-sm mt-2">Support</p>
                 </span>
-                <span className="w-1/4 max-sm:w-1/2 max-sm:mt-2 flex flex-col items-start justify-center text-gray-200">
+                <span className="w-1/4 max-sm:w-1/2 max-sm:mt-5 flex flex-col items-start justify-center text-gray-200">
                     <h3 className="text-lg font-semibold text-gray-50">Legal</h3>
                     <p className="text-sm mt-2">Privacy Policy</p>
                     <p className="text-sm mt-2">Terms of Service</p>
                 </span>
-                <span className="w-1/4 max-sm:w-1/2 max-sm:mt-2 max-sm:items-end flex flex-col items-start justify-center text-gray-200">
+                <span className="w-1/4 max-sm:w-1/2 max-sm:mt-5 max-sm:items-end flex flex-col items-start justify-center text-gray-200">
                     <h3 className="text-lg font-semibold text-gray-50">Contact</h3>
                     <p className="text-sm mt-2"><i className="fa fa-envelope text-red-500"></i> Email Us</p>
                     <p className="text-sm mt-2"><i className="fa fa-phone"></i>Call Us</p>
@@ -28,9 +28,9 @@ function Footer() {
             </div>
 
             {/* Download App Section */}
-            <div className="w-full h-1/4 max-sm:h-fit max-sm:mt-3 flex justify-center items-center">
+            <div className="w-full h-1/4 max-sm:h-fit max-sm:mt-3 flex max-sm:flex-col justify-center items-center">
                 <span className="text-gray-400">Get our free apps:</span>
-                <span className="flex justify-between">
+                <span className="flex justify-between max-sm:mt-5">
                     <img src="/images/playstore.png" className="w-auto h-10 cursor-pointer" alt="Google Play Store" />
                     <img src="/images/appstore.png" className="w-auto h-10 cursor-pointer mx-2" alt="Apple App Store" />
                 </span>
