@@ -3,7 +3,6 @@ import TopMenu from "../components/TopMenu";
 import HeroSection from "../components/landing_page/HeroSection";
 import PoweredBy from "../components/landing_page/PoweredBy";
 import Reviews from "../components/landing_page/Reviews";
-import BooksBanner from "../components/landing_page/BooksBanner";
 import Button from "../components/ui/Button";
 import Footer from "../components/landing_page/Footer";
 import Categories from "../components/landing_page/Categories";
@@ -35,10 +34,8 @@ function LandingPage() {
                 <ReadAnywhere></ReadAnywhere>
                 {/* Reviews Section */}
                 <Reviews></Reviews>
-                {/* Books Banner Section */}
-                <BooksBanner></BooksBanner>
                 {/* Call to Action Section */}
-                <span className="flex">
+                <span className="flex mt-20">
                     <Button text='30 days free trial' styles="mx-auto mb-10"></Button>
                 </span>
             </div>
