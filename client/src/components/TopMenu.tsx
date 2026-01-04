@@ -9,7 +9,7 @@ function TopMenu() {
     const [activeState, setActiveState] = useState('hidden');
 
     return (
-        <div className="fixed w-9/10 max-sm:w-[95%] left-[5%] h-15 max-sm:left-[2.5%] px-3 rounded-3xl flex justify-between items-center top-5 max-sm:top-3 bg-transparent border border-gray-700 backdrop-blur-2xl z-50">
+        <div className="fixed w-9/10 max-sm:w-[95%] left-[5%] h-15 max-sm:left-[2.5%] px-3 rounded-3xl flex justify-between items-center top-5 max-sm:top-3 bg-transparent border border-gray-700 backdrop-blur-3xl z-50">
             <span className="w-auto h-full flex justify-between items-center">
                 <img src="/images/logo.png" alt="Logo" className="w-10 max-sm:w-10" />
                 <h1 className="text-xl font-[Super] gradient">Libronet</h1>

@@ -20,7 +20,7 @@ function NewTitleItem({ bookImage, bookDetails }: { bookImage: string, bookDetai
 function NewTitles() {
     return (
         <div className="flex flex-col justify-between items-center mt-20 max-sm:mt-5">
-            <h1 className="text-3xl max-[900px]:text-2xl text-gray-400 font-semibold">New Titles</h1>
+            <h1 className="text-3xl max-[900px]:text-2xl max-sm:text-xl text-gray-400 font-semibold">New Titles</h1>
             <div className="flex max-sm:flex-col gap-5 mt-20 max-sm:mt-5 justify-evenly items-center w-full h-fit max-sm:py-5">
                 <NewTitleItem bookImage="/images/books/google_adsense.png" bookDetails={{ title: 'Google Adsense explained', author: 'Jane Doe', year: 2015, rating: 3.9 }}></NewTitleItem>
                 <NewTitleItem bookImage="/images/books/rc_cars.png" bookDetails={{ title: 'Your Guide To RC Cars', author: 'David Doe', year: 2025, rating: 4.9 }}></NewTitleItem>

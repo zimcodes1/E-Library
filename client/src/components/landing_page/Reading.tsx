@@ -2,7 +2,7 @@
 function Reading() {
     return (
         <div className="flex flex-col justify-between items-center mt-20 max-sm:mt-5 px-4 max-sm:px-0">
-            <h1 className="text-3xl max-[900px]:text-2xl text-gray-400 font-semibold">Maximize Your Potential</h1>
+            <h1 className="text-3xl max-[900px]:text-xl text-gray-400 font-semibold">Maximize Your Potential</h1>
             
             <div className="flex max-sm:flex-wrap justify-between items-center w-full mt-20 max-sm:mt-5 h-fit max-sm:py-5 flex-wrap gap-y-5">
                 
