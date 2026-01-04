@@ -10,6 +10,7 @@ function HomePage() {
         else if (hour > 16) return 'Evening'
         else return 'Morning'
     })
+    setHourTime
     const [containerHeight, setContainerHeight] = useState(['h-44', 'Show More', 'fa-plus']);
     return (
         <div className="w-full flex justify-end items-center bg-purple-100 min-h-screen pb-10">

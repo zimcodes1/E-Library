@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import TopMenu from "../components/TopMenu";
 import HeroSection from "../components/landing_page/HeroSection";
 import PoweredBy from "../components/landing_page/PoweredBy";
 import Reviews from "../components/landing_page/Reviews";
@@ -10,13 +11,15 @@ import NewTitles from "../components/landing_page/NewTitles";
 import Reading from "../components/landing_page/Reading";
 
 function LandingPage() {
-    useEffect(()=>{
+    useEffect(() => {
         document.title = 'Libronet | Welcome Page'
     }, [])
 
     return (
         <>
             <div className="w-full h-fit max-sm:px-5 max-[900px]:px-10 px-20 bgImage pt-5 ">
+                {/* Top Menu */}
+                <TopMenu></TopMenu>
                 {/* Hero Section */}
                 <HeroSection></HeroSection>
                 {/* Powered-By Section */}
