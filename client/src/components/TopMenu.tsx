@@ -37,38 +37,38 @@ export function TopBar() {
     return (
         <div className="w-full h-15 max-sm:h-10 flex justify-between items-center absolute top-0 right-0 px-5">
             {/* Search Bar */}
-            <span className="flex h-9 min-w-2/6 rounded-4xl bg-white justify-between items-center border border-purple-300 shadow">
-                <CustomSelect defaultValue="All" customStyles=" border-r border-r-purple-300" options={[{ value: "Book", label: "Book" }, { value: "Author", label: "Author" }]}></CustomSelect>
-                <span className="flex justify-between items-center h-full w-2/3 text-xs">
-                    <input type="text" className="w-full h-full outline-0 ring-0" placeholder="Search..." />
-                    <i className="fa fa-search text-gray-800"></i>
+            <span className="flex h-9 min-w-2/6 rounded-4xl bg-[#4857605a] justify-between items-center border border-gray-700">
+                <CustomSelect defaultValue="All" options={[{ value: "Book", label: "Book" }, { value: "Author", label: "Author" }]}></CustomSelect>
+                <span className="flex justify-between items-center h-full w-2/3 text-xs text-gray-300">
+                    <input type="text" className="w-full h-full outline-0 ring-0 caret-purple-500" placeholder="Search..." />
+                    <i className="fa fa-search"></i>
                 </span>
                 <span className="w-auto px-2 flex justify-center items-center cursor-pointer h-6/10 border-l border-purple-300" title="Scan ISBN/ISSN Code">
                     <i className="fa fa-barcode text-sm text-gray-800"></i>
                 </span>
             </span>
             {/* Language Selector - Future Feature */}
-            <span className="flex h-9 min-w-25 px-2 rounded-4xl bg-white justify-center items-center border border-purple-300 shadow cursor-pointer">
-                <i className="fa fa-language"></i>
+            <span className="flex h-9 min-w-25 px-2 rounded-4xl bg-[#4857605a] justify-center items-center border border-gray-700 shadow cursor-pointer">
+                <i className="fa fa-language text-gray-300"></i>
                 <CustomSelect defaultValue="English" options={[{ value: "English", label: "English" }, { value: "Spanish", label: "Spanish" }]}></CustomSelect>
             </span>
             {/* Digital Clock and Reading Timer */}
-            <span className="flex h-9 w-fit rounded-4xl bg-white justify-between items-center border border-purple-300 shadow font-[digi]">
-                <span className="text-gray-800 flex justify-between items-center">
+            <span className="flex h-9 w-fit rounded-4xl bg-[#4857605a] justify-between items-center border border-gray-700 shadow font-[digi]">
+                <span className="text-gray-300 flex justify-between items-center">
                     <i className="fa fa-clock mx-2"></i>
                     <p>09:00 HRS</p>
                 </span>
-                <span className="text-gray-800 flex justify-between items-center px-2">
+                <span className="text-gray-300 flex justify-between items-center px-2">
                     <i className="fa fa-calendar mx-2"></i>
                     <p>31-Dec-2025</p>
                 </span>
             </span>
             {/* User Profile */}
-            <span className="flex h-9 min-w-25 px-0.5 rounded-4xl bg-white justify-start items-center border border-purple-300 shadow cursor-pointer">
+            <span className="flex h-9 min-w-25 px-0.5 rounded-4xl bg-[#4857605a] justify-start items-center border border-gray-700 shadow cursor-pointer">
                 <span className="h-8 w-8 rounded-full flex justify-center items-center overflow-hidden bg-amber-200">
-                    <img src="/images/user.jpg" alt="User" className="w-auto h-full" />
+                    <img src="/images/user.png" alt="User" className="w-auto h-full" />
                 </span>
-                <p className="text-xs ml-2">Azimeh</p>
+                <p className="text-xs ml-2 text-gray-300">Azimeh</p>
             </span>
         </div>
     )

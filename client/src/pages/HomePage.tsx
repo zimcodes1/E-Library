@@ -13,7 +13,7 @@ function HomePage() {
     setHourTime
     const [containerHeight, setContainerHeight] = useState(['h-44', 'Show More', 'fa-plus']);
     return (
-        <div className="w-full flex justify-end items-center bg-purple-100 min-h-screen pb-10">
+        <div className="w-full flex justify-end items-center bgImage min-h-screen pb-10">
             {/* Side Navigation Menu */}
             <SideMenu />
             <div className="w-6/7 h-full flex flex-col px-10 pt-5 relative">
@@ -24,7 +24,7 @@ function HomePage() {
                     {/* Today's Quote and New arrivals Section */}
                     <div className="w-full h-40 flex justify-between items-center">
                         {/* Today's Quotes */}
-                        <div className="w-4/10 h-full flex rounded-xl bg-linear-to-br to-purple-900 from-[#b30220] shadow-md shadow-purple-300">
+                        <div className="w-4/10 h-full flex rounded-xl bg-linear-to-br to-purple-900 from-[#b30220]">
                             <span className="w-full h-full flex flex-col p-5">
                                 <h1 className="text-lg text-gray-50 font-semibold">Today's Quote</h1>
                                 <p className="text-gray-100 text-sm my-3">'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde ab, labore cumque corrupti quae et.'</p>
@@ -38,7 +38,7 @@ function HomePage() {
                             </span>
                         </div>
                         {/* New Arrivals */}
-                        <div className="w-[57%] h-full bg-white flex justify-between rounded-xl border border-purple-500 overflow-hidden">
+                        <div className="w-[57%] h-full bg-[#4857605a] border border-gray-700 flex justify-between rounded-xl overflow-hidden">
                             <div className="w-1/13 h-full flex justify-center items-center bg-linear-to-b rounded-l-lg to-purple-900 from-[#b30220]">
                                 <p className="text-gray-50 text-sm -rotate-90 text-nowrap font-medium">New Arrivals</p>
                             </div>
@@ -53,9 +53,9 @@ function HomePage() {
                             </div>
                         </div>
                     </div>
-                    <h1 className="text-2xl font-semibold text-gray-800 mt-3 mb-2">Good {HourTime}</h1>
+                    <h1 className="text-2xl font-semibold text-gray-300 mt-3 mb-2">Good {HourTime}</h1>
                     <div className="w-full h-150 flex flex-col">
-                        <span className="flex justify-between items-center text-gray-600">
+                        <span className="flex justify-between items-center text-gray-500">
                             <h3>Recommended for you</h3>
                             <p className="cursor-pointer text-sm" onClick={() => { (containerHeight[0] == 'h-44') ? setContainerHeight(['h-fit', 'Show Less', 'fa-minus']) : setContainerHeight(['h-44', 'Show More', 'fa-plus']) }}> <i className={`fa ${containerHeight[2]}`}></i> {containerHeight[1]}</p>
                         </span>
@@ -84,9 +84,9 @@ function HomePage() {
                         </div>
 
                         {/* Recent Readings */}
-                        <span className="flex justify-between items-center text-gray-600 mt-4">
+                        <span className="flex justify-between items-center text-gray-500 mt-4">
                             <h3>Recent Readings</h3>
-                            <p className="cursor-pointer text-sm">Show More <i className='fa fa-plus'></i></p>
+                            <p className="cursor-pointer text-sm"><i className='fa fa-plus'></i> Show More</p>
                         </span>
                         <div className="w-full h-fit mt-2 flex flex-col">
                             <div className='w-full overflow-hidden flex justify-between flex-wrap gap-2 transition-all duration-300'>
