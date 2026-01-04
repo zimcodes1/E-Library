@@ -17,8 +17,8 @@ function LoginPage() {
                     <h1 className="text-3xl font-[Super]  font-semibold text-gray-50 mt-5">Holla Bookie, <br />Welcome Back</h1>
                     <p className="text-xs text-gray-400 mt-3">Hey, welcome back to your silent spot.  </p>
                     <form action="#" className="flex w-[60%] pt-10 flex-col">
-                        <input type="text" placeholder="Your email..." className="h-10 text-gray-300 rounded-lg pl-2 w-full bg-[#48576019] border-gray-800 focus:ring-0 outline-0 caret-purple-500" />
-                        <input type="password" placeholder="Password" className="h-10 text-gray-300 rounded-lg pl-2 w-full mt-4 bg-[#48576019] border-gray-800 focus:ring-0 outline-0 caret-purple-500" />
+                        <input type="text" placeholder="Your email..." className="h-10 text-gray-300 rounded-lg pl-2 w-full bg-[#4857602f] border border-gray-800 focus:ring-0 outline-0 caret-purple-500" />
+                        <input type="password" placeholder="Password" className="h-10 text-gray-300 rounded-lg pl-2 w-full mt-4 bg-[#4857602f] border border-gray-800 focus:ring-0 outline-0 caret-purple-500" />
                         <span className="flex w-full jbetwustify-een items-center mt-4">
                             <span className="flex w-fit justify-between items-center">
                                 <input type="checkbox" className="accent-purple-500" />
