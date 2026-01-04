@@ -9,6 +9,7 @@ import Footer from "../components/landing_page/Footer";
 import Categories from "../components/landing_page/Categories";
 import NewTitles from "../components/landing_page/NewTitles";
 import Reading from "../components/landing_page/Reading";
+import ReadAnywhere from "../components/landing_page/ReadAnywhere";
 
 function LandingPage() {
     useEffect(() => {
@@ -30,6 +31,8 @@ function LandingPage() {
                 <Reading></Reading>
                 {/* New titles */}
                 <NewTitles></NewTitles>
+                {/* Read From Any Location */}
+                <ReadAnywhere></ReadAnywhere>
                 {/* Reviews Section */}
                 <Reviews></Reviews>
                 {/* Books Banner Section */}
