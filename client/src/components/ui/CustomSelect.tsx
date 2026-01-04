@@ -6,7 +6,7 @@ function CustomSelect({ defaultValue, options, customStyles }: { defaultValue?: 
     return (
         <span onClick={() => {
             (activeState == 'hidden') ? setActiveState('') : setActiveState('hidden')
-        }} className="flex h-6/10 w-auto text-gray-300 text-sm relative rounded-l-2xl items-center px-2 justify-center">
+        }} className="flex h-6/10 w-auto text-gray-300 text-sm relative rounded-l-2xl items-center px-2 justify-center cursor-pointer">
             <p>{value} <i className="fa fa-angle-down"></i> </p>
             <div className={`w-50 absolute top-10 z-10 left-0 bg-gray-700 border border-gray-600 rounded-2xl backdrop-blur-3xl h-fit flex flex-col overflow-hidden p-2 ${customStyles} ${activeState}`}>
                 {options?.map((option, index) => {

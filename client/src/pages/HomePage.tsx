@@ -38,7 +38,7 @@ function HomePage() {
                             </span>
                         </div>
                         {/* New Arrivals */}
-                        <div className="w-[57%] h-full bg-[#4857605a] border border-gray-700 flex justify-between rounded-xl overflow-hidden">
+                        <div className="w-[57%] h-full bg-transparent border border-gray-700 flex justify-between rounded-xl overflow-hidden">
                             <div className="w-1/13 h-full flex justify-center items-center bg-linear-to-b rounded-l-lg to-purple-900 from-[#b30220]">
                                 <p className="text-gray-50 text-sm -rotate-90 text-nowrap font-medium">New Arrivals</p>
                             </div>

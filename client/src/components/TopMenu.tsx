@@ -44,7 +44,7 @@ export function TopBar() {
                     <i className="fa fa-search"></i>
                 </span>
                 <span className="w-auto px-2 flex justify-center items-center cursor-pointer h-6/10 border-l border-purple-300" title="Scan ISBN/ISSN Code">
-                    <i className="fa fa-barcode text-sm text-gray-800"></i>
+                    <i className="fa fa-barcode text-sm text-gray-300"></i>
                 </span>
             </span>
             {/* Language Selector - Future Feature */}

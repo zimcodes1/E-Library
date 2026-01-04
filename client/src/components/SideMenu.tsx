@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom"
 
 function SideMenu() {
     return (
@@ -8,26 +8,26 @@ function SideMenu() {
             </span>
 
             <span className="w-full h-fit mt-5 flex flex-col">
-                <span className="w-full text-sm h-12 flex justify-start items-center cursor-pointer text-gray-300 px-2 hover:bg-[#48576050] rounded-md transition duration-300">
+                <Link to='/home' className="w-full text-sm h-12 flex justify-start items-center cursor-pointer text-gray-300 px-2 hover:bg-[#48576050] rounded-md transition duration-300">
                     <i className="fa fa-home"></i>
                     <p className="pl-2">Home</p>
-                </span>
-                <span className="w-full text-sm h-12 flex justify-start items-center cursor-pointer text-gray-300 px-2 hover:bg-[#48576050] rounded-md transition duration-300">
+                </Link>
+                <Link to='/search' className="w-full text-sm h-12 flex justify-start items-center cursor-pointer text-gray-300 px-2 hover:bg-[#48576050] rounded-md transition duration-300">
                     <i className="fa fa-search"></i>
                     <p className="pl-2">Search</p>
-                </span>
-                <span className="w-full text-sm h-12 flex justify-start items-center cursor-pointer text-gray-300 px-2 hover:bg-[#48576050] rounded-md transition duration-300">
+                </Link>
+                <Link to='/' className="w-full text-sm h-12 flex justify-start items-center cursor-pointer text-gray-300 px-2 hover:bg-[#48576050] rounded-md transition duration-300">
                     <i className="fa fa-book"></i>
                     <p className="pl-2">My Shelve</p>
-                </span>
-                <span className="w-full text-sm h-12 flex justify-start items-center cursor-pointer text-gray-300 px-2 hover:bg-[#48576050] rounded-md transition duration-300">
+                </Link>
+                <Link to='/' className="w-full text-sm h-12 flex justify-start items-center cursor-pointer text-gray-300 px-2 hover:bg-[#48576050] rounded-md transition duration-300">
                     <i className="fa fa-plus-circle"></i>
                     <p className="pl-2">Upload</p>
-                </span>
-                <span className="w-full text-sm h-12 flex justify-start items-center cursor-pointer text-gray-300 px-2 hover:bg-[#48576050] rounded-md transition duration-300">
+                </Link>
+                <Link to='/' className="w-full text-sm h-12 flex justify-start items-center cursor-pointer text-gray-300 px-2 hover:bg-[#48576050] rounded-md transition duration-300">
                     <i className="fa-solid fa-hand-holding-heart"></i>
                     <p className="pl-2">Contribute</p>
-                </span>
+                </Link>
             </span>
 
 
