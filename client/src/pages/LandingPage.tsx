@@ -17,7 +17,7 @@ function LandingPage() {
 
     return (
         <>
-            <div className="w-full h-fit max-sm:px-5 max-[900px]:px-10 px-20 bgImage pt-5 ">
+            <div className="w-full h-fit max-sm:px-5 max-[900px]:px-10 px-20 bgImage pt-5 pb-10 ">
                 {/* Top Menu */}
                 <TopMenu></TopMenu>
                 {/* Hero Section */}

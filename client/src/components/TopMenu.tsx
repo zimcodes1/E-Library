@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "./ui/Button";
 import CustomSelect from "./ui/CustomSelect";
@@ -5,18 +6,28 @@ import CustomSelect from "./ui/CustomSelect";
 
 //Topmenu for landing page
 function TopMenu() {
+    const [activeState, setActiveState] = useState('hidden');
 
     return (
-        <div className="fixed w-9/10 mx-auto h-15 px-5 rounded-3xl max-sm:h-10 flex justify-between items-center top-5 bg-transparent border border-gray-700 backdrop-blur-2xl z-50">
+        <div className="fixed w-9/10 max-sm:w-[95%] left-[5%] h-15 max-sm:left-[2.5%] px-3 rounded-3xl flex justify-between items-center top-5 max-sm:top-3 bg-transparent border border-gray-700 backdrop-blur-2xl z-50">
             <span className="w-auto h-full flex justify-between items-center">
                 <img src="/images/logo.png" alt="Logo" className="w-10 max-sm:w-10" />
-                <h1 className="text-xl max-sm:text-3xl font-[Super] gradient">Libronet</h1>
+                <h1 className="text-xl font-[Super] gradient">Libronet</h1>
             </span>
-            <span>
+            <span className="max-sm:hidden">
                 <Link to="/" className="text-gray-400 text-sm p-2 mx-2">Home</Link>
                 <Link to="#" className="text-gray-400 text-sm p-2 mx-2">Search</Link>
                 <Link to="#" className="text-gray-400 text-sm p-2 mx-2">About</Link>
                 <Link to="/login"><Button text="Sign In"></Button></Link>
+            </span>
+            <span className="relative hidden max-sm:flex">
+                <i onClick={()=>{(activeState=='hidden') ? setActiveState('max-sm:flex') : setActiveState('hidden')}} className="fa fa-bars text-gray-50 hidden text-2xl cursor-pointer"></i>
+                <div className={`${activeState} flex-col overflow-hidden w-25 h-fit rounded-2xl bg-[#31303e] border border-gray-700 absolute top-7 right-0`}>
+                    <span className="flex w-full h-10 justify-start items-center hover:bg-[#413f52]"><Link to="/" className="text-gray-300 text-sm p-2 mx-2">Home</Link></span>
+                    <span className="flex w-full h-10 justify-start items-center hover:bg-[#413f52]"><Link to="#" className="text-gray-300 text-sm p-2 mx-2">Search</Link></span>
+                    <span className="flex w-full h-10 justify-start items-center hover:bg-[#413f52]"><Link to="#" className="text-gray-300 text-sm p-2 mx-2">About</Link></span>
+                    <span className="flex w-full h-10 justify-start items-center hover:bg-[#413f52]"><Link to="/login" className="text-gray-300 text-sm p-2 mx-2">Sign In</Link></span>
+                </div>
             </span>
         </div>
     )
