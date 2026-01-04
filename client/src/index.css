@@ -38,3 +38,12 @@
     background-image: radial-gradient(ellipse 50% 100% at 50% -10%, #222c6880, #060410);
     background-repeat: no-repeat;
 }
+.radial-bg {
+  /* This creates a circular gradient starting from the center */
+  background: radial-gradient(
+    ellipse at center, 
+    #060410 0%, 
+    #060410 75%, 
+    #2f199487 100%
+  );
+}

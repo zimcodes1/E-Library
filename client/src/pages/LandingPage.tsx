@@ -38,9 +38,10 @@ function LandingPage() {
                 <span className="flex mt-20">
                     <Button text='30 days free trial' styles="mx-auto mb-10"></Button>
                 </span>
-            </div>
+
             {/* Footer Section */}
             <Footer></Footer>
+            </div>
         </>
     )
 }
