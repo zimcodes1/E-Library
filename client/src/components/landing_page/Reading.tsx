@@ -1,10 +1,10 @@
 
 function Reading() {
     return (
-        <div className="flex flex-col justify-between items-center mt-20 px-4">
+        <div className="flex flex-col justify-between items-center mt-20 max-sm:mt-5 px-4 max-sm:px-0">
             <h1 className="text-3xl max-[900px]:text-2xl text-gray-400 font-semibold">Maximize Your Potential</h1>
             
-            <div className="flex max-sm:flex-wrap justify-between items-center w-full mt-20 h-fit max-sm:py-5 flex-wrap gap-y-5">
+            <div className="flex max-sm:flex-wrap justify-between items-center w-full mt-20 max-sm:mt-5 h-fit max-sm:py-5 flex-wrap gap-y-5">
                 
                 {/* Feature 1: Habit Building */}
                 <div className="w-[32%] max-md:w-[48%] max-sm:w-full h-80 flex justify-center items-center rounded-3xl flex-col backdrop-blur-2xl overflow-hidden px-8 py-6 border bg-[#48576019] border-gray-800 text-center">
