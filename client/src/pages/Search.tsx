@@ -25,10 +25,10 @@ function SearchPage() {
                             <span className="flex justify-start"></span>
                         </span>
                         <div className="w-full h-fit flex flex-col">
-                            <SearchElement></SearchElement>
-                            <SearchElement></SearchElement>
-                            <SearchElement></SearchElement>
-                            <SearchElement></SearchElement>
+                            <SearchElement bookImage="/images/books/books.jpeg" bookDetails={{ title: 'Two Boy Gold Miners', author: 'Azimeh Doe', year: 2005, rating: 3.9, category:'Science' }}></SearchElement>
+                            <SearchElement bookImage="/images/books/book2.png" bookDetails={{ title: 'Web Traffic Explosion', author: 'Jane Doe', year: 2021, rating: 3.2, category:'Technology' }}></SearchElement>
+                            <SearchElement bookImage="/images/books/audience.png" bookDetails={{ title: 'Influencing Marketing', author: 'John Doe', year: 2000, rating: 4.3, category:'Business' }}></SearchElement>
+                            <SearchElement bookImage="/images/books/google_adsense.png" bookDetails={{ title: 'Google Adsense explained', author: 'Jane Doe', year: 2015, rating: 3.9, category:'Technology' }}></SearchElement>
                         </div>
 
                     </div>
