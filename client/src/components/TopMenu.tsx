@@ -35,7 +35,7 @@ function TopMenu() {
 
 export function TopBar() {
     return (
-        <div className="w-full h-15 max-sm:h-10 flex justify-between items-center absolute top-0 right-0 px-5">
+        <div className="w-6/7 backdrop-blur-3xl h-15 max-sm:h-10 flex justify-between items-center fixed top-0 right-0 px-10 z-50">
             {/* Search Bar */}
             <span className="flex h-9 min-w-2/6 rounded-4xl bg-[#4857605a] justify-between items-center border border-gray-700">
                 <CustomSelect defaultValue="All" options={[{ value: "Book", label: "Book" }, { value: "Author", label: "Author" }]}></CustomSelect>
