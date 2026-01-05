@@ -1,4 +1,3 @@
-import Button from "./Button"
 import truncate from "../../truncateText"
 const SearchElement = ({ bookImage, bookDetails }: { bookImage: string, bookDetails?: { title?: string, author?: string, rating?: number, year?:number, category?:string } }) => {
     return (
@@ -22,7 +21,7 @@ const SearchElement = ({ bookImage, bookDetails }: { bookImage: string, bookDeta
             </span>
             <span className="flex w-3/10 h-full justify-between items-center">
                 <i className="fa fa-bookmark cursor-pointer text-xl"></i>
-                <Button text="View" styles="rounded-xl"></Button>
+                <button className="w-auto h-fit text-red-500 border-2 border-red-500 rounded-xl text-sm px-6 py-1.5 cursor-pointer hover:text-gray-50 hover:bg-red-500 ">View</button>
             </span>
 
         </div>
