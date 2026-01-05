@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 
 function SideMenu() {
     return (
-        <div className="w-1/7 bg-[#48576019] h-full flex flex-col justify-start items-center px-2 fixed left-0 top-0">
+        <div className="w-1/7 bg-[#48576019] h-full flex flex-col justify-start items-center px-2 fixed left-0 top-0 border-r border-gray-800">
             <span className="flex w-full h-15 justify-start items-center">
                 <img src="/images/logo.png" alt="Logo" className="h-10" />
             </span>
@@ -16,7 +16,7 @@ function SideMenu() {
                     <i className="fa fa-search"></i>
                     <p className="pl-2">Search</p>
                 </Link>
-                <Link to='/' className="w-full text-sm h-12 flex justify-start items-center cursor-pointer text-gray-300 px-2 hover:bg-[#48576050] rounded-md transition duration-300">
+                <Link to='/myshelve' className="w-full text-sm h-12 flex justify-start items-center cursor-pointer text-gray-300 px-2 hover:bg-[#48576050] rounded-md transition duration-300">
                     <i className="fa fa-book"></i>
                     <p className="pl-2">My Shelve</p>
                 </Link>

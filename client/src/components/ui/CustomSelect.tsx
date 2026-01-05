@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function CustomSelect({ defaultValue, options, customStyles }: { defaultValue?: string, options?: Array<{ value: string, label: string, customStyles?: string }>, customStyles?: string }) {
+function CustomSelect({ defaultValue, options, customStyles }: { defaultValue?: string, options?: Array<{ value: string, label?: string, customStyles?: string }>, customStyles?: string }) {
     const [value, setValue] = useState(defaultValue || 'Select');
     const [activeState, setActiveState] = useState('hidden');
     return (
@@ -12,8 +12,8 @@ function CustomSelect({ defaultValue, options, customStyles }: { defaultValue?: 
                 {options?.map((option, index) => {
                     return (
                         <span onClick={() => {
-                            setValue(option.label)
-                        }} key={index} className="w-full h-10 text-gray-300 hover:bg-gray-500 rounded-lg flex items-center px-2 cursor-pointer">{option.label}</span>
+                            setValue(option.label || option.value)
+                        }} key={index} className="w-full h-10 text-gray-300 hover:bg-gray-500 rounded-lg flex items-center px-2 cursor-pointer">{option.label || option.value}</span>
                     )
                 })}
             </div>

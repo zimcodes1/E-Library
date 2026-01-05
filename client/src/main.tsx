@@ -7,13 +7,15 @@ import LoginPage from './pages/Login';
 import SignUp from './pages/SignUp';
 import HomePage from './pages/HomePage';
 import SearchPage from './pages/Search';
+import Shelve from './pages/Shelve';
 
 const router  = createBrowserRouter([
   {path:"/", element:<LandingPage />},
   {path:'/login', element: <LoginPage/>},
   {path:'/signup', element: <SignUp/>},
   {path:'/home', element: <HomePage/>},
-  {path:'/search', element: <SearchPage/>}
+  {path:'/search', element: <SearchPage/>},
+  {path:'/myshelve', element: <Shelve/>}
 ]
 )
 createRoot(document.getElementById('root')!).render(

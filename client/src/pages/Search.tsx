@@ -2,8 +2,12 @@ import SideMenu from "../components/SideMenu"
 import { TopBar } from "../components/TopMenu"
 import CustomSelect from "../components/ui/CustomSelect"
 import SearchElement from "../components/ui/SearchElement"
+import { useEffect } from "react"
 
 function SearchPage() {
+    useEffect(()=>{
+        document.title = 'Search | Libronet'
+    }, [])
     return (
         <div className="w-full flex justify-end items-center bgImage min-h-screen pb-10">
             {/* Side Navigation Menu */}
