@@ -16,7 +16,7 @@ function Contribution(){
         <span className="w-8 h-8 rounded-full overflow-hidden">
           <img src="/images/user.jpg" alt="User" />
         </span>
-        <p className="text-xs text-gray-200 ml-2">{truncate('Obadiah Azimeh Nasara', 15)}</p>
+        <p className="text-xs text-gray-200 ml-2">{truncate('Jane Doe', 15)}</p>
       </span>
     </div>
   )
