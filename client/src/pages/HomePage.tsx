@@ -3,6 +3,7 @@ import { TopBar } from "../components/TopMenu"
 import BookItem from "../components/BookItem"
 import { useState } from "react";
 import TodayQuotes from "../components/ui/TodayQuote";
+import NewArrivals from "../components/ui/NewArrivals";
 
 function HomePage() {
     let hour = new Date().getHours();
@@ -25,6 +26,12 @@ function HomePage() {
         { text: "Time is money.", author: "Benjamin Franklin" },
     ];
 
+    //New Arrival Books
+    const arrivalBooks = [
+        { id: 1, bookImage: "/images/books/addict.jpeg" },
+        { id: 2, bookImage: "/images/books/google_adsense.png" },
+        // ... rest of your books
+    ];
     return (
         <div className="w-full flex justify-end items-center bgImage min-h-dvh max-h-fit pb-10">
             {/* Side Navigation Menu */}
@@ -38,20 +45,7 @@ function HomePage() {
                     <div className="w-full h-40 flex justify-between items-center">
                         <TodayQuotes quotes={data}></TodayQuotes>
                         {/* New Arrivals */}
-                        <div className="w-[57%] h-full bg-transparent border border-gray-700 flex justify-between rounded-xl overflow-hidden">
-                            <div className="w-1/13 h-full flex justify-center items-center bg-linear-to-b rounded-l-lg to-purple-900 from-[#b30220]">
-                                <p className="text-gray-50 text-sm -rotate-90 text-nowrap font-medium">New Arrivals</p>
-                            </div>
-                            <div className="w-12/13 py-2 px-2 h-full flex justify-start gap-7 overflow-hidden flex-row">
-                                <BookItem bookImage="/images/books/addict.jpeg"></BookItem>
-                                <BookItem bookImage="/images/books/google_adsense.png"></BookItem>
-                                <BookItem bookImage="/images/books/rc_cars.png"></BookItem>
-                                <BookItem bookImage="/images/books/book2.png"></BookItem>
-                                <BookItem bookImage="/images/books/books.jpeg"></BookItem>
-                                <BookItem bookImage="/images/books/energy_hacks.png"></BookItem>
-                                <BookItem bookImage="/images/books/audience.png"></BookItem>
-                            </div>
-                        </div>
+                        <NewArrivals books={arrivalBooks}></NewArrivals>
                     </div>
                     <h1 className="text-2xl font-semibold text-gray-300 mt-3 mb-2">Good {HourTime}</h1>
                     <div className="w-full h-150 flex flex-col">
