@@ -24,9 +24,9 @@ function SideMenu() {
                     <i className="fa fa-plus-circle"></i>
                     <p className="pl-2">Upload</p>
                 </Link>
-                <Link to='/' className="w-full text-sm h-12 flex justify-start items-center cursor-pointer text-gray-300 px-2 hover:bg-[#48576050] rounded-md transition duration-300">
-                    <i className="fa-solid fa-hand-holding-heart"></i>
-                    <p className="pl-2">Contribute</p>
+                <Link to='/profile' className="w-full text-sm h-12 flex justify-start items-center cursor-pointer text-gray-300 px-2 hover:bg-[#48576050] rounded-md transition duration-300">
+                    <i className="fa-solid fa-user-circle"></i>
+                    <p className="pl-2">Profile</p>
                 </Link>
             </span>
 

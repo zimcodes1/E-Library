@@ -14,7 +14,7 @@ function Contribution(){
         <span className="w-8 h-8 rounded-full overflow-hidden">
           <img src="/images/user.jpg" alt="User" />
         </span>
-        <p className="text-xs text-gray-200 ml-2">Jane Doe</p>
+        <p className="text-xs text-gray-200 ml-2">{truncate('Obadiah Azimeh Nasara', 15)}</p>
       </span>
     </div>
   )
@@ -36,7 +36,7 @@ function UploadPage() {
             <form action="" className="w-8/10 h-9/10 p-5 rounded-2xl flex justify-between items-center bg-[#48576019] border border-gray-700">
               <div className="w-[65%] h-full flex flex-col">
                 <h3 className="text-gray-300 font-semibold"> Fill up book details</h3>
-                <span className="mt-10">
+                <span className="mt-5">
                   <input type="text" placeholder="Book Name" className="pl-3 h-12 rounded-lg w-full bg-[#4857602f] border border-gray-800 text-gray-300 outline-0 ring-0" />
                   <input type="text" placeholder="Author" className="pl-3 mt-3 h-12 rounded-lg w-full bg-[#4857602f] border border-gray-800 text-gray-300 outline-0 ring-0" />
                   <input type="number" max='2026' placeholder="Book Year" className="pl-3 mt-3 h-12 rounded-lg w-full bg-[#4857602f] border border-gray-800 text-gray-300 outline-0 ring-0" />
