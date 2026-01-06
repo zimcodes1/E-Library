@@ -2,8 +2,10 @@ import SideMenu from "../components/SideMenu"
 import { TopBar } from "../components/TopMenu"
 import CustomSelect from "../components/ui/CustomSelect"
 import ShelveItem from "../components/ShelveItem"
+import { useEffect } from "react"
 
 const Shelve = () => {
+    useEffect(()=>{document.title = 'Your Shelve | Libronet'}, [])
     return (
         <div className="w-full flex justify-end items-center bgImage min-h-screen pb-10">
             {/* Side Navigation Menu */}

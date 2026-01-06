@@ -1,12 +1,14 @@
 import SideMenu from "../components/SideMenu";
 import { TopBar } from "../components/TopMenu";
 import CustomSelect from "../components/ui/CustomSelect";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../components/ui/Button";
 import BookItem from "../components/BookItem";
 import truncate from "../truncateText";
 
 function Contribution(){
+
+  useEffect(()=>{document.title = 'Upload Your Book | Libronet'}, [])
   return(
     <div className="h-50 w-fit flex justify-between flex-col">
       <BookItem bookImage="/images/books/energy_hacks.png" bookDetails={{ title: 'Top 10 Energy Hacks', author: 'Jane Doe', year: 2010, rating: 2.9 }}></BookItem>
