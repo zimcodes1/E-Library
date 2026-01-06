@@ -3,7 +3,22 @@ import { TopBar } from "../components/TopMenu";
 import CustomSelect from "../components/ui/CustomSelect";
 import { useState } from "react";
 import Button from "../components/ui/Button";
+import BookItem from "../components/BookItem";
+import truncate from "../truncateText";
 
+function Contribution(){
+  return(
+    <div className="h-50 w-fit flex justify-between flex-col">
+      <BookItem bookImage="/images/books/energy_hacks.png" bookDetails={{ title: 'Top 10 Energy Hacks', author: 'Jane Doe', year: 2010, rating: 2.9 }}></BookItem>
+      <span className="flex h-9 w-full p-2 rounded-4xl bg-[#4857605a] justify-center items-center border border-gray-700 shadow cursor-pointer">
+        <span className="w-8 h-8 rounded-full overflow-hidden">
+          <img src="/images/user.jpg" alt="User" />
+        </span>
+        <p className="text-xs text-gray-200 ml-2">Jane Doe</p>
+      </span>
+    </div>
+  )
+}
 
 function UploadPage() {
 
@@ -16,9 +31,9 @@ function UploadPage() {
         {/* Topbar component for Search Feature, Language Switch ... */}
         <TopBar />
         {/* Main Contents */}
-        <div className="w-8/10 h-full flex mt-15 justify-between items-center">
+        <div className="w-full h-full flex mt-15 justify-center items-center">
           <div className="w-1/2 flex h-full justify-start items-center">
-            <form action="" className="w-full h-9/10 p-5 rounded-2xl flex justify-between items-center bg-[#48576019] border border-gray-700">
+            <form action="" className="w-8/10 h-9/10 p-5 rounded-2xl flex justify-between items-center bg-[#48576019] border border-gray-700">
               <div className="w-[65%] h-full flex flex-col">
                 <h3 className="text-gray-300 font-semibold"> Fill up book details</h3>
                 <span className="mt-10">
@@ -52,7 +67,17 @@ function UploadPage() {
               </div>
             </form>
           </div>
-          <div className="w-1/2 flex h-full"></div>
+          <div className="w-1/2 flex flex-col h-full justify-center items-start px-5">
+                  <h1 className="text-4xl text-gray-200 font-bold font-[Super]">Your <span className=" gradient">Contributions</span></h1>
+                  <h1 className="text-4xl text-gray-200 font-bold font-[Super]">Help Other to Learn 😇</h1>
+                  <p className="text-sm mt-5 text-gray-300">Recent Contributions</p>
+                  <div className="w-full h-fit mt-5 flex justify-evenly items-center ">
+                    <Contribution></Contribution>
+                    <Contribution></Contribution>
+                    <Contribution></Contribution>
+                    <Contribution></Contribution>
+                  </div>
+          </div>
         </div>
       </div>
     </div>

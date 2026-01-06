@@ -13,7 +13,7 @@ function HomePage() {
     setHourTime
     const [containerHeight, setContainerHeight] = useState(['h-44', 'Show More', 'fa-plus']);
     return (
-        <div className="w-full flex justify-end items-center bgImage min-h-screen pb-10">
+        <div className="w-full flex justify-end items-center bgImage min-h-dvh max-h-fit pb-10">
             {/* Side Navigation Menu */}
             <SideMenu />
             <div className="w-6/7 h-full flex flex-col px-10 pt-5 relative">
