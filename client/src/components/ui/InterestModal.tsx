@@ -36,7 +36,7 @@ const InterestsModal = ({onClose, setInterests}:{onClose:()=>void, setInterests:
 
     return (
             <div className="w-100 h-8/10 bg-[#0d0f21] border border-gray-600 text-gray-200 rounded-2xl shadow-md shadow-[#0d0a1a6f] py-10 px-5 flex flex-col relative">
-                <i onClick={onClose} className="fa fa-close text-2xl text-gray-50 absolute top-5 right-5 cursor-pointer"></i>
+                <i onClick={onClose} className="fa fa-close text-xl text-gray-50 absolute top-5 right-5 cursor-pointer"></i>
                 <h2 className="text-2xl font-semibold text-center">
                     <i className="fa fa-magic-wand-sparkles"></i> Interests
                 </h2>

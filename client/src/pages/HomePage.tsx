@@ -2,6 +2,7 @@ import SideMenu from "../components/SideMenu"
 import { TopBar } from "../components/TopMenu"
 import BookItem from "../components/BookItem"
 import { useState } from "react";
+import TodayQuotes from "../components/ui/TodayQuote";
 
 function HomePage() {
     let hour = new Date().getHours();
@@ -12,6 +13,18 @@ function HomePage() {
     })
     setHourTime
     const [containerHeight, setContainerHeight] = useState(['h-44', 'Show More', 'fa-plus']);
+    //Quotes data
+    interface Quote {
+        text: string;
+        author: string;
+    }
+    const data: Quote[] = [
+        { text: "Knowledge is power.", author: "Francis Bacon" },
+        { text: "The only constant is change.", author: "Heraclitus" },
+        { text: "Keep it simple, stupid.", author: "Kelly Johnson" },
+        { text: "Time is money.", author: "Benjamin Franklin" },
+    ];
+
     return (
         <div className="w-full flex justify-end items-center bgImage min-h-dvh max-h-fit pb-10">
             {/* Side Navigation Menu */}
@@ -23,20 +36,7 @@ function HomePage() {
                 <div className="w-full h-full flex mt-15 flex-col">
                     {/* Today's Quote and New arrivals Section */}
                     <div className="w-full h-40 flex justify-between items-center">
-                        {/* Today's Quotes */}
-                        <div className="w-4/10 h-full flex rounded-xl bg-linear-to-br to-purple-900 from-[#b30220]">
-                            <span className="w-full h-full flex flex-col p-5">
-                                <h1 className="text-lg text-gray-50 font-semibold">Today's Quote</h1>
-                                <p className="text-gray-100 text-sm my-3">'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde ab, labore cumque corrupti quae et.'</p>
-                                <p className="text-sm text-gray-50 ml-auto">~ John Doe</p>
-                                <span className="flex justify-start items-center gap-1">
-                                    <span className="flex w-2 h-2 rounded-full bg-amber-50 border border-gray-50"></span>
-                                    <span className="flex w-2 h-2 rounded-full border border-gray-50"></span>
-                                    <span className="flex w-2 h-2 rounded-full border border-gray-50"></span>
-                                    <span className="flex w-2 h-2 rounded-full border border-gray-50"></span>
-                                </span>
-                            </span>
-                        </div>
+                        <TodayQuotes quotes={data}></TodayQuotes>
                         {/* New Arrivals */}
                         <div className="w-[57%] h-full bg-transparent border border-gray-700 flex justify-between rounded-xl overflow-hidden">
                             <div className="w-1/13 h-full flex justify-center items-center bg-linear-to-b rounded-l-lg to-purple-900 from-[#b30220]">
