@@ -8,6 +8,7 @@ import SignUp from './pages/SignUp';
 import HomePage from './pages/HomePage';
 import SearchPage from './pages/Search';
 import Shelve from './pages/Shelve';
+import UploadPage from './pages/Upload';
 
 const router  = createBrowserRouter([
   {path:"/", element:<LandingPage />},
@@ -15,7 +16,8 @@ const router  = createBrowserRouter([
   {path:'/signup', element: <SignUp/>},
   {path:'/home', element: <HomePage/>},
   {path:'/search', element: <SearchPage/>},
-  {path:'/myshelve', element: <Shelve/>}
+  {path:'/myshelve', element: <Shelve/>},
+  {path:'/upload', element: <UploadPage/>}
 ]
 )
 createRoot(document.getElementById('root')!).render(

@@ -20,7 +20,14 @@ const Shelve = () => {
                         </span>
                     </span>
                     {/* Shelve Container */}
-                    <div className="w-full h-fit flex justify-evenly items-center flex-wrap mt-5 text-sm">
+                    <div className="w-full h-fit flex justify-start items-center flex-wrap mt-5 text-sm gap-10">
+                        <ShelveItem></ShelveItem>
+                        <ShelveItem></ShelveItem>
+                        <ShelveItem></ShelveItem>
+                        <ShelveItem></ShelveItem>
+                        <ShelveItem></ShelveItem>
+                        <ShelveItem></ShelveItem>
+                        <ShelveItem></ShelveItem>
                         <ShelveItem></ShelveItem>
                     </div>
                 </div>
