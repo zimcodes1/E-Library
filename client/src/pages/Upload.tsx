@@ -6,10 +6,10 @@ import Button from "../components/ui/Button";
 import BookItem from "../components/BookItem";
 import truncate from "../truncateText";
 
-function Contribution(){
+function Contribution() {
 
-  useEffect(()=>{document.title = 'Upload Your Book | Libronet'}, [])
-  return(
+  useEffect(() => { document.title = 'Upload Your Book | Libronet' }, [])
+  return (
     <div className="h-50 w-fit flex justify-between flex-col">
       <BookItem bookImage="/images/books/energy_hacks.png" bookDetails={{ title: 'Top 10 Energy Hacks', author: 'Jane Doe', year: 2010, rating: 2.9 }}></BookItem>
       <span className="flex h-9 w-full p-2 rounded-4xl bg-[#4857605a] justify-center items-center border border-gray-700 shadow cursor-pointer">
@@ -36,7 +36,7 @@ function UploadPage() {
         <div className="w-full h-full flex mt-15 justify-center items-center">
           <div className="w-1/2 flex h-full justify-start items-center">
             <form action="" className="w-8/10 h-9/10 p-5 rounded-2xl flex justify-between items-center bg-[#48576019] border border-gray-700">
-              <div className="w-[65%] h-full flex flex-col">
+              <div className="w-[65%] h-full flex flex-col  overflow-scroll no-scrollbar">
                 <h3 className="text-gray-300 font-semibold"> Fill up book details</h3>
                 <span className="mt-5">
                   <input type="text" placeholder="Book Name" className="pl-3 h-12 rounded-lg w-full bg-[#4857602f] border border-gray-800 text-gray-300 outline-0 ring-0" />
@@ -45,7 +45,7 @@ function UploadPage() {
                   <p className="text-gray-400 text-xs mt-2 text-center">Do you have the URL or the PDF file to upload?</p>
                   <span className="flex justify-between items-center mt-2 text-sm text-gray-400 px-5">
                     <span>Url <input type="radio" value='url' name="format" onChange={() => { setfileUploadFormat('URL') }} /></span>
-                    <span>PDF <input type="radio" value='file' name="format" onChange={() => { setfileUploadFormat('PDF') }} /></span>
+                    <span>PDF <input type="radio" value='file' name="format" onChange={() => { setfileUploadFormat('PDF') }} defaultChecked /></span>
                   </span>
                   {(fileUploadFormat == 'URL') ? (
                     <input type="url" placeholder="Link to file..." className="pl-3 mt-3 h-12 rounded-lg w-full bg-[#4857602f] border border-gray-800 text-gray-300 outline-0 ring-0" />
@@ -56,6 +56,10 @@ function UploadPage() {
                       <input type="file" accept=".pdf" className="hidden" id="fileInput" />
                     </div>
                   )}
+                  <div onClick={() => { document.getElementById('bookCover')?.click() }} className="flex mt-3 h-12 rounded-lg w-full bg-[#4857602f] border border-gray-800 text-gray-300 justify-center items-center cursor-pointer">
+                    <p className="text-gray-400">-- Select Book Cover --</p>
+                    <input type="file" accept=".png, .jpg, .avif, .webp" className="hidden" id="bookCover" />
+                  </div>
                 </span>
                 <Button text="Submit" styles="mt-4"></Button>
               </div>
@@ -70,15 +74,15 @@ function UploadPage() {
             </form>
           </div>
           <div className="w-1/2 flex flex-col h-full justify-center items-start px-5">
-                  <h1 className="text-4xl text-gray-200 font-bold font-[Super]">Your <span className=" gradient">Contributions</span></h1>
-                  <h1 className="text-4xl text-gray-200 font-bold font-[Super]">Help Other to Learn 😇</h1>
-                  <p className="text-sm mt-5 text-gray-300">Recent Contributions</p>
-                  <div className="w-full h-fit mt-5 flex justify-evenly items-center ">
-                    <Contribution></Contribution>
-                    <Contribution></Contribution>
-                    <Contribution></Contribution>
-                    <Contribution></Contribution>
-                  </div>
+            <h1 className="text-4xl text-gray-200 font-bold font-[Super]">Your <span className=" gradient">Contributions</span></h1>
+            <h1 className="text-4xl text-gray-200 font-bold font-[Super]">Help Other to Learn 😇</h1>
+            <p className="text-sm mt-5 text-gray-300">Recent Contributions</p>
+            <div className="w-full h-fit mt-5 flex justify-evenly items-center ">
+              <Contribution></Contribution>
+              <Contribution></Contribution>
+              <Contribution></Contribution>
+              <Contribution></Contribution>
+            </div>
           </div>
         </div>
       </div>

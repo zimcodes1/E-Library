@@ -21,7 +21,7 @@ function TopMenu() {
                 <Link to="/login"><Button text="Sign In"></Button></Link>
             </span>
             <span className="relative hidden max-sm:flex">
-                <i onClick={()=>{(activeState=='hidden') ? setActiveState('max-sm:flex') : setActiveState('hidden')}} className="fa fa-bars text-gray-50 hidden text-2xl cursor-pointer"></i>
+                <i onClick={() => { (activeState == 'hidden') ? setActiveState('max-sm:flex') : setActiveState('hidden') }} className="fa fa-bars text-gray-50 hidden text-2xl cursor-pointer"></i>
                 <div className={`${activeState} flex-col overflow-hidden w-25 h-fit rounded-2xl bg-[#31303e] border border-gray-700 absolute top-7 right-0`}>
                     <span className="flex w-full h-10 justify-start items-center hover:bg-[#413f52]"><Link to="/" className="text-gray-300 text-sm p-2 mx-2">Home</Link></span>
                     <span className="flex w-full h-10 justify-start items-center hover:bg-[#413f52]"><Link to="#" className="text-gray-300 text-sm p-2 mx-2">Search</Link></span>
@@ -64,12 +64,14 @@ export function TopBar() {
                 </span>
             </span>
             {/* User Profile */}
-            <span className="flex h-9 min-w-25 px-0.5 rounded-4xl bg-[#4857605a] justify-start items-center border border-gray-700 shadow cursor-pointer">
-                <span className="h-8 w-8 rounded-full flex justify-center items-center overflow-hidden">
-                    <img src="/images/user.jpg" alt="User" className="w-full h-auto" />
+            <Link to='/profile'>
+                <span className="flex h-9 min-w-25 px-0.5 rounded-4xl bg-[#4857605a] justify-start items-center border border-gray-700 shadow cursor-pointer">
+                    <span className="h-8 w-8 rounded-full flex justify-center items-center overflow-hidden">
+                        <img src="/images/user.jpg" alt="User" className="w-full h-auto" />
+                    </span>
+                    <p className="text-xs ml-2 text-gray-300">Azimeh</p>
                 </span>
-                <p className="text-xs ml-2 text-gray-300">Azimeh</p>
-            </span>
+            </Link>
         </div>
     )
 }
