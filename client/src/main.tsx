@@ -10,16 +10,18 @@ import SearchPage from './pages/Search';
 import Shelve from './pages/Shelve';
 import UploadPage from './pages/Upload';
 import UserProfile from './pages/Profile';
+import Lost from './pages/Lost';
 
-const router  = createBrowserRouter([
-  {path:"/", element:<LandingPage />},
-  {path:'/login', element: <LoginPage/>},
-  {path:'/signup', element: <SignUp/>},
-  {path:'/home', element: <HomePage/>},
-  {path:'/search', element: <SearchPage/>},
-  {path:'/myshelve', element: <Shelve/>},
-  {path:'/upload', element: <UploadPage/>},
-  {path:'/profile', element: <UserProfile/>}
+const router = createBrowserRouter([
+  { path: "/", element: <LandingPage /> },
+  { path: '/login', element: <LoginPage /> },
+  { path: '/signup', element: <SignUp /> },
+  { path: '/home', element: <HomePage /> },
+  { path: '/search', element: <SearchPage /> },
+  { path: '/myshelve', element: <Shelve /> },
+  { path: '/upload', element: <UploadPage /> },
+  { path: '/profile', element: <UserProfile /> },
+  { path: '*', element: <Lost /> }
 ]
 )
 createRoot(document.getElementById('root')!).render(
