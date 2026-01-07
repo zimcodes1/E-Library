@@ -2,6 +2,7 @@ import SideMenu from "../components/SideMenu"
 import { TopBar } from "../components/TopMenu"
 import Review from "../components/Review"
 import { useEffect } from "react"
+import ReviewModal from "../components/ui/ReviewModal"
 
 function BookDetails() {
     useEffect(() => { document.title = 'Book Details | Libronet' })
@@ -14,7 +15,7 @@ function BookDetails() {
                 <TopBar />
                 {/* Main Contents */}
                 <div className="w-full h-full flex mt-15 max-sm:mt-3 justify-center items-start">
-                    <div className="w-8/10 max-sm:w-full h-fit flex flex-col">
+                    <div className="w-8/10 max-[900px]:w-9/10 max-sm:w-full h-fit flex flex-col">
                         <div className="flex w-full h-50 max-sm:h-fit overflow-hidden bg-[#48576019] p-5 border border-gray-700 rounded-2xl justify-between max-sm:flex-col max-sm:justify-center">
                             <div className="w-4/5 max-sm:w-full max-sm:h-fit h-full flex justify-between">
                                 <div className="w-30 overflow-hidden rounded-lg flex justify-center items-center">
@@ -48,6 +49,8 @@ function BookDetails() {
                                 this book provides the proven techniques you need to dominate Google
                                 AdSense and maximize your online earnings in the shortest time possible</p>
                         </div>
+
+                        <h2 className="font-semibold text-2xl text-gray-400 mx-auto my-5">Book Reviews</h2>
                         <div className="w-full h-50 max-sm:h-fit flex flex-wrap justify-between items-center">
                             <Review></Review>
                             <Review></Review>
