@@ -41,7 +41,7 @@ function ReadBook() {
     return (
         <div className="w-full flex justify-end items-center max-sm:items-start bgImage min-h-screen pb-10">
             <SideMenu />
-            <div className="w-6/7 max-sm:w-full h-fit flex flex-col px-10 pt-5 max-sm:p-3 relative">
+            <div className="w-6/7 max-[900px]:w-7/8 max-sm:w-full h-fit flex flex-col px-10 pt-5 max-sm:p-3 relative">
                 <TopBar />
 
                 <div className="w-full h-fit flex flex-col mt-15 justify-center items-center">
