@@ -10,7 +10,7 @@ const UserProfile = () => {
             <div className="w-6/7 max-sm:w-full h-dvh flex flex-col px-10 max-sm:p-3 pt-5 relative">
                 {/* Main Contents */}
                 <div className="w-full h-full flex items-center justify-center flex-col">
-                    <div className="w-125 max-sm:w-full h-9/10 rounded-2xl bg-[#4857605a] p-10 border border-gray-700 flex-col items-center">
+                    <div className="w-125 max-sm:w-full h-9/10 max-[900px]:h-fit rounded-2xl bg-[#4857605a] p-10 border border-gray-700 flex-col items-center">
                         <h1 className="text-gray-200 text-xl font-semibold text-center">Your Profile</h1>
                         <div className="w-25 h-25 mt-5 rounded-full overflow-hidden mx-auto border-3 border-green-500">
                             <img src="/images/user.jpg" alt="User" className="w-full" />
