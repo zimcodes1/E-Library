@@ -12,6 +12,7 @@ import UploadPage from './pages/Upload';
 import UserProfile from './pages/Profile';
 import Lost from './pages/Lost';
 import ReadBook from './pages/ReadBook';
+import BookDetails from './pages/BookDetails';
 
 const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
@@ -23,7 +24,8 @@ const router = createBrowserRouter([
   { path: '/upload', element: <UploadPage /> },
   { path: '/profile', element: <UserProfile /> },
   { path: '/reading', element: <ReadBook /> },
-  { path: '*', element: <Lost /> }
+  {path:'/bookdetails', element: <BookDetails/>},
+  { path: '*', element: <Lost /> },
 ]
 )
 createRoot(document.getElementById('root')!).render(
