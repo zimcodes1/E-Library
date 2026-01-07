@@ -12,6 +12,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 function ReadBook() {
+    useEffect(()=>{document.title = 'Reading... | Libronet'})
     const [numPages, setNumPages] = useState<number>(0);
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [containerWidth, setContainerWidth] = useState<number>(0);

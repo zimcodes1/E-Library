@@ -1,6 +1,7 @@
 import Button from "../components/ui/Button"
-
+import { useEffect } from "react";
 function Lost(){
+    useEffect(()=>{document.title = '404 Not Found | Libronet'}, [])
     return(
         <div className="w-full h-screen bgImage flex flex-col justify-center items-center">
             <h1 className="text-5xl text-gray-300 font-bold max-sm:text-3xl">404 Not Found</h1>
