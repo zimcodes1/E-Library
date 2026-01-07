@@ -16,7 +16,7 @@ const SearchElement = ({ bookImage, bookDetails }: { bookImage: string, bookDeta
             <span className="flex w-25 h-full justify-center items-center">
                 <p><i className="fa fa-star text-amber-300"></i> {bookDetails?.rating}</p>
             </span>
-            <span className="flex h-full w-3/10 justify-center items-center">
+            <span className="flex h-full w-3/10 max-sm:w-2/10 justify-center items-center">
                 <p className="text-gray-400">{truncate(bookDetails?.category, 8)}</p>
             </span>
             <span className="flex w-3/10 max-sm:w-fit h-full justify-between items-center">

@@ -30,7 +30,7 @@ function SearchPage() {
                         <span className="w-full px-5 flex justify-start items-center">
                             <span className="flex justify-start w-3/10 max-sm:w-4/10"><p>Title</p></span>
                             <span className="flex justify-center w-25"><p>Rating</p></span>
-                            <span className="flex justify-center w-3/10"><p>Category</p></span>
+                            <span className="flex justify-center w-2/10"><p>Category</p></span>
                             <span className="flex justify-start"></span>
                         </span>
                         <div className="w-full h-fit flex flex-col">
