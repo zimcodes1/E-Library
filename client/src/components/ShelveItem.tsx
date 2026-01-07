@@ -2,7 +2,7 @@ import BookItem from "./BookItem"
 
 const ShelveItem = () => {
     return (
-        <div className="flex justify-between items-center h-fit max-sm:w-full p-2 rounded-2xl bg-[#4857600f] border border-gray-700">
+        <div className="flex justify-between items-center h-fit max-[900px]:w-[48%] max-sm:w-full p-2 rounded-2xl bg-[#4857600f] border border-gray-700">
             <BookItem bookImage="/images/books/google_adsense.png" bookDetails={{ title: 'Google Adsense explained', author: 'Jane Doe', year: 2015, rating: 3.9 }}></BookItem>
             <span className="flex w-27 h-40 flex-col items-center justify-between text-gray-400 relative">
                 <i className="fa fa-close text-red-400 absolute -top-2 max-sm:top-1 right-1 cursor-pointer"></i>

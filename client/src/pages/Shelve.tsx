@@ -10,7 +10,7 @@ const Shelve = () => {
         <div className="w-full flex justify-end items-center bgImage min-h-screen pb-10 max-sm:pb-25">
             {/* Side Navigation Menu */}
             <SideMenu />
-            <div className="w-6/7 max-sm:w-full min-h-screen flex flex-col px-10 max-sm:px-3 pt-5 relative">
+            <div className="w-6/7 max-[900px]:w-7/8 max-sm:w-full min-h-screen flex flex-col px-10 max-[900px]:px-5 max-sm:px-3 pt-5 relative">
                 {/* Topbar component for Search Feature, Language Switch ... */}
                 <TopBar />
                 {/* Main Contents */}
@@ -22,7 +22,7 @@ const Shelve = () => {
                         </span>
                     </span>
                     {/* Shelve Container */}
-                    <div className="w-full h-fit flex justify-start items-center flex-wrap max-sm:flex-col mt-5 text-sm gap-10 max-sm:gap-2">
+                    <div className="w-full h-fit flex justify-start items-center flex-wrap max-sm:flex-col mt-5 text-sm gap-10 max-[900px]:gap-2 max-sm:gap-2">
                         <ShelveItem></ShelveItem>
                         <ShelveItem></ShelveItem>
                         <ShelveItem></ShelveItem>
