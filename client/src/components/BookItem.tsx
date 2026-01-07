@@ -1,11 +1,11 @@
 import truncate from "../truncateText"
 
 
-function BookItem({bookImage, bookDetails }: { bookImage: string, bookDetails?: { title?: string, author?: string, rating?: number, year?:number }}) {
+function BookItem({bookImage, bookDetails, customWidth }: { bookImage: string, bookDetails?: { title?: string, author?: string, rating?: number, year?:number }, customWidth?:string}) {
     let bookTitle = bookDetails?.title
     if (bookDetails?.title !== undefined) {
         return (
-            <div className={`w-27 max-sm:w-[32.5%] my-2 max-sm:my-1 shrink-0 h-40 flex flex-col justify-start items-start p-2 bg-[#4857605a] border border-gray-700 rounded-2xl cursor-pointer overflow-hidden`} title={bookTitle}>
+            <div className={`w-27 max-sm:${customWidth || 'w-[32.5%]'} my-2 max-sm:my-1 shrink-0 h-40 flex flex-col justify-start items-start p-2 bg-[#4857605a] border border-gray-700 rounded-2xl cursor-pointer overflow-hidden`} title={bookTitle}>
                 <span className="flex w-fit mx-auto h-7/11"><img src={bookImage} className="h-full w-auto" alt="Addict" /></span>
                 <h3 className="text-xs text-gray-300 mt-1.5">{truncate(bookTitle, 12)}</h3>
                 <p className="text-[10px] text-gray-300">{bookDetails.author}, {bookDetails.year}</p>
