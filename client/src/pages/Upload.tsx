@@ -29,12 +29,12 @@ function UploadPage() {
     <div className="w-full flex justify-end items-center bgImage min-h-screen pb-10 max-sm:pb-25">
       {/* Side Navigation Menu */}
       <SideMenu />
-      <div className="w-6/7 max-sm:w-full max-sm:px-3 min-h-screen flex flex-col px-10 pt-5 relative">
+      <div className="w-6/7 max-[900px]:w-8/9 max-sm:w-full max-sm:px-3 min-h-screen flex flex-col px-10 pt-5 relative">
         {/* Topbar component for Search Feature, Language Switch ... */}
         <TopBar />
         {/* Main Contents */}
-        <div className="w-full h-full flex max-sm:flex-col mt-15 max-sm:mt-3 justify-center items-center">
-          <div className="w-1/2 max-sm:w-full flex h-full max-sm:h-fit justify-start max-sm:justify-center items-center">
+        <div className="w-full h-full flex max-sm:flex-col max-[900px]:flex-col mt-15 max-sm:mt-3 justify-center items-center">
+          <div className="w-1/2 max-[900px]:w-full flex h-full max-sm:h-fit justify-start max-[900px]:justify-center items-center">
             <form action="" className="flex-col w-8/10 h-9/10 max-sm:w-full p-5 rounded-2xl flex justify-between items-center bg-[#48576019] border border-gray-700">
               <div className="flex justify-between items-center w-full h-9/10 max-sm:flex-col">
                 <div className="w-[65%] max-sm:w-9/10 h-full flex flex-col  overflow-scroll no-scrollbar">
@@ -75,7 +75,7 @@ function UploadPage() {
               <Button text="Submit" styles="mt-4"></Button>
             </form>
           </div>
-          <div className="w-1/2 max-sm:w-full max-sm:mt-5 flex flex-col h-full max-sm:h-fit justify-center items-start px-5">
+          <div className="w-1/2 max-[900px]:w-full max-[900px]:mt-5 max-sm:mt-5 flex flex-col h-full max-sm:h-fit justify-center items-start px-5">
             <h1 className="text-4xl text-gray-200 font-bold font-[Super]">Your <span className=" gradient">Contributions</span></h1>
             <h1 className="text-4xl text-gray-200 font-bold font-[Super]">Help Other to Learn 😇</h1>
             <p className="text-sm mt-5 text-gray-300">Recent Contributions</p>
