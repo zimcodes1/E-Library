@@ -14,7 +14,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 
 function ReadBook() {
-    const [numPages, setNumPages] = useState<number | null>(null);
+    const [numPages, setNumPages] = useState<number>(0);
     const [pageNumber, setPageNumber] = useState<number>(1)
     const fileUrl = '/public/pdfs/google_adsense.pdf';
 
@@ -38,8 +38,8 @@ function ReadBook() {
                     <p className="mt-4 text-gray-400">Page {pageNumber} of {numPages}</p>
                 </div>
                 {/* Page Navigation */}
-                <span onClick={()=>{setPageNumber(pageNumber-1)}} title="Previous Page" className="p-4 fixed z-50 left-1/6 top-[45%] cursor-pointer rounded-full bg-[#48576019] border border-gray-700 text-gray-50"><i className="fa fa-angle-left"></i></span>
-                <span onClick={()=>{setPageNumber(pageNumber+1)}} title="Next Page" className="p-4 fixed z-50 right-1/12 top-[45%] cursor-pointer rounded-full bg-[#48576019] border border-gray-700 text-gray-50"><i className="fa fa-angle-right"></i></span>
+                {(pageNumber < 2) ? null : <span onClick={() => { setPageNumber(pageNumber - 1) }} title="Previous Page" className="p-4 fixed z-50 left-1/6 top-[45%] cursor-pointer rounded-full bg-[#48576019] border border-gray-700 text-gray-50"><i className="fa fa-angle-left"></i></span>}
+                {(pageNumber >= numPages) ? null : <span onClick={() => { setPageNumber(pageNumber + 1) }} title="Next Page" className="p-4 fixed z-50 right-1/12 top-[45%] cursor-pointer rounded-full bg-[#48576019] border border-gray-700 text-gray-50"><i className="fa fa-angle-right"></i></span>}
             </div>
         </div>
     )
