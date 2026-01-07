@@ -29,7 +29,7 @@ function SideMenu() {
                 </NavLink>
 
                 <NavLink to='/myshelve' className={navLinkStyles}>
-                    <i className="max-sm:text-2xl fa fa-book"></i>
+                    <i className="max-sm:text-2xl fa fa-bookmark"></i>
                     <p className="pl-2 max-sm:hidden">My Shelve</p>
                 </NavLink>
 
