@@ -33,7 +33,7 @@ const TodayQuotes: React.FC<TodayQuotesProps> = ({ quotes }) => {
   const currentQuote = quotes[currentIndex];
 
   return (
-    <div className="w-4/10 h-full flex rounded-xl bg-linear-to-br to-purple-900 from-[#b30220] transition-colors duration-500">
+    <div className="w-4/10 h-full max-sm:h-40 max-sm:w-full flex rounded-xl bg-linear-to-br to-purple-900 from-[#b30220] transition-colors duration-500">
       <div className="w-full h-full flex flex-col p-5">
         <h1 className="text-lg text-gray-50 font-semibold">Today's Quote</h1>
         

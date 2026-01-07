@@ -10,7 +10,7 @@ function SideMenu() {
         }`;
 
     return (
-        <div className="w-1/7 bg-[#48576019] h-full flex flex-col justify-start items-center px-2 fixed left-0 top-0 border-r border-gray-800">
+        <div className="w-1/7 max-sm:hidden bg-[#48576019] h-full flex flex-col justify-start items-center px-2 fixed left-0 top-0 border-r border-gray-800">
             <span className="flex w-full h-15 justify-start items-center">
                 <img src="/images/logo.png" alt="Logo" className="h-10" />
             </span>
