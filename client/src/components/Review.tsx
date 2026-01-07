@@ -2,7 +2,7 @@
 
 function Review() {
     return (
-        <div className="w-[48%] h-full flex flex-col p-5 bg-[#48576019] border border-gray-700 rounded-2xl">
+        <div className="w-[48%] h-full max-sm:w-full max-sm:mt-2 flex flex-col p-5 bg-[#48576019] border border-gray-700 rounded-2xl">
             <div className="w-full h-3/10 flex justify-between text-gray-400 items-center">
                 <span className="flex justify-start items-center">
                     <span className="flex h-8 w-8 rounded-full overflow-hidden justify-start">
