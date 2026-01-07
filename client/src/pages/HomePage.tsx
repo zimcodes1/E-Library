@@ -8,8 +8,12 @@ import NewArrivals from "../components/ui/NewArrivals";
 function HomePage() {
     let hour = new Date().getHours();
     const [HourTime, setHourTime] = useState(() => {
-        if (hour > 11) return 'Afternoon'
-        else if (hour > 16) return 'Evening'
+        if (hour > 11){
+            if(hour >15){
+                return 'Evening'
+            }
+            else return 'Afternoon'
+        }
         else return 'Morning'
     })
     setHourTime
@@ -33,7 +37,7 @@ function HomePage() {
         // ... rest of your books
     ];
     return (
-        <div className="w-full flex justify-end items-center bgImage min-h-screen max-sm:h-fit pb-10">
+        <div className="w-full flex justify-end max-sm:items-start items-center bgImage min-h-screen max-sm:h-fit pb-10">
             {/* Side Navigation Menu */}
             <SideMenu />
             <div className="w-6/7 max-sm:w-full max-sm:px-3 h-full max-sm:h-fit flex flex-col px-10 pt-5 relative">
@@ -79,7 +83,7 @@ function HomePage() {
 
                         {/* Recent Readings */}
                         <span className="flex justify-between items-center text-gray-500 mt-4">
-                            <h3>Recent Readings</h3>
+                            <h3 className="text-sm">Recent Readings</h3>
                             <p className="cursor-pointer text-sm"><i className='fa fa-plus'></i> Show More</p>
                         </span>
                         <div className="w-full h-fit mt-2 flex flex-col">

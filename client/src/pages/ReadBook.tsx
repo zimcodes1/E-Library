@@ -16,7 +16,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 function ReadBook() {
     const [numPages, setNumPages] = useState<number>(0);
     const [pageNumber, setPageNumber] = useState<number>(1)
-    const fileUrl = '/public/pdfs/google_adsense.pdf';
+    const fileUrl = '/pdfs/google_adsense.pdf';
 
     const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
         setNumPages(numPages)
