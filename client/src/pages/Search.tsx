@@ -12,7 +12,7 @@ function SearchPage() {
         <div className="w-full flex justify-end items-center bgImage min-h-screen pb-10 max-sm:pb-40">
             {/* Side Navigation Menu */}
             <SideMenu />
-            <div className="w-6/7 max-sm:w-full min-h-screen flex flex-col px-10 max-sm:px-3 pt-5 relative">
+            <div className="w-6/7 max-[900px]:w-8/9 max-sm:w-full min-h-screen flex flex-col px-10 max-[900px]:px-3 max-sm:px-3 pt-5 relative">
                 {/* Topbar component for Search Feature, Language Switch ... */}
                 <TopBar />
                 {/* Main Contents */}

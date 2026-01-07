@@ -1,7 +1,7 @@
 import truncate from "../../truncateText"
 const SearchElement = ({ bookImage, bookDetails }: { bookImage: string, bookDetails?: { title?: string, author?: string, rating?: number, year?:number, category?:string } }) => {
     return (
-        <div className="flex w-full h-25 bg-[#4857605a] border border-gray-700 mt-2 py-2 rounded-2xl">
+        <div className="flex w-full h-25 bg-[#4857605a] border border-gray-700 mt-2 py-2 px-2 rounded-2xl">
             <span className="flex justify-start items-center w-3/10 max-sm:w-4/10 px-4 h-full">
                 {/* Search Element Image */}
                 <div className="w-20 h-full flex justify-center items-center max-sm:hidden">

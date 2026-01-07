@@ -40,11 +40,11 @@ function HomePage() {
         <div className="w-full flex justify-end max-sm:items-start items-center bgImage min-h-screen max-sm:h-fit pb-10">
             {/* Side Navigation Menu */}
             <SideMenu />
-            <div className="w-6/7 max-sm:w-full max-sm:px-3 h-full max-sm:h-fit flex flex-col px-10 pt-5 relative">
+            <div className="w-6/7 max-[900px]:w-8/9 max-[900px]:px-3 max-sm:w-full max-sm:px-3 h-full max-sm:h-fit flex flex-col px-10 pt-5 max-[900px]:pt-0 relative">
                 {/* Topbar component for Search Feature, Language Switch ... */}
                 <TopBar />
                 {/* Main Contents */}
-                <div className="w-full h-full flex mt-15 max-sm:mt-3 flex-col">
+                <div className="w-full h-full flex mt-15 max-[900px]:mt-0 max-sm:mt-3 flex-col">
                     {/* Today's Quote and New arrivals Section */}
                     <div className="w-full h-40 flex max-sm:h-fit max-sm:flex-col justify-between items-center">
                         <TodayQuotes quotes={data}></TodayQuotes>
@@ -58,7 +58,7 @@ function HomePage() {
                             <p className="cursor-pointer text-sm" onClick={() => { (containerHeight[0] == 'h-44') ? setContainerHeight(['h-fit', 'Show Less', 'fa-minus']) : setContainerHeight(['h-44', 'Show More', 'fa-plus']) }}> <i className={`fa ${containerHeight[2]}`}></i> {containerHeight[1]}</p>
                         </span>
                         <div className="w-full h-fit mt-2 flex flex-col">
-                            <div className={`w-full ${containerHeight[0]} overflow-hidden flex justify-start flex-wrap gap-3 max-sm:gap-1 transition-all duration-300`}>
+                            <div className={`w-full ${containerHeight[0]} overflow-hidden flex justify-start flex-wrap gap-3 max-[900px]:gap-2 max-sm:gap-1 transition-all duration-300`}>
                                 <BookItem bookImage="/images/books/audience.png" bookDetails={{ title: 'Influencing Marketing', author: 'John Doe', year: 2000, rating: 4.3 }}></BookItem>
                                 <BookItem bookImage="/images/books/google_adsense.png" bookDetails={{ title: 'Google Adsense explained', author: 'Jane Doe', year: 2015, rating: 3.9 }}></BookItem>
                                 <BookItem bookImage="/images/books/rc_cars.png" bookDetails={{ title: 'Your Guide To RC Cars', author: 'David Doe', year: 2025, rating: 4.9 }}></BookItem>
