@@ -1,49 +1,89 @@
 import SideMenu from "../components/SideMenu"
 import { TopBar } from "../components/TopMenu"
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Document, Page, pdfjs } from "react-pdf"
-//Import neccessary styles for text and annotation layers.
+
 import 'react-pdf/dist/Page/TextLayer.css'
 import 'react-pdf/dist/Page/AnnotationLayer.css'
 
-//configure the pdf.js worker source
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     'pdfjs-dist/build/pdf.worker.min.mjs',
     import.meta.url,
 ).toString();
 
-
 function ReadBook() {
     const [numPages, setNumPages] = useState<number>(0);
-    const [pageNumber, setPageNumber] = useState<number>(1)
-    const fileUrl = '/pdfs/google_adsense.pdf';
+    const [pageNumber, setPageNumber] = useState<number>(1);
+    const [containerWidth, setContainerWidth] = useState<number>(0);
+
+    // Ref to measure the parent container's width
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    const fileUrl = '/pdfs/two_boys.pdf';
 
     const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
-        setNumPages(numPages)
+        setNumPages(numPages);
     }
+
+    // Effect to handle window resizing
+    useEffect(() => {
+        const updateWidth = () => {
+            if (containerRef.current) {
+                setContainerWidth(containerRef.current.offsetWidth);
+            }
+        };
+
+        updateWidth(); // Set initial width
+        window.addEventListener("resize", updateWidth);
+        return () => window.removeEventListener("resize", updateWidth);
+    }, []);
+
     return (
-        <div className="w-full flex justify-end items-center bgImage min-h-screen pb-10">
-            {/* Side Navigation Menu */}
+        <div className="w-full flex justify-end items-center max-sm:items-start bgImage min-h-screen pb-10">
             <SideMenu />
-            <div className="w-6/7 h-fit flex flex-col px-10 pt-5 relative">
-                {/* Topbar component for Search Feature, Language Switch ... */}
+            <div className="w-6/7 max-sm:w-full h-fit flex flex-col px-10 pt-5 max-sm:p-3 relative">
                 <TopBar />
-                {/* Main Contents */}
+
                 <div className="w-full h-fit flex flex-col mt-15 justify-center items-center">
-                    <div className="max-w-8/10 h-fit overflow-hidden bg-[#48576019] rounded-md">
+                    {/* Container for PDF */}
+                    <div
+                        ref={containerRef}
+                        className="w-full max-w-4xl flex justify-center items-center h-fit bg-[#48576019] rounded-md overflow-hidden"
+                    >
                         <Document file={fileUrl} onLoadSuccess={onDocumentLoadSuccess}>
-                            <Page pageNumber={pageNumber}></Page>
+                            {/* width prop makes the PDF scale to the container */}
+                            <Page
+                                pageNumber={pageNumber}
+                                width={containerWidth > 0 ? containerWidth : undefined}
+                                renderMode="canvas"
+                            />
                         </Document>
                     </div>
+
                     <p className="mt-4 text-gray-400">Page {pageNumber} of {numPages}</p>
                 </div>
-                {/* Page Navigation */}
-                {(pageNumber < 2) ? null : <span onClick={() => { setPageNumber(pageNumber - 1) }} title="Previous Page" className="p-4 fixed z-50 left-1/6 top-[45%] cursor-pointer rounded-full bg-[#48576019] border border-gray-700 text-gray-50"><i className="fa fa-angle-left"></i></span>}
-                {(pageNumber >= numPages) ? null : <span onClick={() => { setPageNumber(pageNumber + 1) }} title="Next Page" className="p-4 fixed z-50 right-1/12 top-[45%] cursor-pointer rounded-full bg-[#48576019] border border-gray-700 text-gray-50"><i className="fa fa-angle-right"></i></span>}
+
+                {/* Navigation Buttons */}
+                {pageNumber > 1 && (
+                    <span
+                        onClick={() => setPageNumber(pageNumber - 1)}
+                        className="p-4 max-sm:p-3 fixed z-50 left-[18%] max-sm:left-5 top-[45%] cursor-pointer rounded-full bg-black/30 backdrop-blur-sm border border-gray-700 text-gray-50 hover:bg-black/50 transition-colors"
+                    >
+                        <i className="fa fa-angle-left"></i>
+                    </span>
+                )}
+
+                {pageNumber < numPages && (
+                    <span
+                        onClick={() => setPageNumber(pageNumber + 1)}
+                        className="p-4 max-sm:p-3 fixed z-50 right-[5%] max-sm:right-5 top-[45%] cursor-pointer rounded-full bg-black/30 backdrop-blur-sm border border-gray-700 text-gray-50 hover:bg-black/50 transition-colors"
+                    >
+                        <i className="fa fa-angle-right"></i>
+                    </span>
+                )}
             </div>
         </div>
     )
 }
 
-
-export default ReadBook
+export default ReadBook;
