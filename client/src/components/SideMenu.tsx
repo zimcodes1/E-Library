@@ -12,7 +12,7 @@ function SideMenu() {
         <div className="w-1/7 max-sm:w-[95%] max-sm:h-18 backdrop-blur-2xl max-sm:rounded-4xl
          max-sm:flex-row max-sm:fixed max-sm:z-50 max-sm:bg-[#4857605a] 
          max-sm:bottom-3 h-full flex flex-col justify-start
-          items-center px-2 fixed left-0 bottom-0 max-sm:left-[2.5%] border-r border-gray-800">
+          items-center px-2 fixed left-0 bottom-0 max-sm:left-[2.5%] border-r max-sm:border max-sm:border-gray-700 border-gray-800">
             <span className="flex w-full h-15 justify-start items-center max-sm:hidden">
                 <img src="/images/logo.png" alt="Logo" className="h-10" />
             </span>
