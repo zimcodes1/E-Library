@@ -1,11 +1,12 @@
 import SideMenu from "../components/SideMenu"
 import { TopBar } from "../components/TopMenu"
 import Review from "../components/Review"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import ReviewModal from "../components/ui/ReviewModal"
 
 function BookDetails() {
     useEffect(() => { document.title = 'Book Details | Libronet' })
+    const [activeState, setActiveState] = useState('hidden')
     return (
         <div className="w-full flex justify-end items-center bgImage min-h-screen pb-10 max-sm:pb-25">
             {/* Side Navigation Menu */}
@@ -57,7 +58,10 @@ function BookDetails() {
                         </div>
                     </div>
                 </div>
-                <button className="text-gray-800 w-30 mx-auto mt-5 cursor-pointer py-2 rounded-2xl bg-gray-50 inline-block"> <i className="fa fa-pen"></i> Review</button>
+                <button onClick={()=>{setActiveState('flex')}} className="text-gray-800 w-30 mx-auto mt-5 cursor-pointer py-2 rounded-2xl bg-gray-50 inline-block"> <i className="fa fa-pen"></i> Review</button>
+            </div>
+            <div className={`w-full h-full top-0 left-0 ${activeState} justify-center items-center bg-[#48576019] backdrop-blur-2xl fixed z-50"`}>
+                <ReviewModal onClose={() => { setActiveState('hidden') }}></ReviewModal>
             </div>
         </div>
     )
