@@ -11,6 +11,7 @@ import Shelve from './pages/Shelve';
 import UploadPage from './pages/Upload';
 import UserProfile from './pages/Profile';
 import Lost from './pages/Lost';
+import ReadBook from './pages/ReadBook';
 
 const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
   { path: '/myshelve', element: <Shelve /> },
   { path: '/upload', element: <UploadPage /> },
   { path: '/profile', element: <UserProfile /> },
+  { path: '/reading', element: <ReadBook /> },
   { path: '*', element: <Lost /> }
 ]
 )
