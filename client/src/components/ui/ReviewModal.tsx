@@ -6,8 +6,16 @@ function ReviewModal({ onClose }: { onClose: () => void }) {
             <i onClick={onClose} className="fa fa-close text-xl text-gray-50 absolute top-5 right-5 cursor-pointer"></i>
             <h2 className="font-semibold text-2xl text-gray-400 mx-auto mt-5">Book Reviews</h2>
             <p className="text-sm text-gray-300 mt-2 text-center">Write your out your review here. Every other information is filled out automatically. </p>
+            <small className="text-center my-1">Rate your experience</small>
+            <span className="flex w-full justify-center items-center text-2xl text-gray-300 mt-2">
+                <i className="fa fa-star mx-2 cursor-pointer"></i>
+                <i className="fa fa-star mx-2 cursor-pointer"></i>
+                <i className="fa fa-star mx-2 cursor-pointer"></i>
+                <i className="fa fa-star mx-2 cursor-pointer"></i>
+                <i className="fa fa-star mx-2 cursor-pointer"></i>
+            </span>
             <textarea name="" placeholder="Write your review here..." className="resize-none p-2 text-sm w-full h-40 mt-3 ring-0 outline-0 rounded-2xl border bg-[#4857605a] border-gray-700"></textarea>
-            <Button text='Submit Selection' styles='mt-10' onClick={()=>{onClose()}}></Button>
+            <Button text='Submit Selection' styles='mt-10' onClick={() => { onClose() }}></Button>
         </div>
     )
 }
