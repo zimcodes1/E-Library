@@ -1,31 +1,111 @@
 import SideMenu from "../components/SideMenu"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import Tabs from "../components/ui/Tabs"
 
 const UserProfile = () => {
-    useEffect(()=>{document.title = 'Profile | Libronet'}, [])
+    useEffect(() => { document.title = 'Profile | Libronet' }, [])
+    const [activeTab, setActiveTab] = useState(0)
+
     return (
         <div className="w-full flex justify-end items-center bgImage min-h-dvh pb-10">
-            {/* Side Navigation Menu */}
             <SideMenu />
             <div className="w-6/7 max-sm:w-full h-dvh flex flex-col px-10 max-sm:p-3 pt-5 relative">
-                {/* Main Contents */}
                 <div className="w-full h-full flex items-center justify-center flex-col">
-                    <div className="w-125 max-sm:w-full h-9/10 max-[900px]:h-fit rounded-2xl bg-[#4857605a] p-10 border border-gray-700 flex-col items-center">
-                        <h1 className="text-gray-200 text-xl font-semibold text-center">Your Profile</h1>
-                        <div className="w-25 h-25 mt-5 rounded-full overflow-hidden mx-auto border-3 border-green-500">
-                            <img src="/images/user.jpg" alt="User" className="w-full" />
+                    <div className="w-full max-w-5xl h-9/10 max-[900px]:h-fit rounded-2xl bg-[#4857605a] p-8 max-sm:p-4 border border-gray-700">
+                        {/* Profile Header */}
+                        <div className="flex max-sm:flex-col items-center gap-6 pb-6 border-b border-gray-700">
+                            <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-purple-500">
+                                <img src="/images/user.jpg" alt="User" className="w-full h-full object-cover" />
+                            </div>
+                            <div className="flex-1 max-sm:text-center">
+                                <h1 className="text-2xl font-bold text-gray-50">John Doe</h1>
+                                <p className="text-gray-400 text-sm mt-1">johndoe@gmail.com</p>
+                                <div className="flex max-sm:justify-center gap-4 mt-3 text-sm">
+                                    <span className="text-gray-300"><i className="fa fa-book text-purple-400"></i> 45 Books</span>
+                                    <span className="text-gray-300"><i className="fa fa-clock text-purple-400"></i> 70hrs</span>
+                                </div>
+                            </div>
+                            <button className="text-gray-50 bg-red-500 px-5 py-2 rounded-lg hover:bg-red-600 transition">
+                                <i className="fa fa-power-off"></i> Logout
+                            </button>
                         </div>
 
-                        <div className="w-full h-fit mt-10 flex flex-col text-gray-400 gap-4">
-                            <span className="flex justify-between items-center"><p>Name: <span className="text-gray-300">John Doe</span></p> <i className="fa fa-edit cursor-pointer"></i></span>
-                            <span className="flex justify-between items-center"><p>Email: <span className="text-gray-300">johndoe@gmail.com</span></p> <i className="fa fa-edit cursor-pointer"></i></span>
-                            <span className="flex justify-between items-center"><p><i className="fa fa-clock"></i> Total Read Time: <span className="text-gray-300">70hrs</span></p></span>
-                            <span className="flex justify-between items-center"><p><i className="fas fa-wand-magic-sparkles"></i> Interests: <span className="text-gray-300">Technolgy, Storybooks, Novel, Science</span></p> <i className="fa fa-edit"></i></span>
-                            <span className="flex justify-between items-center"><p><i className="fas fa-book"></i> Your Uploads:<span className="text-gray-300"> Great Lion, Spears, Timberland</span></p> <i className="fa fa-edit"></i></span>
+                        {/* Tabs */}
+                        <div className="mt-6">
+                            <Tabs tabs={['Account', 'Reading Stats', 'Interests', 'Uploads']} activeTab={activeTab} onTabChange={setActiveTab} />
+
+                            {/* Tab Content */}
+                            {activeTab === 0 && (
+                                <div className="space-y-4">
+                                    <div className="flex justify-between items-center p-4 rounded-lg bg-[#31303e] border border-gray-700">
+                                        <div><span className="text-gray-400">Name:</span> <span className="text-gray-50 ml-2">John Doe</span></div>
+                                        <i className="fa fa-edit text-purple-400 cursor-pointer"></i>
+                                    </div>
+                                    <div className="flex justify-between items-center p-4 rounded-lg bg-[#31303e] border border-gray-700">
+                                        <div><span className="text-gray-400">Email:</span> <span className="text-gray-50 ml-2">johndoe@gmail.com</span></div>
+                                        <i className="fa fa-edit text-purple-400 cursor-pointer"></i>
+                                    </div>
+                                    <div className="flex justify-between items-center p-4 rounded-lg bg-[#31303e] border border-gray-700">
+                                        <div><span className="text-gray-400">Password:</span> <span className="text-gray-50 ml-2">••••••••</span></div>
+                                        <i className="fa fa-edit text-purple-400 cursor-pointer"></i>
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeTab === 1 && (
+                                <div className="grid grid-cols-3 max-sm:grid-cols-1 gap-4">
+                                    <div className="p-6 rounded-lg bg-[#31303e] border border-gray-700 text-center">
+                                        <i className="fa fa-book-open text-3xl text-purple-400"></i>
+                                        <h3 className="text-2xl font-bold text-gray-50 mt-3">45</h3>
+                                        <p className="text-gray-400 text-sm">Books Read</p>
+                                    </div>
+                                    <div className="p-6 rounded-lg bg-[#31303e] border border-gray-700 text-center">
+                                        <i className="fa fa-clock text-3xl text-purple-400"></i>
+                                        <h3 className="text-2xl font-bold text-gray-50 mt-3">70hrs</h3>
+                                        <p className="text-gray-400 text-sm">Reading Time</p>
+                                    </div>
+                                    <div className="p-6 rounded-lg bg-[#31303e] border border-gray-700 text-center">
+                                        <i className="fa fa-star text-3xl text-purple-400"></i>
+                                        <h3 className="text-2xl font-bold text-gray-50 mt-3">12</h3>
+                                        <p className="text-gray-400 text-sm">Reviews Written</p>
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeTab === 2 && (
+                                <div className="p-4 rounded-lg bg-[#31303e] border border-gray-700">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <p className="text-gray-400 mb-3">Your Interests:</p>
+                                            <div className="flex flex-wrap gap-2">
+                                                {['Technology', 'Storybooks', 'Novel', 'Science'].map((interest, i) => (
+                                                    <span key={i} className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">{interest}</span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <i className="fa fa-edit text-purple-400 cursor-pointer"></i>
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeTab === 3 && (
+                                <div className="p-4 rounded-lg bg-[#31303e] border border-gray-700">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <p className="text-gray-400 mb-3">Your Uploads:</p>
+                                            <ul className="space-y-2">
+                                                {['Great Lion', 'Spears', 'Timberland'].map((book, i) => (
+                                                    <li key={i} className="text-gray-50 flex items-center gap-2">
+                                                        <i className="fa fa-book text-purple-400"></i> {book}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                        <i className="fa fa-plus text-purple-400 cursor-pointer"></i>
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                        <span className="w-full flex justify-center items-center mt-10">
-                            <button className="text-gray-50 bg-red-400 px-5 py-3 rounded-2xl cursor-pointer hover:text-red-400 hover:bg-gray-50 transition duration-300"><i className="fa fa-power-off"></i> Logout</button>
-                            </span>
                     </div>
                 </div>
             </div>
