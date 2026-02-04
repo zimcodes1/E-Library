@@ -9,7 +9,7 @@ const UserProfile = () => {
     return (
         <div className="w-full flex justify-end items-center bgImage min-h-dvh pb-10">
             <SideMenu />
-            <div className="w-6/7 max-sm:w-full h-dvh flex flex-col px-10 max-sm:p-3 pt-5 relative">
+            <div className="w-6/7 max-sm:w-full h-dvh flex flex-col px-10 max-sm:p-3 pt-5 relative max-sm:pb-35">
                 <div className="w-full h-full flex items-center justify-center flex-col">
                     <div className="w-full max-w-5xl h-9/10 max-[900px]:h-fit rounded-2xl bg-[#4857605a] p-8 max-sm:p-4 border border-gray-700">
                         {/* Profile Header */}
