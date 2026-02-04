@@ -14,7 +14,7 @@ function About() {
     }, [])
 
     return (
-        <div className="w-full h-fit max-sm:px-5 max-[900px]:px-10 px-20 bgImage pt-5 pb-10">
+        <div className="w-full h-fit max-sm:px-5 max-[900px]:px-10 max-sm:pt-20 px-20 bgImage pt-5 pb-10">
             <TopMenu />
             <AboutHero />
             <Mission />
