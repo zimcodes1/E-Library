@@ -13,6 +13,7 @@ import UserProfile from './pages/Profile';
 import Lost from './pages/Lost';
 import ReadBook from './pages/ReadBook';
 import BookDetails from './pages/BookDetails';
+import About from './pages/About';
 
 const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
   { path: '/profile', element: <UserProfile /> },
   { path: '/reading', element: <ReadBook /> },
   {path:'/bookdetails', element: <BookDetails/>},
+  { path: '/about', element: <About /> },
   { path: '*', element: <Lost /> },
 ]
 )

@@ -17,7 +17,7 @@ function TopMenu() {
             <span className="max-sm:hidden">
                 <Link to="/" className="text-gray-400 text-sm p-2 mx-2">Home</Link>
                 <Link to="#" className="text-gray-400 text-sm p-2 mx-2">Search</Link>
-                <Link to="#" className="text-gray-400 text-sm p-2 mx-2">About</Link>
+                <Link to="/about" className="text-gray-400 text-sm p-2 mx-2">About</Link>
                 <Link to="/login"><Button text="Sign In"></Button></Link>
             </span>
             <span className="relative hidden max-sm:flex">
@@ -25,7 +25,7 @@ function TopMenu() {
                 <div className={`${activeState} flex-col overflow-hidden w-25 h-fit rounded-2xl bg-[#31303e] border border-gray-700 absolute top-7 right-0`}>
                     <span className="flex w-full h-10 justify-start items-center hover:bg-[#413f52]"><Link to="/" className="text-gray-300 text-sm p-2 mx-2">Home</Link></span>
                     <span className="flex w-full h-10 justify-start items-center hover:bg-[#413f52]"><Link to="#" className="text-gray-300 text-sm p-2 mx-2">Search</Link></span>
-                    <span className="flex w-full h-10 justify-start items-center hover:bg-[#413f52]"><Link to="#" className="text-gray-300 text-sm p-2 mx-2">About</Link></span>
+                    <span className="flex w-full h-10 justify-start items-center hover:bg-[#413f52]"><Link to="/about" className="text-gray-300 text-sm p-2 mx-2">About</Link></span>
                     <span className="flex w-full h-10 justify-start items-center hover:bg-[#413f52]"><Link to="/login" className="text-gray-300 text-sm p-2 mx-2">Sign In</Link></span>
                 </div>
             </span>
