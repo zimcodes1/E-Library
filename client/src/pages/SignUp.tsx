@@ -49,15 +49,22 @@ function SignUp() {
                                 <label className="px-2 text-xs text-gray-400"> Female</label>
                             </span>
                         </span>
-                        <p className="text-gray-400 mt-2"><i className="fa fa-magic-wand-sparkles"></i> Select Interests</p>
-                        <span className="p-2 flex flex-wrap gap-1 w-full justify-start items-center">
-                            {selectedInterests.map((value, index) => {
-                                return (
-                                    <p key={index} className="flex h-9 w-fit px-4 rounded-4xl bg-[#4857605a] justify-center items-center border border-gray-700 shadow cursor-pointer text-gray-400 text-xs">{value}</p>
-                                )
-                            })}
-                            <i className="fa fa-plus-square text-2xl text-gray-300 cursor-pointer" onClick={() => { setActiveState('flex') }}></i>
-                        </span>
+                        <p className="text-gray-400 mt-4 text-sm"><i className="fa fa-magic-wand-sparkles"></i> Select Interests</p>
+                        <div className="p-3 flex flex-wrap gap-2 w-full justify-start items-center min-h-16 rounded-lg bg-[#4857602f] border border-gray-800 mt-2">
+                            {selectedInterests.length === 0 ? (
+                                <p className="text-gray-500 text-xs italic">No interests selected yet...</p>
+                            ) : (
+                                selectedInterests.map((value, index) => (
+                                    <span key={index} className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-xs flex items-center gap-2">
+                                        {value}
+                                        <i onClick={() => setSelectedInterests(selectedInterests.filter((_, i) => i !== index))} className="fa fa-times cursor-pointer hover:text-purple-100"></i>
+                                    </span>
+                                ))
+                            )}
+                            <button type="button" onClick={() => { setActiveState('flex') }} className="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition flex items-center justify-center">
+                                <i className="fa fa-plus"></i>
+                            </button>
+                        </div>
                         <span className="w-full flex justify-between items-center mt-7">
                             <Button text="Create Account" styles="w-fit rounded-md text-xs px-5.5 py-2.5 bg-linear-to-r from-purple-600 to-purple-400 text-gray-50 border-none"></Button>
                             <span className="flex justify-between items-center">

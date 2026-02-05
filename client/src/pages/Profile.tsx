@@ -1,10 +1,13 @@
 import SideMenu from "../components/SideMenu"
 import { useEffect, useState } from "react"
 import Tabs from "../components/ui/Tabs"
+import InterestsModal from "../components/ui/InterestModal"
 
 const UserProfile = () => {
     useEffect(() => { document.title = 'Profile | Libronet' }, [])
     const [activeTab, setActiveTab] = useState(0)
+    const [showModal, setShowModal] = useState(false)
+    const [interests, setInterests] = useState(['Technology', 'Storybooks', 'Novel', 'Science'])
 
     return (
         <div className="w-full flex justify-end items-center bgImage overflow-clip min-h-dvh pb-10 max-sm:pb-0">
@@ -78,12 +81,12 @@ const UserProfile = () => {
                                         <div>
                                             <p className="text-gray-400 mb-3">Your Interests:</p>
                                             <div className="flex flex-wrap gap-2">
-                                                {['Technology', 'Storybooks', 'Novel', 'Science'].map((interest, i) => (
+                                                {interests.map((interest, i) => (
                                                     <span key={i} className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">{interest}</span>
                                                 ))}
                                             </div>
                                         </div>
-                                        <i className="fa fa-edit text-purple-400 cursor-pointer"></i>
+                                        <i onClick={() => setShowModal(true)} className="fa fa-edit text-purple-400 cursor-pointer"></i>
                                     </div>
                                 </div>
                             )}
@@ -109,6 +112,11 @@ const UserProfile = () => {
                     </div>
                 </div>
             </div>
+            {showModal && (
+                <div className="w-full h-full flex justify-center items-center bg-[#48576019] backdrop-blur-2xl fixed z-50 top-0 left-0">
+                    <InterestsModal onClose={() => setShowModal(false)} setInterests={setInterests} />
+                </div>
+            )}
         </div>
     )
 }

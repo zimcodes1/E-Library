@@ -16,33 +16,28 @@ function Interest({ InterestName, onClick, isSelected }: { InterestName: string,
 }
 
 const InterestsModal = ({onClose, setInterests}:{onClose:()=>void, setInterests:React.Dispatch<React.SetStateAction<string[]>>}) => {
-    // 1. Data source for all possible interests
     const availableOptions = ["Technology", "Science", "Art", "Music", "Cooking", "Gaming"];
-
-    // 2. State to track which ones the user has clicked
     const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
 
-    // 3. Logic to add an interest (and prevent duplicates)
     const toggleInterest = (name: string) => {
         if (!selectedInterests.includes(name)) {
             setSelectedInterests([...selectedInterests, name]);
             setInterests([...selectedInterests, name])
         } else {
-            // Optional: Remove if clicked again
             setSelectedInterests(selectedInterests.filter(i => i !== name));
             setInterests(selectedInterests.filter(i => i !== name))
         }
     };
 
     return (
-            <div className="w-100 h-fit max-sm:w-9/10 bg-[#0d0f21] border border-gray-600 text-gray-200 rounded-2xl shadow-md shadow-[#0d0a1a6f] py-10 px-5 flex flex-col relative">
-                <i onClick={onClose} className="fa fa-close text-xl text-gray-50 absolute top-5 right-5 cursor-pointer"></i>
-                <h2 className="text-2xl font-semibold text-center">
-                    <i className="fa fa-magic-wand-sparkles"></i> Interests
+            <div className="w-100 h-fit max-sm:w-9/10 bg-[#1a1b2e] border border-purple-500/30 text-gray-200 rounded-2xl shadow-2xl py-8 px-6 flex flex-col relative">
+                <i onClick={onClose} className="fa fa-close text-xl text-gray-400 hover:text-gray-50 absolute top-4 right-4 cursor-pointer transition"></i>
+                <h2 className="text-3xl max-sm:text-2xl font-bold gradient text-center">
+                    <i className="fa fa-magic-wand-sparkles"></i> Your Interests
                 </h2>
-                <p className="text-sm text-gray-300 mt-2 text-center">Click on any interest to select it</p>
-                {/* Available Pool */}
-                <div className="w-full h-fit mt-5 flex justify-start flex-wrap gap-2">
+                <p className="text-sm text-gray-400 mt-3 text-center">Select topics you're interested in</p>
+                
+                <div className="w-full h-fit mt-6 flex justify-center flex-wrap gap-3">
                     {availableOptions.map((item) => (
                         <Interest
                             key={item}
@@ -53,23 +48,21 @@ const InterestsModal = ({onClose, setInterests}:{onClose:()=>void, setInterests:
                     ))}
                 </div>
 
-                <p className="text-sm text-gray-300 mt-7 text-center">Selected Interests</p>
+                {selectedInterests.length > 0 && (
+                    <div className="w-full mt-6 p-4 rounded-xl bg-[#0d0f21] border border-gray-700">
+                        <p className="text-sm text-gray-400 mb-3 text-center">Selected ({selectedInterests.length})</p>
+                        <div className="flex justify-center flex-wrap gap-2">
+                            {selectedInterests.map((item) => (
+                                <span key={item} className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm flex items-center gap-2">
+                                    {item}
+                                    <i onClick={() => toggleInterest(item)} className="fa fa-times cursor-pointer hover:text-purple-100"></i>
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                )}
 
-                {/* Selected Area - React renders this based on the state array */}
-                <div className="w-full h-fit mt-5 flex justify-start flex-wrap gap-2 min-h-12.5 border-t border-gray-800 pt-4">
-                    {selectedInterests.length === 0 && (
-                        <p className="text-gray-500 italic text-xs">No interests selected yet...</p>
-                    )}
-                    {selectedInterests.map((item) => (
-                        <Interest
-                            key={item}
-                            InterestName={item}
-                            onClick={() => toggleInterest(item)}
-                            isSelected={true}
-                        />
-                    ))}
-                </div>
-               <Button text='Submit Selection' styles='mt-10' onClick={()=>{onClose()}}></Button>
+               <Button text='Save Interests' styles='mt-6' onClick={()=>{onClose()}}></Button>
             </div>
     );
 }
