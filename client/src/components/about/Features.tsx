@@ -6,7 +6,7 @@ interface FeatureProps {
 
 function FeatureCard({ icon, title, description }: FeatureProps) {
     return (
-        <div className="w-full h-fit p-6 rounded-2xl bg-[#4857605a] border border-gray-700 flex flex-col items-center text-center">
+        <div className="w-full h-45 max-sm:h-fit p-6 rounded-2xl bg-[#4857605a] border border-gray-700 flex flex-col items-center text-center">
             <i className={`fa ${icon} text-4xl gradient mb-4`}></i>
             <h3 className="text-xl font-semibold text-gray-50">{title}</h3>
             <p className="text-gray-300 text-sm mt-3">{description}</p>

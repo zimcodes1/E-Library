@@ -35,7 +35,7 @@ function BookDetails() {
                             </div>
                             <div className="w-1/5 max-sm:w-full max-sm:h-fit h-full flex justify-end max-sm:justify-between max-sm:mt-2 items-end relative">
                                 <i className="fa fa-bookmark text-2xl text-gray-400 absolute max-sm:static top-0 right-0"></i>
-                                <button className="text-gray-50 font-semibold bg-red-400 px-4 py-2 rounded-lg cursor-pointer hover:text-red-400 hover:bg-gray-50 transition duration-300">Read Now</button>
+                                <button className="text-gray-50 font-semibold bg-purple-600 px-4 py-2 rounded-lg cursor-pointer hover:text-purple-600 hover:bg-gray-50 transition duration-300">Read Now</button>
                             </div>
 
                         </div>

@@ -8,13 +8,13 @@ import truncate from "../truncateText";
 
 function Contribution() {
   return (
-    <div className="h-50 max-sm:mt-2 w-fit max-sm:w-[32.5%] flex justify-between flex-col">
+    <div className="h-50 max-sm:mt-2 w-fit max-sm:w-[49%] flex justify-between flex-col">
       <BookItem bookImage="/images/books/energy_hacks.png" customWidth="w-full" bookDetails={{ title: 'Top 10 Energy Hacks', author: 'Jane Doe', year: 2010, rating: 2.9 }}></BookItem>
-      <span className="flex h-fit py-1 w-full px-1 rounded-4xl bg-[#4857605a] justify-between items-center border border-gray-700 shadow cursor-pointer">
+      <span className="flex h-fit py-1 w-full px-1 rounded-4xl bg-[#4857605a] items-center border border-gray-700 shadow cursor-pointer">
         <span className="w-8 h-8 rounded-full overflow-hidden">
           <img src="/images/defaultUser.jpg" alt="User" />
         </span>
-        <p className="text-xs text-gray-200">{truncate('Jane Doe', 15)}</p>
+        <p className="text-sm font-semibold ml-2 text-gray-200">{truncate('Jane Doe', 15)}</p>
       </span>
     </div>
   )

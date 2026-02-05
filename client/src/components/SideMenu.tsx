@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom"; // Change Link to NavLink
+import { NavLink, Link } from "react-router-dom"; // Change Link to NavLink
 
 function SideMenu() {
     // Define a helper to handle the active styling logic
@@ -45,9 +45,9 @@ function SideMenu() {
             </span>
 
             <span className="flex flex-col h-fit w-full text-gray-400 text-xs px-2 mt-auto mb-5 max-sm:hidden">
-                <a href="#" className="hover:underline">About</a>
-                <a href="#" className="my-2 hover:underline">Contact</a>
-                <a href="#" className="hover:underline">Terms & Conditions</a>
+                <Link to="/about" className="hover:underline">About</Link>
+                <Link to="#" className="my-2 hover:underline">Contact</Link>
+                <Link to="#" className="hover:underline">Terms & Conditions</Link>
             </span>
         </div>
     )
