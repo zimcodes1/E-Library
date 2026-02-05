@@ -7,9 +7,9 @@ const UserProfile = () => {
     const [activeTab, setActiveTab] = useState(0)
 
     return (
-        <div className="w-full flex justify-end items-center bgImage min-h-dvh pb-10">
+        <div className="w-full flex justify-end items-center bgImage min-h-dvh pb-10 max-sm:pb-0">
             <SideMenu />
-            <div className="w-6/7 max-sm:w-full h-dvh flex flex-col px-10 max-sm:p-3 pt-5 relative max-sm:pb-35">
+            <div className="w-6/7 max-sm:w-full h-dvh max-sm:h-fit flex flex-col px-10 max-sm:p-3 pt-5 pb-20 max-sm:pb-28 relative">
                 <div className="w-full h-full flex items-center justify-center flex-col">
                     <div className="w-full max-w-5xl h-9/10 max-[900px]:h-fit rounded-2xl bg-[#4857605a] p-8 max-sm:p-4 border border-gray-700">
                         {/* Profile Header */}
@@ -31,7 +31,7 @@ const UserProfile = () => {
                         </div>
 
                         {/* Tabs */}
-                        <div className="mt-6">
+                        <div className="mt-6 max-sm:mt-3">
                             <Tabs tabs={['Account', 'Reading Stats', 'Interests', 'Uploads']} activeTab={activeTab} onTabChange={setActiveTab} />
 
                             {/* Tab Content */}

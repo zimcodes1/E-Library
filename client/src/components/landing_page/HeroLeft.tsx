@@ -1,4 +1,5 @@
 import Button from "../ui/Button";
+import {Link} from 'react-router-dom'
 function HeroLeft() {
     return (
         <div className="w-full py-10 mt-20 max-sm:mt-10 max-sm:w-full h-full max-sm:h-fit max-sm:pt-15 flex flex-col justify-center items-center">
@@ -13,7 +14,7 @@ function HeroLeft() {
             {/* Get Started Button */}
             <span className="flex justify-between items-center gap-2 mt-5">
                 <Button text="Get Started" styles="max-sm:mx-auto"></Button>
-                <Button text="Guest" styles="bg-linear-to-r from-purple-600 to-purple-400 text-gray-50 border-none"></Button>
+                <Link to='/home'><Button text="Guest" styles="bg-linear-to-r from-purple-600 to-purple-400 text-gray-50 border-none"></Button></Link>
             </span>
 
         </div>
