@@ -7,7 +7,7 @@ const UserProfile = () => {
     useEffect(() => { document.title = 'Profile | Libronet' }, [])
     const [activeTab, setActiveTab] = useState(0)
     const [showModal, setShowModal] = useState(false)
-    const [interests, setInterests] = useState(['Technology', 'Storybooks', 'Novel', 'Science'])
+    const [interests, setInterests] = useState(['Technology', 'Science', 'Reading'])
 
     return (
         <div className="w-full flex justify-end items-center bgImage overflow-clip min-h-dvh pb-10 max-sm:pb-0">
@@ -114,7 +114,7 @@ const UserProfile = () => {
             </div>
             {showModal && (
                 <div className="w-full h-full flex justify-center items-center bg-[#48576019] backdrop-blur-2xl fixed z-50 top-0 left-0">
-                    <InterestsModal onClose={() => setShowModal(false)} setInterests={setInterests} />
+                    <InterestsModal onClose={() => setShowModal(false)} setInterests={setInterests} currentInterests={interests} />
                 </div>
             )}
         </div>

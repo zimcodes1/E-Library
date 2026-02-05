@@ -82,7 +82,7 @@ function SignUp() {
                 </div>
             </div>
             <div className={`w-full h-full ${activeState} justify-center items-center bg-[#48576019] backdrop-blur-2xl fixed z-50"`}>
-                <InterestsModal onClose={() => { setActiveState('hidden') }} setInterests={setSelectedInterests}></InterestsModal>
+                <InterestsModal onClose={() => { setActiveState('hidden') }} setInterests={setSelectedInterests} currentInterests={selectedInterests}></InterestsModal>
             </div>
             </div>
     )

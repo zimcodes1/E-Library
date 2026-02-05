@@ -15,18 +15,21 @@ function Interest({ InterestName, onClick, isSelected }: { InterestName: string,
     );
 }
 
-const InterestsModal = ({onClose, setInterests}:{onClose:()=>void, setInterests:React.Dispatch<React.SetStateAction<string[]>>}) => {
-    const availableOptions = ["Technology", "Science", "Art", "Music", "Cooking", "Gaming"];
-    const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+const InterestsModal = ({onClose, setInterests, currentInterests}:{onClose:()=>void, setInterests:React.Dispatch<React.SetStateAction<string[]>>, currentInterests: string[]}) => {
+    const availableOptions = ["Technology", "Science", "Art", "Music", "Cooking", "Gaming", "Sports", "Travel", "Photography", "Reading"];
+    const [selectedInterests, setSelectedInterests] = useState<string[]>(currentInterests);
 
     const toggleInterest = (name: string) => {
         if (!selectedInterests.includes(name)) {
             setSelectedInterests([...selectedInterests, name]);
-            setInterests([...selectedInterests, name])
         } else {
             setSelectedInterests(selectedInterests.filter(i => i !== name));
-            setInterests(selectedInterests.filter(i => i !== name))
         }
+    };
+
+    const handleSave = () => {
+        setInterests(selectedInterests);
+        onClose();
     };
 
     return (
@@ -62,7 +65,7 @@ const InterestsModal = ({onClose, setInterests}:{onClose:()=>void, setInterests:
                     </div>
                 )}
 
-               <Button text='Save Interests' styles='mt-6' onClick={()=>{onClose()}}></Button>
+               <Button text='Save Interests' styles='mt-6' onClick={handleSave}></Button>
             </div>
     );
 }
