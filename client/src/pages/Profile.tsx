@@ -7,7 +7,7 @@ const UserProfile = () => {
     const [activeTab, setActiveTab] = useState(0)
 
     return (
-        <div className="w-full flex justify-end items-center bgImage min-h-dvh pb-10 max-sm:pb-0">
+        <div className="w-full flex justify-end items-center bgImage overflow-clip min-h-dvh pb-10 max-sm:pb-0">
             <SideMenu />
             <div className="w-6/7 max-sm:w-full h-dvh max-sm:h-fit flex flex-col px-10 max-sm:p-3 pt-5 pb-20 max-sm:pb-28 relative">
                 <div className="w-full h-full flex items-center justify-center flex-col">
@@ -15,7 +15,7 @@ const UserProfile = () => {
                         {/* Profile Header */}
                         <div className="flex max-sm:flex-col items-center gap-6 pb-6 border-b border-gray-700">
                             <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-purple-500">
-                                <img src="/images/user.jpg" alt="User" className="w-full h-full object-cover" />
+                                <img src="/images/defaultUser.jpg" alt="User" className="w-full h-full object-cover" />
                             </div>
                             <div className="flex-1 max-sm:text-center">
                                 <h1 className="text-2xl font-bold text-gray-50">John Doe</h1>
