@@ -8,13 +8,13 @@ import truncate from "../truncateText";
 
 function Contribution() {
   return (
-    <div className="h-50 w-fit max-sm:w-[32.5%] flex justify-between flex-col">
+    <div className="h-50 max-sm:mt-2 w-fit max-sm:w-[32.5%] flex justify-between flex-col">
       <BookItem bookImage="/images/books/energy_hacks.png" customWidth="w-full" bookDetails={{ title: 'Top 10 Energy Hacks', author: 'Jane Doe', year: 2010, rating: 2.9 }}></BookItem>
-      <span className="flex h-9 w-full p-2 rounded-4xl bg-[#4857605a] justify-center items-center border border-gray-700 shadow cursor-pointer">
+      <span className="flex h-fit py-1 w-full px-1 rounded-4xl bg-[#4857605a] justify-between items-center border border-gray-700 shadow cursor-pointer">
         <span className="w-8 h-8 rounded-full overflow-hidden">
-          <img src="/images/user.jpg" alt="User" />
+          <img src="/images/defaultUser.jpg" alt="User" />
         </span>
-        <p className="text-xs text-gray-200 ml-2">{truncate('Jane Doe', 15)}</p>
+        <p className="text-xs text-gray-200">{truncate('Jane Doe', 15)}</p>
       </span>
     </div>
   )
@@ -79,7 +79,7 @@ function UploadPage() {
             <h1 className="text-4xl text-gray-200 font-bold font-[Super]">Your <span className=" gradient">Contributions</span></h1>
             <h1 className="text-4xl text-gray-200 font-bold font-[Super]">Help Other to Learn 😇</h1>
             <p className="text-sm mt-5 text-gray-300">Recent Contributions</p>
-            <div className="w-full h-fit mt-5 flex max-sm:flex-wrap justify-evenly max-sm:gap-1 items-center ">
+            <div className="w-full h-fit mt-3 flex max-sm:flex-wrap justify-evenly max-sm:gap-1 items-center ">
               <Contribution></Contribution>
               <Contribution></Contribution>
               <Contribution></Contribution>
