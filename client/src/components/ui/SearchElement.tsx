@@ -1,4 +1,4 @@
-import truncate from "../../truncateText"
+import truncate from "../../utils/truncateText"
 const SearchElement = ({ bookImage, bookDetails }: { bookImage: string, bookDetails?: { title?: string, author?: string, rating?: number, year?:number, category?:string } }) => {
     return (
         <div className="flex w-full h-25 bg-[#4857605a] border border-gray-700 mt-2 py-2 px-2 rounded-2xl">

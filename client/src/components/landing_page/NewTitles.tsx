@@ -1,4 +1,4 @@
-import truncate from "../../truncateText"
+import truncate from "../../utils/truncateText"
 import { Link } from "react-router-dom"
 import { motion } from 'framer-motion'
 

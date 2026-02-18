@@ -4,7 +4,7 @@ import CustomSelect from "../components/ui/CustomSelect";
 import { useState, useEffect } from "react";
 import Button from "../components/ui/Button";
 import BookItem from "../components/BookItem";
-import truncate from "../truncateText";
+import truncate from "../utils/truncateText";
 
 function Contribution() {
   return (

@@ -1,4 +1,4 @@
-import truncate from "../truncateText"
+import truncate from "../utils/truncateText"
 
 
 function BookItem({bookImage, bookDetails, customWidth }: { bookImage: string, bookDetails?: { title?: string, author?: string, rating?: number, year?:number }, customWidth?:string}) {
