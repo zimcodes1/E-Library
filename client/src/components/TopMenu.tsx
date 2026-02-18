@@ -15,9 +15,9 @@ function TopMenu() {
                 <h1 className="text-xl font-[Super] gradient">Libronet</h1>
             </span>
             <span className="max-sm:hidden">
-                <Link to="/" className="text-gray-400 text-sm p-2 mx-2">Home</Link>
-                <Link to="#" className="text-gray-400 text-sm p-2 mx-2">Search</Link>
-                <Link to="/about" className="text-gray-400 text-sm p-2 mx-2">About</Link>
+                <Link to="/" className="text-gray-400 text-sm p-2 mx-2 hover:text-purple-400 transition-colors duration-300">Home</Link>
+                <Link to="#" className="text-gray-400 text-sm p-2 mx-2 hover:text-purple-400 transition-colors duration-300">Search</Link>
+                <Link to="/about" className="text-gray-400 text-sm p-2 mx-2 hover:text-purple-400 transition-colors duration-300">About</Link>
                 <Link to="/login"><Button text="Sign In"></Button></Link>
             </span>
             <span className="relative hidden max-sm:flex">
