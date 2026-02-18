@@ -1,8 +1,15 @@
 import Button from "../ui/Button";
 import {Link} from 'react-router-dom'
+import { motion } from 'framer-motion'
+
 function HeroLeft() {
     return (
-        <div className="w-1/2 max-[900px]:w-full py-10 max-sm:py-5 flex flex-col justify-center max-[900px]:items-center">
+        <motion.div 
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="w-1/2 max-[900px]:w-full py-10 max-sm:py-5 flex flex-col justify-center max-[900px]:items-center"
+        >
             <h1 className="font-[Super] text-6xl max-[900px]:text-5xl max-sm:text-4xl max-[900px]:text-center text-blue-50 font-bold leading-tight">
                 Experience the Freedom of a <span className="gradient">Boundless</span> Library
             </h1>
@@ -23,7 +30,7 @@ function HeroLeft() {
                     <Button text="Browse as Guest" styles="bg-gradient-to-r from-purple-600 to-purple-400 text-gray-50 border-none px-8 py-3 text-base hover:shadow-lg hover:shadow-purple-500/50" />
                 </Link>
             </div>
-        </div>
+        </motion.div>
     )
 }
 

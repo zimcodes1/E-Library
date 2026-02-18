@@ -1,5 +1,6 @@
 import truncate from "../../truncateText"
 import { Link } from "react-router-dom"
+import { motion } from 'framer-motion'
 
 function NewTitleItem({ bookImage, bookDetails }: { bookImage: string, bookDetails?: { title?: string, author?: string, rating?: number, year?:number } }) {
     let bookTitle = bookDetails?.title
@@ -19,7 +20,13 @@ function NewTitleItem({ bookImage, bookDetails }: { bookImage: string, bookDetai
 
 function NewTitles() {
     return (
-        <div className="flex flex-col justify-between items-center mt-20 max-[900px]:mt-10 max-sm:mt-5">
+        <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col justify-between items-center mt-20 max-[900px]:mt-10 max-sm:mt-5"
+        >
             <h1 className="text-3xl max-[900px]:text-xl max-sm:text-xl text-gray-400 font-semibold">New Titles</h1>
             <div className="flex max-sm:flex-col max-[900px]:flex-wrap gap-5 max-[900px]:gap-0 mt-20 max-sm:mt-5 max-[900px]:mt-10 justify-evenly items-center w-full h-fit max-sm:py-5">
                 <NewTitleItem bookImage="/images/books/google_adsense.png" bookDetails={{ title: 'Google Adsense explained', author: 'Jane Doe', year: 2015, rating: 3.9 }}></NewTitleItem>
@@ -28,7 +35,7 @@ function NewTitles() {
                 <NewTitleItem bookImage="/images/books/google_adsense.png" bookDetails={{ title: 'Google Adsense explained', author: 'Jane Doe', year: 2015, rating: 3.9 }}></NewTitleItem>
             </div>
             <Link to='/home' className="text-gray-400 text-sm mt-5">View More</Link>
-        </div>
+        </motion.div>
     )
 }
 
