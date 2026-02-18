@@ -64,8 +64,9 @@ function HomePage() {
                             <h3>Recommended for you</h3>
                             <p className="cursor-pointer text-sm" onClick={() => { (containerHeight[0] == 'h-44') ? setContainerHeight(['h-fit', 'Show Less', 'fa-minus']) : setContainerHeight(['h-44', 'Show More', 'fa-plus']) }}> <i className={`fa ${containerHeight[2]}`}></i> {containerHeight[1]}</p>
                         </span>
+                        {/* Books Grid */}
                         <div className="w-full h-fit mt-2 flex flex-col">
-                            <div className={`w-full ${containerHeight[0]} overflow-hidden flex justify-start flex-wrap gap-3 max-[900px]:gap-2 max-sm:gap-1 transition-all duration-300`}>
+                            <div className={`w-full ${containerHeight[0]} overflow-hidden flex justify-evenly flex-wrap gap-3 max-[900px]:gap-2 max-sm:gap-1 transition-all duration-300`}>
                                 <BookItem bookImage="/images/books/audience.png" bookDetails={{ title: 'Influencing Marketing', author: 'John Doe', year: 2000, rating: 4.3 }}></BookItem>
                                 <BookItem bookImage="/images/books/google_adsense.png" bookDetails={{ title: 'Google Adsense explained', author: 'Jane Doe', year: 2015, rating: 3.9 }}></BookItem>
                                 <BookItem bookImage="/images/books/rc_cars.png" bookDetails={{ title: 'Your Guide To RC Cars', author: 'David Doe', year: 2025, rating: 4.9 }}></BookItem>
@@ -83,8 +84,6 @@ function HomePage() {
                                 <BookItem bookImage="/images/books/books.jpeg" bookDetails={{ title: 'Two Boy Gold Miners', author: 'Azimeh Doe', year: 2005, rating: 3.9 }}></BookItem>
                                 <BookItem bookImage="/images/books/energy_hacks.png" bookDetails={{ title: 'Top 10 Energy Hacks', author: 'Jane Doe', year: 2010, rating: 2.9 }}></BookItem>
                                 <BookItem bookImage="/images/books/audience.png" bookDetails={{ title: 'Influencing Marketing', author: 'John Doe', year: 2000, rating: 4.3 }}></BookItem>
-                                <BookItem bookImage="/images/books/books.jpeg" bookDetails={{ title: 'Two Boy Gold Miners', author: 'Azimeh Doe', year: 2005, rating: 3.9 }}></BookItem>
-                                <BookItem bookImage="/images/books/energy_hacks.png" bookDetails={{ title: 'Top 10 Energy Hacks', author: 'Jane Doe', year: 2010, rating: 2.9 }}></BookItem>
                             </div>
                         </div>
 
