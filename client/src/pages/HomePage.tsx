@@ -32,9 +32,16 @@ function HomePage() {
 
     //New Arrival Books
     const arrivalBooks = [
-        { id: 1, bookImage: "/images/books/addict.jpeg" },
-        { id: 2, bookImage: "/images/books/google_adsense.png" },
-        // ... rest of your books
+        { id: 1, bookImage: "/images/books/addict.jpeg", bookDetails: { title: 'Addict', author: 'John Doe', year: 2020, rating: 4.5 } },
+        { id: 2, bookImage: "/images/books/google_adsense.png", bookDetails: { title: 'Google Adsense', author: 'Jane Doe', year: 2015, rating: 3.9 } },
+        { id: 3, bookImage: "/images/books/audience.png", bookDetails: { title: 'Influencing Marketing', author: 'John Doe', year: 2000, rating: 4.3 } },
+        { id: 4, bookImage: "/images/books/rc_cars.png", bookDetails: { title: 'RC Cars Guide', author: 'David Doe', year: 2025, rating: 4.9 } },
+        { id: 5, bookImage: "/images/books/book2.png", bookDetails: { title: 'Web Traffic', author: 'Jane Doe', year: 2021, rating: 3.2 } },
+        { id: 6, bookImage: "/images/books/books.jpeg", bookDetails: { title: 'Gold Miners', author: 'Azimeh Doe', year: 2005, rating: 3.9 } },
+        { id: 7, bookImage: "/images/books/energy_hacks.png", bookDetails: { title: 'Energy Hacks', author: 'Jane Doe', year: 2010, rating: 2.9 } },
+        { id: 8, bookImage: "/images/books/addict.jpeg", bookDetails: { title: 'Addict', author: 'John Doe', year: 2020, rating: 4.5 } },
+        { id: 9, bookImage: "/images/books/google_adsense.png", bookDetails: { title: 'Google Adsense', author: 'Jane Doe', year: 2015, rating: 3.9 } },
+        { id: 10, bookImage: "/images/books/audience.png", bookDetails: { title: 'Influencing Marketing', author: 'John Doe', year: 2000, rating: 4.3 } },
     ];
     return (
         <div className="w-full flex justify-end max-sm:items-start items-center bgImage min-h-screen max-sm:h-fit pb-10">
@@ -46,7 +53,7 @@ function HomePage() {
                 {/* Main Contents */}
                 <div className="w-full h-full flex mt-15 max-[900px]:mt-0 max-sm:mt-3 flex-col">
                     {/* Today's Quote and New arrivals Section */}
-                    <div className="w-full h-40 flex max-sm:h-fit max-sm:flex-col justify-between items-center">
+                    <div className="w-full h-45 flex max-sm:h-fit max-sm:flex-col justify-between items-center">
                         <TodayQuotes quotes={data}></TodayQuotes>
                         {/* New Arrivals */}
                         <NewArrivals books={arrivalBooks}></NewArrivals>
