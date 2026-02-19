@@ -4,10 +4,11 @@ import { type ButtonHTMLAttributes } from "react";
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     text: string;
     styles?: string; // This is your custom prop for Tailwind classes
+    icon?: string;
 }
 
 // 2. Use "rest" parameters (...props) to collect everything else
-function Button({ text, styles, ...props }: ButtonProps) {
+function Button({ text, styles, icon, ...props }: ButtonProps) {
     return (
         <button 
             // 3. Spread the props onto the native element
@@ -17,7 +18,7 @@ function Button({ text, styles, ...props }: ButtonProps) {
                 hover:shadow-md transition duration-500 hover:bg-gray-950 
                 border-gray-50 border-2 hover:text-gray-50 ${styles || ''}`}
         >
-            {text}
+            {text} {(icon)? <i className={`fa ${icon}`}></i> : null}
         </button>
     );
 }
