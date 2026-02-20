@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.conf import settings
 
 
 class Category(models.Model):
@@ -23,3 +24,164 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Book(models.Model):
+    FILE_TYPE_CHOICES = [
+        ('pdf', 'PDF'),
+        ('url', 'URL'),
+    ]
+
+    title = models.CharField(max_length=255)
+    author = models.CharField(max_length=255)
+    description = models.TextField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    cover_image = models.ImageField(upload_to='book_covers/')
+    file = models.FileField(upload_to='books/', blank=True, null=True)
+    file_url = models.URLField(blank=True, null=True)
+    publication_year = models.IntegerField()
+    language = models.CharField(max_length=50, default='English')
+    uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='uploaded_books')
+    upload_date = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    file_type = models.CharField(max_length=10, choices=FILE_TYPE_CHOICES, default='pdf')
+    pages = models.IntegerField(blank=True, null=True)
+    is_published = models.BooleanField(default=True)
+    view_count = models.IntegerField(default=0)
+    download_count = models.IntegerField(default=0)
+    average_rating = models.FloatField(default=0.0)
+    total_reviews = models.IntegerField(default=0)
+    is_featured = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-upload_date']
+
+    def calculate_average_rating(self):
+        reviews = self.review_set.all()
+        if reviews.exists():
+            total = sum(review.rating for review in reviews)
+            self.average_rating = total / reviews.count()
+            self.total_reviews = reviews.count()
+            self.save()
+
+    def increment_views(self):
+        self.view_count += 1
+        self.save(update_fields=['view_count'])
+
+    def increment_downloads(self):
+        self.download_count += 1
+        self.save(update_fields=['download_count'])
+
+    def __str__(self):
+        return self.title
+
+
+class Review(models.Model):
+    RATING_CHOICES = [(i, i) for i in range(1, 6)]
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    rating = models.IntegerField(choices=RATING_CHOICES)
+    title = models.CharField(max_length=255, blank=True)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    helpful_count = models.IntegerField(default=0)
+
+    class Meta:
+        unique_together = ['user', 'book']
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user.username} reviewed {self.book.title}"
+
+
+class Shelve(models.Model):
+    SHELF_TYPE_CHOICES = [
+        ('all', 'All Books'),
+        ('favorite', 'Favorites'),
+        ('bookmark', 'Bookmarks'),
+        ('downloaded', 'Downloaded'),
+    ]
+
+    READING_STATUS_CHOICES = [
+        ('not_started', 'Not Started'),
+        ('reading', 'Reading'),
+        ('completed', 'Completed'),
+    ]
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    shelf_type = models.CharField(max_length=20, choices=SHELF_TYPE_CHOICES)
+    added_date = models.DateTimeField(auto_now_add=True)
+    reading_status = models.CharField(max_length=20, choices=READING_STATUS_CHOICES, default='not_started')
+
+    class Meta:
+        unique_together = ['user', 'book', 'shelf_type']
+        ordering = ['-added_date']
+
+    def __str__(self):
+        return f"{self.user.username}'s {self.book.title} in {self.shelf_type}"
+
+
+class ReadingProgress(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    current_page = models.IntegerField(default=0)
+    total_pages = models.IntegerField()
+    reading_time = models.IntegerField(default=0)
+    started_at = models.DateTimeField(auto_now_add=True)
+    last_read_at = models.DateTimeField(auto_now=True)
+    completed_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ['user', 'book']
+
+    def get_progress_percentage(self):
+        if self.total_pages > 0:
+            return (self.current_page / self.total_pages) * 100
+        return 0
+
+    def mark_as_completed(self):
+        from django.utils import timezone
+        self.completed_at = timezone.now()
+        self.current_page = self.total_pages
+        self.save()
+
+    def __str__(self):
+        return f"{self.user.username} - {self.book.title} ({self.get_progress_percentage():.1f}%)"
+
+
+class BookDownload(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    download_date = models.DateTimeField(auto_now_add=True)
+    download_format = models.CharField(max_length=10, default='pdf')
+
+    class Meta:
+        ordering = ['-download_date']
+
+    def __str__(self):
+        return f"{self.user.username} downloaded {self.book.title}"
+
+
+class Quote(models.Model):
+    text = models.TextField()
+    author = models.CharField(max_length=255)
+    category = models.CharField(max_length=100, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.text[:50] + '...' if len(self.text) > 50 else self.text
+
+    @staticmethod
+    def get_today_quote():
+        import random
+        active_quotes = Quote.objects.filter(is_active=True)
+        if active_quotes.exists():
+            return random.choice(active_quotes)
+        return None
