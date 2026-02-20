@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "./ui/Button";
 import CustomSelect from "./ui/CustomSelect";
+import { getUser, isAuthenticated } from "../utils/auth";
 
 
 //Topmenu for landing page
@@ -34,6 +35,25 @@ function TopMenu() {
 }
 
 export function TopBar() {
+    const [user, setUser] = useState<any>(null);
+    const [currentTime, setCurrentTime] = useState(new Date());
+
+    useEffect(() => {
+        if (isAuthenticated()) {
+            setUser(getUser());
+        }
+        const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+        return () => clearInterval(timer);
+    }, []);
+
+    const formatTime = (date: Date) => {
+        return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+    };
+
+    const formatDate = (date: Date) => {
+        return date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    };
+
     return (
         <div className="w-6/7 max-[900px]:w-8/9 max-[900px]:px-5 max-sm:hidden backdrop-blur-3xl h-15 max-sm:h-10 flex justify-between items-center fixed top-0 right-0 px-10 z-50">
             {/* Search Bar */}
@@ -56,20 +76,20 @@ export function TopBar() {
             <span className="flex h-9 w-fit rounded-4xl bg-[#4857605a] justify-between items-center border border-gray-700 shadow font-[digi]">
                 <span className="text-gray-300 flex justify-between items-center">
                     <i className="fa fa-clock mx-2"></i>
-                    <p>09:00 HRS</p>
+                    <p>{formatTime(currentTime)} HRS</p>
                 </span>
                 <span className="text-gray-300 flex justify-between items-center px-2">
                     <i className="fa fa-calendar mx-2"></i>
-                    <p>31-Dec-2025</p>
+                    <p>{formatDate(currentTime)}</p>
                 </span>
             </span>
             {/* User Profile */}
             <Link to='/profile' className="max-[900px]:hidden">
                 <span className="flex h-9 min-w-25 px-0.5 rounded-4xl bg-[#4857605a] justify-start items-center border border-gray-700 shadow cursor-pointer">
                     <span className="h-8 w-8 rounded-full flex justify-center items-center overflow-hidden">
-                        <img src="/images/defaultUser.jpg" alt="User" className="w-full h-auto" />
+                        <img src={user?.avatar || "/images/defaultUser.jpg"} alt="User" className="w-full h-auto" />
                     </span>
-                    <p className="text-xs ml-2 text-gray-300">Azimeh</p>
+                    <p className="text-xs ml-2 text-gray-300">{user?.username || 'Guest'}</p>
                 </span>
             </Link>
         </div>

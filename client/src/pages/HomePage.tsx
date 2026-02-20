@@ -1,11 +1,13 @@
 import SideMenu from "../components/SideMenu"
 import { TopBar } from "../components/TopMenu"
 import BookItem from "../components/BookItem"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TodayQuotes from "../components/ui/TodayQuote";
 import NewArrivals from "../components/ui/NewArrivals";
+import { getUser, isAuthenticated } from "../utils/auth";
 
 function HomePage() {
+    const [user, setUser] = useState<any>(null);
     let hour = new Date().getHours();
     const [HourTime, setHourTime] = useState(() => {
         if (hour > 11){
@@ -18,6 +20,12 @@ function HomePage() {
     })
     setHourTime
     const [containerHeight, setContainerHeight] = useState(['h-44', 'Show More', 'fa-plus']);
+
+    useEffect(() => {
+        if (isAuthenticated()) {
+            setUser(getUser());
+        }
+    }, []);
     //Quotes data
     interface Quote {
         text: string;
@@ -58,7 +66,9 @@ function HomePage() {
                         {/* New Arrivals */}
                         <NewArrivals books={arrivalBooks}></NewArrivals>
                     </div>
-                    <h1 className="text-2xl max-sm:text-xl font-semibold text-gray-300 mt-3 mb-2">Good {HourTime}</h1>
+                    <h1 className="text-2xl max-sm:text-xl font-semibold text-gray-300 mt-3 mb-2">
+                        Good {HourTime}{user ? `, ${user.username}` : ''}
+                    </h1>
                     <div className="w-full h-150 max-sm:h-fit flex flex-col">
                         <span className="flex justify-between items-center text-gray-500 max-sm:text-sm">
                             <h3>Recommended for you</h3>
