@@ -16,6 +16,7 @@ function SignUp() {
     const [avatarPreview, setAvatarPreview] = useState('/images/user.png');
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,8 +63,10 @@ function SignUp() {
                 email: formData.email,
                 password: formData.password,
             });
-            saveAuth(response.token, response.user);
-            navigate('/');
+            setSuccess(true);
+            setTimeout(() => {
+                navigate('/login');
+            }, 2000);
         } catch (err: any) {
             setError(err.message);
         } finally {
@@ -73,6 +76,12 @@ function SignUp() {
     return (
         // Changed bg-purple-100 to bgImage and h-screen
         <div className="w-full flex justify-center items-center bgImage h-screen max-sm:h-dvh">
+            {success && (
+                <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-green-500/90 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2 animate-fade-in">
+                    <i className="fa fa-check-circle"></i>
+                    <span>Account created successfully! Redirecting to login...</span>
+                </div>
+            )}
             {/* Changed background and border to match Login dark theme */}
             <div className="w-[80%] max-[900px]:w-[60%] max-[900px]:h-200 max-sm:w-full max-sm:h-full max-sm:rounded-none h-[90%] border bg-[#48576019] max-sm:bg-transparent max-sm:border-none border-gray-800 rounded-3xl flex justify-between items-center overflow-hidden p-2">
                 <div className="w-1/2 max-[900px]:w-full h-full flex flex-col items-start max-sm:items-center justify-start pt-10 max-sm:pt-0 pl-20 max-[900px]:pl-0 overflow-scroll no-scrollbar">

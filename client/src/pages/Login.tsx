@@ -11,6 +11,8 @@ function LoginPage() {
     const [formData, setFormData] = useState({ username: '', password: '' });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -21,7 +23,10 @@ function LoginPage() {
         try {
             const response = await login(formData);
             saveAuth(response.token, response.user);
-            navigate('/');
+            setSuccess(true);
+            setTimeout(() => {
+                navigate('/');
+            }, 1500);
         } catch (err: any) {
             setError(err.message);
         } finally {
@@ -30,6 +35,12 @@ function LoginPage() {
     };
     return (
         <div className="w-full flex justify-center items-center bgImage h-screen max-sm:h-dvh">
+            {success && (
+                <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-green-500/90 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2 animate-fade-in">
+                    <i className="fa fa-check-circle"></i>
+                    <span>Login successful! Redirecting...</span>
+                </div>
+            )}
             <div className="w-[80%] max-[900px]:w-[60%] max-[900px]:h-200 max-sm:w-full max-sm:h-full
             max-sm:bg-transparent max-sm:rounded-none max-sm:m-0 max-[900px]:flex-col-reverse h-[90%]
             border bg-[#48576019] border-gray-800 rounded-3xl max-sm:justify-end flex 
@@ -52,14 +63,20 @@ function LoginPage() {
                             required
                             className="h-10 text-gray-300 rounded-lg pl-2 w-full bg-[#4857602f] max-sm:bg-[#48576088] border border-gray-800 focus:ring-0 outline-0 caret-purple-500" 
                         />
-                        <input 
-                            type="password" 
-                            placeholder="Password" 
-                            value={formData.password}
-                            onChange={(e) => setFormData({...formData, password: e.target.value})}
-                            required
-                            className="h-10 text-gray-300 rounded-lg pl-2 w-full mt-4 bg-[#4857602f] max-sm:bg-[#48576088] border border-gray-800 focus:ring-0 outline-0 caret-purple-500" 
-                        />
+                        <div className="relative mt-4">
+                            <input 
+                                type={showPassword ? "text" : "password"} 
+                                placeholder="Password" 
+                                value={formData.password}
+                                onChange={(e) => setFormData({...formData, password: e.target.value})}
+                                required
+                                className="h-10 text-gray-300 rounded-lg pl-2 pr-10 w-full bg-[#4857602f] max-sm:bg-[#48576088] border border-gray-800 focus:ring-0 outline-0 caret-purple-500" 
+                            />
+                            <i 
+                                onClick={() => setShowPassword(!showPassword)}
+                                className={`fa ${showPassword ? 'fa-eye-slash' : 'fa-eye'} absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer hover:text-gray-300`}
+                            ></i>
+                        </div>
                         <span className="flex w-full justify-between items-center mt-4">
                             <span className="flex w-fit justify-between items-center">
                                 <input type="checkbox" className="accent-purple-500" />
