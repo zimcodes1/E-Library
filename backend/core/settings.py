@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'rest_framework',
-    "app",
+    "api",
 ]
 
 MIDDLEWARE = [
@@ -75,8 +75,12 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "libronet_db",
+        "USER": "libronet_admin",
+        "PASSWORD": 'Libronet(2026)',
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 
