@@ -25,7 +25,7 @@ function LoginPage() {
             saveAuth(response.token, response.user);
             setSuccess(true);
             setTimeout(() => {
-                navigate('/');
+                navigate('/home');
             }, 1500);
         } catch (err: any) {
             setError(err.message);
