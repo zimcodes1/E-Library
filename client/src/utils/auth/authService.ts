@@ -21,6 +21,7 @@ export interface AuthResponse {
     bio?: string;
     reading_hours: number;
     books_read: number;
+    interests?: Array<{id: number; name: string; slug: string}>;
   };
 }
 
@@ -80,6 +81,40 @@ export const logout = async (token: string): Promise<void> => {
   localStorage.removeItem('user');
 };
 
+export const getProfile = async (token: string): Promise<AuthResponse['user']> => {
+  const response = await fetch(`${API_BASE_URL}/auth/profile/`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Token ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch profile');
+  }
+
+  return response.json();
+};
+
+export const updateProfile = async (token: string, data: Partial<AuthResponse['user']> & {interest_ids?: number[]}): Promise<AuthResponse['user']> => {
+  const response = await fetch(`${API_BASE_URL}/auth/profile/`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Token ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to update profile');
+  }
+
+  const user = await response.json();
+  localStorage.setItem('user', JSON.stringify(user));
+  return user;
+};
+
 export const saveAuth = (token: string, user: AuthResponse['user']): void => {
   localStorage.setItem('token', token);
   localStorage.setItem('user', JSON.stringify(user));
@@ -96,4 +131,9 @@ export const getUser = (): AuthResponse['user'] | null => {
 
 export const isAuthenticated = (): boolean => {
   return !!getToken();
+};
+
+export const clearAuth = (): void => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
 };

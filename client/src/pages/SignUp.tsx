@@ -3,6 +3,7 @@ import Button from "../components/ui/Button"
 import { Link, useNavigate } from "react-router-dom"
 import InterestsModal from "../components/ui/InterestModal"
 import { signup, saveAuth } from "../utils/auth"
+import { saveUserInterests } from "../utils/interests"
 
 function SignUp() {
     useEffect(() => {
@@ -63,6 +64,19 @@ function SignUp() {
                 email: formData.email,
                 password: formData.password,
             });
+            
+            // Save auth first
+            saveAuth(response.token, response.user);
+            
+            // Save interests if any selected
+            if (selectedInterests.length > 0) {
+                try {
+                    await saveUserInterests(selectedInterests);
+                } catch (err) {
+                    console.error('Failed to save interests:', err);
+                }
+            }
+            
             setSuccess(true);
             setTimeout(() => {
                 navigate('/login');

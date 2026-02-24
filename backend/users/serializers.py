@@ -1,14 +1,41 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from api.models import Category
 
 User = get_user_model()
 
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id', 'name', 'slug']
+
+
 class UserSerializer(serializers.ModelSerializer):
+    interests = CategorySerializer(many=True, read_only=True)
+    interest_ids = serializers.PrimaryKeyRelatedField(
+        many=True, 
+        queryset=Category.objects.all(), 
+        write_only=True, 
+        required=False
+    )
+
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'avatar', 'bio', 'reading_hours', 'books_read']
+        fields = ['id', 'username', 'email', 'avatar', 'bio', 'reading_hours', 'books_read', 'interests', 'interest_ids']
         read_only_fields = ['id', 'reading_hours', 'books_read']
+
+    def update(self, instance, validated_data):
+        interest_ids = validated_data.pop('interest_ids', None)
+        
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        
+        if interest_ids is not None:
+            instance.interests.set(interest_ids)
+        
+        return instance
 
 
 class SignupSerializer(serializers.ModelSerializer):
