@@ -1,5 +1,5 @@
-import { getToken, updateProfile, saveAuth } from './auth';
-import API_BASE_URL from './auth/config';
+import { getToken, updateProfile, saveAuth } from '../auth';
+import API_BASE_URL from '../auth/config';
 
 export interface Category {
   id: number;

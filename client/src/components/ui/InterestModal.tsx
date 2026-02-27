@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Button from './Button';
-import { getCategories } from '../../utils/interests';
+import { getCategories } from '../../utils/user/interests';
 
 // Simplified Interest component that accepts a click handler and an 'active' state
 function Interest({ InterestName, onClick, isSelected }: { InterestName: string, onClick: () => void, isSelected?: boolean }) {

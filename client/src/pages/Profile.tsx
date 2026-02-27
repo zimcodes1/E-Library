@@ -10,8 +10,9 @@ import {
 	clearAuth,
 	isAuthenticated,
 } from "../utils/auth";
-import { saveUserInterests } from "../utils/interests";
+import { saveUserInterests } from "../utils/user/interests";
 import EditBioModal from "../components/ui/EditBioModal";
+import { saveBio } from "../utils/user/bio";
 
 const UserProfile = () => {
 	useEffect(() => {
@@ -19,9 +20,10 @@ const UserProfile = () => {
 	}, []);
 	const [activeTab, setActiveTab] = useState(0);
 	const [showModal, setShowModal] = useState(false);
-    const [showBioEditModal, setShowBioEditModal] = useState(false);
+	const [showBioEditModal, setShowBioEditModal] = useState(false);
 	const [user, setUser] = useState<any>(null);
 	const [interests, setInterests] = useState<string[]>([]);
+    const [bio, setBio] = useState<string|undefined>()
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -38,6 +40,9 @@ const UserProfile = () => {
 		if (userData?.interests) {
 			setInterests(userData.interests.map((i: any) => i.name));
 		}
+        if (userData?.bio){
+            setBio(userData.bio)
+        }
 	};
 
 	const handleSaveInterests = async (newInterests: string[]) => {
@@ -52,6 +57,18 @@ const UserProfile = () => {
 			alert("Failed to save interests. Please try again.");
 		}
 	};
+
+    const handleSetBio = async (newBio:string)=>{
+        try{
+            await saveBio(newBio);
+            setTimeout(()=>{
+                loadUserData();
+            }, 500);
+        } catch (err){
+            console.error("Failed to update interests:", err);
+            alert('Failed to update bio. Please try again later.')
+        }
+    }
 
 	const handleLogout = async () => {
 		const token = getToken();
@@ -140,7 +157,10 @@ const UserProfile = () => {
 											<span className="text-gray-50 ml-2">
 												{user?.bio || "No bio yet"}
 											</span>
-                                            <i onClick={()=>setShowBioEditModal(true)} className="fa fa-edit cursor-pointer hover:scale-105 transition duration-200 text-purple-400 absolute right-0 "></i>
+											<i
+												onClick={() => setShowBioEditModal(true)}
+												className="fa fa-edit cursor-pointer hover:scale-105 transition duration-200 text-purple-400 absolute right-0 "
+											></i>
 										</div>
 									</div>
 								</div>
@@ -216,7 +236,7 @@ const UserProfile = () => {
 				</div>
 			</div>
 
-            {/* Interests selection modal */}
+			{/* Interests selection modal */}
 			{showModal && (
 				<div className="w-full h-full flex justify-center items-center bg-[#48576019] backdrop-blur-2xl fixed z-50 top-0 left-0">
 					<InterestsModal
@@ -227,12 +247,18 @@ const UserProfile = () => {
 				</div>
 			)}
 
-            {/* Bio edit modal here */}
-            {showBioEditModal && (
-                <div className="w-full h-full flex justify-center items-center bg-[#48576019] backdrop-blur-2xl fixed z-50 top-0 left-0">
-                <EditBioModal onClose={()=>{setShowBioEditModal(false)}}></EditBioModal>
-                </div>
-            )}
+			{/* Bio edit modal here */}
+			{showBioEditModal && (
+				<div className="w-full h-full flex justify-center items-center bg-[#48576019] backdrop-blur-2xl fixed z-50 top-0 left-0">
+					<EditBioModal
+						onClose={() => {
+							setShowBioEditModal(false);
+						}}
+                        userBio={bio}
+                        setBio={handleSetBio}
+					></EditBioModal>
+				</div>
+			)}
 		</div>
 	);
 };

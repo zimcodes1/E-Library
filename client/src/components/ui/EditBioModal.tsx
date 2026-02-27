@@ -1,6 +1,32 @@
+import { useState } from "react";
 import Button from "./Button";
 
-function EditBioModal({onClose}: {onClose:()=>void}) {
+function EditBioModal({
+	onClose,
+	userBio,
+	setBio,
+}: {
+	onClose: () => void;
+	userBio?: string;
+	setBio: (bio: string) => void;
+}) {
+	const [bioEdit, setBioEdit] = useState(userBio);
+	let bioinput = document.getElementById("userBio") as HTMLInputElement;
+	bioinput.onchange = () => {
+		setBioEdit(bioinput.value);
+	};
+
+	const handleSave = async () => {
+		if (bioEdit) {
+			if (bioEdit == userBio) {
+				alert("Bio has not been updated, edit the bio and save.");
+				return;
+			}
+			await setBio(bioEdit);
+			onClose();
+		}
+	};
+
 	return (
 		<div className="w-100 h-fit max-sm:w-9/10 bg-[#1a1b2e] border border-purple-500/30 text-gray-200 rounded-2xl shadow-2xl py-8 px-6 flex flex-col relative">
 			<i
@@ -14,8 +40,16 @@ function EditBioModal({onClose}: {onClose:()=>void}) {
 				Tell us a little about yourself.
 			</p>
 
-            <textarea placeholder="🖊️ Write about your self..." maxLength={150} name="userBio" id="userBio" className="bg-purple-200/10 my-4 outline-0 ring-0 rounded-2xl p-4 text-sm h-25"></textarea>
-			<Button text="Save Bio"></Button>
+			<textarea
+				placeholder="🖊️ Write about your self..."
+				maxLength={150}
+				name="userBio"
+				id="userBio"
+				className="bg-purple-200/10 my-4 outline-0 ring-0 rounded-2xl p-4 text-sm h-25"
+			>
+				{bioEdit}
+			</textarea>
+			<Button onClick={handleSave} text="Save Bio"></Button>
 		</div>
 	);
 }

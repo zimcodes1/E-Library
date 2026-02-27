@@ -3,7 +3,7 @@ import Button from "../components/ui/Button"
 import { Link, useNavigate } from "react-router-dom"
 import InterestsModal from "../components/ui/InterestModal"
 import { signup, saveAuth } from "../utils/auth"
-import { saveUserInterests } from "../utils/interests"
+import { saveUserInterests } from "../utils/user/interests"
 
 function SignUp() {
     useEffect(() => {
