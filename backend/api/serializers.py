@@ -1,8 +1,98 @@
 from rest_framework import serializers
-from .models import Category
+from .models import Category, Book, Review, Shelve, ReadingProgress, BookDownload, Quote
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    book_count = serializers.SerializerMethodField()
+
     class Meta:
         model = Category
-        fields = ['id', 'name', 'slug', 'description', 'icon']
+        fields = ['id', 'name', 'slug', 'description', 'icon', 'book_count']
+
+    def get_book_count(self, obj):
+        return obj.get_book_count()
+
+
+class UserBasicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'avatar']
+
+
+class BookSerializer(serializers.ModelSerializer):
+    category_name = serializers.CharField(source='category.name', read_only=True)
+    uploaded_by_username = serializers.CharField(source='uploaded_by.username', read_only=True)
+    uploaded_by_avatar = serializers.ImageField(source='uploaded_by.avatar', read_only=True)
+
+    class Meta:
+        model = Book
+        fields = ['id', 'title', 'author', 'description', 'category', 'category_name', 
+                  'cover_image', 'file', 'file_url', 'publication_year', 'language', 
+                  'uploaded_by', 'uploaded_by_username', 'uploaded_by_avatar', 'upload_date', 
+                  'updated_at', 'file_type', 'pages', 'is_published', 'view_count', 
+                  'download_count', 'average_rating', 'total_reviews', 'is_featured']
+        read_only_fields = ['uploaded_by', 'upload_date', 'updated_at', 'view_count', 
+                            'download_count', 'average_rating', 'total_reviews']
+
+
+class BookCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = ['title', 'author', 'description', 'category', 'cover_image', 
+                  'file', 'file_url', 'publication_year', 'language', 'file_type', 'pages']
+
+    def validate(self, data):
+        if data.get('file_type') == 'pdf' and not data.get('file'):
+            raise serializers.ValidationError("PDF file is required when file_type is 'pdf'")
+        if data.get('file_type') == 'url' and not data.get('file_url'):
+            raise serializers.ValidationError("URL is required when file_type is 'url'")
+        return data
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    user_username = serializers.CharField(source='user.username', read_only=True)
+    user_avatar = serializers.ImageField(source='user.avatar', read_only=True)
+
+    class Meta:
+        model = Review
+        fields = ['id', 'user', 'user_username', 'user_avatar', 'book', 'rating', 
+                  'title', 'content', 'created_at', 'updated_at', 'helpful_count']
+        read_only_fields = ['user', 'created_at', 'updated_at']
+
+
+class ShelveSerializer(serializers.ModelSerializer):
+    book_details = BookSerializer(source='book', read_only=True)
+
+    class Meta:
+        model = Shelve
+        fields = ['id', 'user', 'book', 'book_details', 'shelf_type', 'added_date', 'reading_status']
+        read_only_fields = ['user', 'added_date']
+
+
+class ReadingProgressSerializer(serializers.ModelSerializer):
+    progress_percentage = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ReadingProgress
+        fields = ['id', 'user', 'book', 'current_page', 'total_pages', 'reading_time', 
+                  'started_at', 'last_read_at', 'completed_at', 'progress_percentage']
+        read_only_fields = ['user', 'started_at', 'last_read_at']
+
+    def get_progress_percentage(self, obj):
+        return obj.get_progress_percentage()
+
+
+class BookDownloadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BookDownload
+        fields = ['id', 'book', 'user', 'download_date', 'download_format']
+        read_only_fields = ['user', 'download_date']
+
+
+class QuoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Quote
+        fields = ['id', 'text', 'author', 'category', 'created_at', 'is_active']
