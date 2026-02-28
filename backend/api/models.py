@@ -1,6 +1,22 @@
 from django.db import models
 from django.utils.text import slugify
 from django.conf import settings
+import os
+from datetime import datetime
+
+
+def book_cover_upload_path(instance, filename):
+    ext = filename.split('.')[-1]
+    timestamp = datetime.now().strftime('%d%m%y%H%M%S')
+    new_filename = f'cover_{timestamp}.{ext}'
+    return os.path.join('book_covers/', new_filename)
+
+
+def book_file_upload_path(instance, filename):
+    ext = filename.split('.')[-1]
+    timestamp = datetime.now().strftime('%d%m%y%H%M%S')
+    new_filename = f'book_{timestamp}.{ext}'
+    return os.path.join('books/', new_filename)
 
 
 class Category(models.Model):
@@ -36,8 +52,8 @@ class Book(models.Model):
     author = models.CharField(max_length=255)
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    cover_image = models.ImageField(upload_to='book_covers/')
-    file = models.FileField(upload_to='books/', blank=True, null=True)
+    cover_image = models.ImageField(upload_to=book_cover_upload_path)
+    file = models.FileField(upload_to=book_file_upload_path, blank=True, null=True)
     file_url = models.URLField(blank=True, null=True)
     publication_year = models.IntegerField()
     language = models.CharField(max_length=50, default='English')
