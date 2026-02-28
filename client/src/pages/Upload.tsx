@@ -6,6 +6,8 @@ import Button from "../components/ui/Button";
 import Message from "../components/ui/Message";
 import { uploadBook, getUserUploadedBooks } from "../utils/books";
 import API_BASE_URL from "../utils/auth/config";
+import { getCategories } from "../utils/user/interests";
+import { getBookCoverUrl } from "../utils/imageUtils";
 
 function UploadPage() {
   useEffect(() => { document.title = 'Upload Your Book | Libronet' }, [])
@@ -15,6 +17,7 @@ function UploadPage() {
   const [userBooks, setUserBooks] = useState<any[]>([]);
   const [message, setMessage] = useState<{type: string, text: string} | null>(null);
   const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState<{id: number, name: string}[]>([]);
   
   const [formData, setFormData] = useState({
     title: '',
@@ -31,7 +34,17 @@ function UploadPage() {
 
   useEffect(() => {
     fetchUserBooks();
+    fetchCategories();
   }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const cats = await getCategories();
+      setCategories(cats);
+    } catch (err) {
+      console.error('Failed to fetch categories');
+    }
+  };
 
   const fetchUserBooks = async () => {
     try {
@@ -162,28 +175,7 @@ function UploadPage() {
                     <input type="file" accept=".png,.jpg,.jpeg,.avif,.webp" onChange={handleCoverChange} className="hidden" id="bookCover" required />
                   </div>
                   <span className="flex h-9 w-full mt-5 px-2 rounded-4xl bg-[#4857605a] justify-center items-center border border-gray-700 shadow cursor-pointer">
-                    <CustomSelect defaultValue="Category" options={[
-                      { value: "1", label: "Fiction" },
-                      { value: "2", label: "Non-Fiction" },
-                      { value: "3", label: "Science" },
-                      { value: "4", label: "Technology" },
-                      { value: "5", label: "History" },
-                      { value: "6", label: "Biography" },
-                      { value: "7", label: "Self-Help" },
-                      { value: "8", label: "Business" },
-                      { value: "9", label: "Philosophy" },
-                      { value: "10", label: "Psychology" },
-                      { value: "11", label: "Education" },
-                      { value: "12", label: "Health" },
-                      { value: "13", label: "Art" },
-                      { value: "14", label: "Religion" },
-                      { value: "15", label: "Travel" },
-                      { value: "16", label: "Cooking" },
-                      { value: "17", label: "Poetry" },
-                      { value: "18", label: "Drama" },
-                      { value: "19", label: "Comics" },
-                      { value: "20", label: "Children" }
-                    ]} onChange={(val) => setFormData({...formData, category: val})}></CustomSelect>
+                    <CustomSelect defaultValue="Category" options={categories.map(cat => ({ value: cat.id.toString(), label: cat.name }))} onChange={(val) => setFormData({...formData, category: val})}></CustomSelect>
                   </span>
                   <span className="flex h-9 w-full mt-5 px-2 rounded-4xl bg-[#4857605a] justify-center items-center border border-gray-700 shadow cursor-pointer">
                     <CustomSelect defaultValue="Language" options={[
@@ -215,7 +207,7 @@ function UploadPage() {
                 <div className="w-full flex flex-wrap gap-3">
                   {userBooks.slice(0, 4).map((book) => (
                     <div key={book.id} className="w-27 h-40 flex flex-col p-2 bg-[#31303e6d] border border-gray-700 rounded-2xl">
-                      <img src={book.cover_image} alt={book.title} className="h-7/11 w-full object-cover rounded-lg" />
+                      <img src={getBookCoverUrl(book.cover_image)} alt={book.title} className="h-7/11 w-full object-cover rounded-lg" />
                       <h3 className="text-xs text-gray-50 mt-1.5">{book.title}</h3>
                       <p className="text-[10px] text-gray-400">{book.author}</p>
                     </div>

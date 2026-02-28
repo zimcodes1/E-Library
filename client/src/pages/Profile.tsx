@@ -15,6 +15,8 @@ import EditBioModal from "../components/ui/EditBioModal";
 import { saveBio } from "../utils/user/bio";
 import { updateAvatar } from "../utils/user/avatar";
 import { getAvatarUrl } from "../utils/avatarUtils";
+import { getUserUploadedBooks } from "../utils/books";
+import { getBookCoverUrl } from "../utils/imageUtils";
 
 const UserProfile = () => {
 	useEffect(() => {
@@ -27,6 +29,7 @@ const UserProfile = () => {
 	const [interests, setInterests] = useState<string[]>([]);
     const [bio, setBio] = useState<string|undefined>()
 	const [avatarUploading, setAvatarUploading] = useState(false);
+	const [uploadedBooks, setUploadedBooks] = useState<any[]>([]);
 	const avatarInputRef = useRef<HTMLInputElement>(null);
 	const navigate = useNavigate();
 
@@ -36,6 +39,7 @@ const UserProfile = () => {
 			return;
 		}
 		loadUserData();
+		loadUploadedBooks();
 	}, []);
 
 	const loadUserData = () => {
@@ -47,6 +51,15 @@ const UserProfile = () => {
         if (userData?.bio){
             setBio(userData.bio)
         }
+	};
+
+	const loadUploadedBooks = async () => {
+		try {
+			const books = await getUserUploadedBooks();
+			setUploadedBooks(books);
+		} catch (error) {
+			console.error("Failed to load uploaded books:", error);
+		}
 	};
 
 	const handleSaveInterests = async (newInterests: string[]) => {
@@ -265,12 +278,20 @@ const UserProfile = () => {
 
 							{activeTab === 3 && (
 								<div className="p-4 rounded-lg bg-[#31303e] border border-gray-700">
-									<div className="flex justify-between items-start">
-										<div>
-											<p className="text-gray-400 mb-3">Your Uploads:</p>
-											<p className="text-gray-500 text-sm">No uploads yet</p>
+									<p className="text-gray-400 mb-3">Your Uploads:</p>
+									{uploadedBooks.length === 0 ? (
+										<p className="text-gray-500 text-sm">No uploads yet</p>
+									) : (
+										<div className="grid grid-cols-4 max-sm:grid-cols-2 gap-3 mt-3">
+											{uploadedBooks.map((book) => (
+												<div key={book.id} className="flex flex-col p-2 bg-[#48576019] border border-gray-700 rounded-lg hover:border-purple-500 transition">
+													<img src={getBookCoverUrl(book.cover_image)} alt={book.title} className="w-full h-32 object-cover rounded-lg" />
+													<h3 className="text-xs text-gray-50 mt-2 truncate">{book.title}</h3>
+													<p className="text-[10px] text-gray-400 truncate">{book.author}</p>
+												</div>
+											))}
 										</div>
-									</div>
+									)}
 								</div>
 							)}
 						</div>
