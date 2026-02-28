@@ -15,6 +15,7 @@ function SignUp() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [avatarPreview, setAvatarPreview] = useState('/images/user.png');
+    const [avatarFile, setAvatarFile] = useState<File | null>(null);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -23,6 +24,7 @@ function SignUp() {
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
+            setAvatarFile(file);
             const reader = new FileReader();
             reader.onloadend = () => {
                 setAvatarPreview(reader.result as string);
@@ -63,6 +65,7 @@ function SignUp() {
                 username: formData.username,
                 email: formData.email,
                 password: formData.password,
+                avatar: avatarFile || undefined,
             });
             
             // Save auth first

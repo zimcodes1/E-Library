@@ -1,9 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+import os
+from datetime import datetime
+
+
+def avatar_upload_path(instance, filename):
+    ext = filename.split('.')[-1]
+    timestamp = datetime.now().strftime('%d%m%y%H%M%S')
+    new_filename = f'libronet_ava_{timestamp}.{ext}'
+    return os.path.join('avatars/', new_filename)
 
 
 class User(AbstractUser):
-    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+    avatar = models.ImageField(upload_to=avatar_upload_path, null=True, blank=True)
     bio = models.TextField(blank=True)
     interests = models.ManyToManyField('api.Category', related_name='interested_users', blank=True)
     reading_hours = models.IntegerField(default=0)

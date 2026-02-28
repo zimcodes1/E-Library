@@ -4,6 +4,7 @@ export interface SignupData {
   username: string;
   email: string;
   password: string;
+  avatar?: File;
 }
 
 export interface LoginData {
@@ -26,12 +27,17 @@ export interface AuthResponse {
 }
 
 export const signup = async (data: SignupData): Promise<AuthResponse> => {
+  const formData = new FormData();
+  formData.append('username', data.username);
+  formData.append('email', data.email);
+  formData.append('password', data.password);
+  if (data.avatar) {
+    formData.append('avatar', data.avatar);
+  }
+
   const response = await fetch(`${API_BASE_URL}/auth/signup/`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
+    body: formData,
   });
 
   const result = await response.json();

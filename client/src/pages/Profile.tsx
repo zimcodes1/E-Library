@@ -1,5 +1,5 @@
 import SideMenu from "../components/SideMenu";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Tabs from "../components/ui/Tabs";
 import InterestsModal from "../components/ui/InterestModal";
@@ -13,6 +13,8 @@ import {
 import { saveUserInterests } from "../utils/user/interests";
 import EditBioModal from "../components/ui/EditBioModal";
 import { saveBio } from "../utils/user/bio";
+import { updateAvatar } from "../utils/user/avatar";
+import { getAvatarUrl } from "../utils/avatarUtils";
 
 const UserProfile = () => {
 	useEffect(() => {
@@ -24,6 +26,8 @@ const UserProfile = () => {
 	const [user, setUser] = useState<any>(null);
 	const [interests, setInterests] = useState<string[]>([]);
     const [bio, setBio] = useState<string|undefined>()
+	const [avatarUploading, setAvatarUploading] = useState(false);
+	const avatarInputRef = useRef<HTMLInputElement>(null);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -70,6 +74,27 @@ const UserProfile = () => {
         }
     }
 
+	const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+		if (!file) return;
+
+		setAvatarUploading(true);
+		try {
+			await updateAvatar(file);
+			setTimeout(() => {
+				loadUserData();
+			}, 500);
+		} catch (error) {
+			console.error("Failed to update avatar:", error);
+			alert("Failed to update avatar. Please try again.");
+		} finally {
+			setAvatarUploading(false);
+			if (avatarInputRef.current) {
+				avatarInputRef.current.value = '';
+			}
+		}
+	};
+
 	const handleLogout = async () => {
 		const token = getToken();
 		if (token) {
@@ -93,11 +118,28 @@ const UserProfile = () => {
 					<div className="w-full max-w-5xl h-9/10 max-[900px]:h-fit rounded-2xl bg-[#4857605a] p-8 max-sm:p-4 border border-gray-700">
 						{/* Profile Header */}
 						<div className="flex max-sm:flex-col items-center gap-6 pb-6 border-b border-gray-700">
-							<div className="w-24 h-24 rounded-full overflow-hidden border-2 border-purple-500">
-								<img
-									src={user?.avatar || "/images/defaultUser.jpg"}
-									alt="User"
-									className="w-full h-full object-cover"
+							<div className="relative">
+								<div className="w-24 h-24 rounded-full overflow-hidden border-2 border-purple-500">
+									<img
+										src={getAvatarUrl(user?.avatar)}
+										alt="User"
+										className="w-full h-full object-cover"
+									/>
+								</div>
+								<button
+									onClick={() => avatarInputRef.current?.click()}
+									disabled={avatarUploading}
+									className="absolute bottom-0 right-0 bg-purple-500 hover:bg-purple-600 disabled:bg-gray-500 text-white rounded-full p-2 transition"
+									title="Change avatar"
+								>
+									<i className="fa fa-camera text-sm"></i>
+								</button>
+								<input
+									ref={avatarInputRef}
+									type="file"
+									accept="image/*"
+									onChange={handleAvatarChange}
+									className="hidden"
 								/>
 							</div>
 							<div className="flex-1 max-sm:text-center">

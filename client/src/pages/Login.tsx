@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import Button from "../components/ui/Button"
 import { Link, useNavigate } from "react-router-dom"
 import { login, saveAuth } from "../utils/auth"
+import Message from "../components/ui/Message"
 
 function LoginPage() {
     useEffect(() => {
@@ -36,10 +37,7 @@ function LoginPage() {
     return (
         <div className="w-full flex justify-center items-center bgImage h-screen max-sm:h-dvh">
             {success && (
-                <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-green-500/90 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2 animate-fade-in">
-                    <i className="fa fa-check-circle"></i>
-                    <span>Login successful! Redirecting...</span>
-                </div>
+                <Message type="success" text="Login successful! Redirecting..." />
             )}
             <div className="w-[80%] max-[900px]:w-[60%] max-[900px]:h-200 max-sm:w-full max-sm:h-full
             max-sm:bg-transparent max-sm:rounded-none max-sm:m-0 max-[900px]:flex-col-reverse h-[90%]
