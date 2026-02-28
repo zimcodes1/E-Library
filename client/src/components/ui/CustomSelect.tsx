@@ -4,12 +4,15 @@ function CustomSelect({
   defaultValue,
   options,
   customStyles,
+  onChange,
 }: {
   defaultValue?: string;
   options?: Array<{ value: string; label?: string; customStyles?: string }>;
   customStyles?: string;
+  onChange?: (value: string) => void;
 }) {
   const [value, setValue] = useState(defaultValue || "Select");
+  const [selectedValue, setSelectedValue] = useState(defaultValue || "");
   const [activeState, setActiveState] = useState("hidden");
   const selectRef = useRef<HTMLSpanElement>(null);
 
@@ -36,16 +39,32 @@ function CustomSelect({
         {value} <i className="fa fa-angle-down"></i>{" "}
       </p>
       <div
-        className={`max-sm:w-auto w-50 absolute top-10 z-10 -left-3 max-sm:left-0 bg-gray-700 border border-gray-600 rounded-2xl backdrop-blur-3xl h-fit flex flex-col overflow-hidden p-2 ${customStyles} ${activeState}`}
+        className={`max-sm:w-auto w-50 absolute top-10 z-10 -left-3 max-sm:left-0 bg-gray-800 border border-gray-600 rounded-2xl backdrop-blur-3xl max-h-56 overflow-y-auto flex flex-col p-2 ${customStyles} ${activeState}`}
+        style={{
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
       >
+        <style>{`
+          div::-webkit-scrollbar {
+            display: none;
+          }
+        `}</style>
         {options?.map((option, index) => {
+          const isSelected = selectedValue === option.value;
           return (
             <span
               onClick={() => {
                 setValue(option.label || option.value);
+                setSelectedValue(option.value);
+                onChange?.(option.value);
               }}
               key={index}
-              className="w-full h-10 text-gray-300 hover:bg-gray-500 rounded-lg flex items-center px-2 cursor-pointer"
+              className={`w-full h-10 shrink-0 rounded-lg flex items-center px-2 cursor-pointer transition-colors duration-150 ${
+                isSelected
+                  ? "bg-blue-600 text-white font-medium"
+                  : "text-gray-300 hover:bg-gray-700"
+              }`}
             >
               {option.label || option.value}
             </span>
