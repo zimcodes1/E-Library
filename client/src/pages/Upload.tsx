@@ -6,7 +6,6 @@ import Button from "../components/ui/Button";
 import Message from "../components/ui/Message";
 import ConfirmModal from "../components/ui/ConfirmModal";
 import { uploadBook, getUserUploadedBooks, deleteBook } from "../utils/books";
-import API_BASE_URL from "../utils/auth/config";
 import { getCategories } from "../utils/user/interests";
 import { getBookCoverUrl } from "../utils/imageUtils";
 
