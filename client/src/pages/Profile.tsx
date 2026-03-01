@@ -15,8 +15,8 @@ import EditBioModal from "../components/ui/EditBioModal";
 import { saveBio } from "../utils/user/bio";
 import { updateAvatar } from "../utils/user/avatar";
 import { getAvatarUrl } from "../utils/avatarUtils";
-import { getUserUploadedBooks } from "../utils/books";
-import { getBookCoverUrl } from "../utils/imageUtils";
+import { getUserUploadedBooks, deleteBook } from "../utils/books";
+import UploadedBookItem from "../components/ui/UploadedBookItem";
 
 const UserProfile = () => {
 	useEffect(() => {
@@ -60,6 +60,22 @@ const UserProfile = () => {
 		} catch (error) {
 			console.error("Failed to load uploaded books:", error);
 		}
+	};
+
+	const handleDeleteBook = async (bookId: number) => {
+		try {
+			await deleteBook(bookId);
+			setUploadedBooks(uploadedBooks.filter(book => book.id !== bookId));
+		} catch (error) {
+			console.error("Failed to delete book:", error);
+			alert("Failed to delete book. Please try again.");
+		}
+	};
+
+	const handleEditBook = (bookId: number) => {
+		// TODO: Implement edit functionality
+		console.log("Edit book:", bookId);
+		alert("Edit functionality coming soon!");
 	};
 
 	const handleSaveInterests = async (newInterests: string[]) => {
@@ -128,7 +144,7 @@ const UserProfile = () => {
 			<SideMenu />
 			<div className="w-6/7 max-sm:w-full h-dvh max-sm:h-fit flex flex-col px-10 max-sm:p-3 pt-5 pb-20 max-sm:pb-28 relative">
 				<div className="w-full h-full flex items-center justify-center flex-col">
-					<div className="w-full max-w-5xl h-9/10 max-[900px]:h-fit rounded-2xl bg-[#4857605a] p-8 max-sm:p-4 border border-gray-700">
+					<div className="w-full max-w-5xl max-h-fit max-[900px]:h-fit rounded-2xl bg-[#4857605a] p-8 max-sm:p-4 border border-gray-700 flex flex-col">
 						{/* Profile Header */}
 						<div className="flex max-sm:flex-col items-center gap-6 pb-6 border-b border-gray-700">
 							<div className="relative">
@@ -182,7 +198,7 @@ const UserProfile = () => {
 						</div>
 
 						{/* Tabs */}
-						<div className="mt-6 max-sm:mt-3">
+						<div className="mt-6 max-sm:mt-3 flex-1 flex flex-col">
 							<Tabs
 								tabs={["Account", "Reading Stats", "Interests", "Uploads"]}
 								activeTab={activeTab}
@@ -191,7 +207,7 @@ const UserProfile = () => {
 
 							{/* Tab Content */}
 							{activeTab === 0 && (
-								<div className="space-y-4">
+								<div className="space-y-4 overflow-y-auto">
 									<div className="flex justify-between items-center p-4 rounded-lg bg-[#31303e] border border-gray-700">
 										<div>
 											<span className="text-gray-400">Username:</span>{" "}
@@ -222,7 +238,7 @@ const UserProfile = () => {
 							)}
 
 							{activeTab === 1 && (
-								<div className="grid grid-cols-3 max-sm:grid-cols-1 gap-4">
+								<div className="grid grid-cols-3 max-sm:grid-cols-1 gap-4 overflow-y-auto">
 									<div className="p-6 rounded-lg bg-[#31303e] border border-gray-700 text-center">
 										<i className="fa fa-book-open text-3xl text-purple-400"></i>
 										<h3 className="text-2xl font-bold text-gray-50 mt-3">
@@ -278,17 +294,13 @@ const UserProfile = () => {
 
 							{activeTab === 3 && (
 								<div className="p-4 rounded-lg bg-[#31303e] border border-gray-700">
-									<p className="text-gray-400 mb-3">Your Uploads:</p>
+									<p className="text-gray-400 mb-3">Your Uploads ({uploadedBooks.length}):</p>
 									{uploadedBooks.length === 0 ? (
 										<p className="text-gray-500 text-sm">No uploads yet</p>
 									) : (
-										<div className="grid grid-cols-4 max-sm:grid-cols-2 gap-3 mt-3">
+										<div className="grid grid-cols-4 max-sm:grid-cols-2 gap-3">
 											{uploadedBooks.map((book) => (
-												<div key={book.id} className="flex flex-col p-2 bg-[#48576019] border border-gray-700 rounded-lg hover:border-purple-500 transition">
-													<img src={getBookCoverUrl(book.cover_image)} alt={book.title} className="w-full h-32 object-cover rounded-lg" />
-													<h3 className="text-xs text-gray-50 mt-2 truncate">{book.title}</h3>
-													<p className="text-[10px] text-gray-400 truncate">{book.author}</p>
-												</div>
+												<UploadedBookItem key={book.id} book={book} onDelete={handleDeleteBook} onEdit={handleEditBook} />
 											))}
 										</div>
 									)}

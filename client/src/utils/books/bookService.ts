@@ -34,6 +34,14 @@ export const uploadBook = async (bookData: FormData) => {
     return response.json();
 };
 
+export const deleteBook = async (id: number) => {
+    const response = await fetch(`${API_BASE_URL}/books/${id}/`, {
+        method: 'DELETE',
+        headers: getAuthHeaders(),
+    });
+    if (!response.ok) throw new Error('Failed to delete book');
+};
+
 export const getUserUploadedBooks = async () => {
     const response = await fetch(`${API_BASE_URL}/my-books/`, {
         headers: getAuthHeaders(),
