@@ -1,14 +1,20 @@
 
+interface ReviewProps {
+  key: any;
+  text: any;
+  userName: any;
+  userImage: string;
+}
 
-function Review() {
-    return (
-        <div className="w-[48%] h-full max-sm:w-full max-sm:mt-2 flex flex-col p-5 bg-[#48576019] border border-gray-700 rounded-2xl">
-            <div className="w-full h-3/10 flex justify-between text-gray-400 items-center">
-                <span className="flex justify-start items-center">
-                    <span className="flex h-8 w-8 rounded-full overflow-hidden justify-start">
-                        <img src="/images/user.jpg" className="w-full" alt="" />
+function Review({ key, text, userName, userImage }: ReviewProps) {
+  return (
+    <div className="w-[48%] h-full max-sm:w-full max-sm:mt-2 flex flex-col p-5 bg-[#48576019] border border-gray-700 rounded-2xl">
+      <div className="w-full h-3/10 flex justify-between text-gray-400 items-center">
+        <span className="flex justify-start items-center">
+          <span className="flex h-8 w-8 rounded-full overflow-hidden justify-start">
+                        <img src={userImage} className="w-full" alt={userName} />
                     </span>
-                    <h3 className="ml-2 font-semibold">Azimeh Nasara Obadiah</h3>
+                    <h3 className="ml-2 font-semibold">{userName}</h3>
                 </span>
                 <span className="text-amber-300">
                     <i className="fa fa-star"></i>

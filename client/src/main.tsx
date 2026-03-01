@@ -24,8 +24,8 @@ const router = createBrowserRouter([
   { path: '/myshelve', element: <Shelve /> },
   { path: '/upload', element: <UploadPage /> },
   { path: '/profile', element: <UserProfile /> },
-  { path: '/reading', element: <ReadBook /> },
-  {path:'/bookdetails', element: <BookDetails/>},
+  { path: '/reading/:bookId', element: <ReadBook /> },
+  { path: '/bookdetails/:bookId', element: <BookDetails /> },
   { path: '/about', element: <About /> },
   { path: '*', element: <Lost /> },
 ]

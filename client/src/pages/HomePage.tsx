@@ -1,16 +1,20 @@
 import SideMenu from "../components/SideMenu"
 import { TopBar } from "../components/TopMenu"
+import BookItem from "../components/BookItem"
 import { useState, useEffect } from "react";
 import { getUser, isAuthenticated } from "../utils/auth";
-import { getTodayQuote, getNewArrivals } from "../utils/books/bookService";
+import { getTodayQuote, getNewArrivals, getBooks } from "../utils/books/bookService";
 import { getBookCoverUrl } from "../utils/imageUtils";
 import TodayQuotes from "../components/ui/TodayQuote";
 import NewArrivals from "../components/ui/NewArrivals";
+import { Link } from "react-router-dom";
 
 function HomePage() {
     const [user, setUser] = useState<any>(null);
     const [books, setBooks] = useState<any[]>([]);
+    const [recommended, setRecommended] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
+    const [loadingRecommended, setLoadingRecommended] = useState(false);
     const [quotes, setQuotes] = useState<any[]>([]);
     
     let hour = new Date().getHours();
@@ -30,6 +34,7 @@ function HomePage() {
         if (isAuthenticated()) {
             setUser(getUser());
             loadNewArrivals();
+            loadRecommended();
         }
         loadQuote();
     }, []);
@@ -52,6 +57,22 @@ function HomePage() {
             console.error('Failed to load new arrivals:', err);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const loadRecommended = async () => {
+        setLoadingRecommended(true);
+        try {
+            const userData = getUser();
+            if (userData?.interests && userData.interests.length > 0) {
+                const categorySlug = userData.interests[0].slug;
+                const data = await getBooks({ category: categorySlug });
+                setRecommended(data.slice(0, 10));
+            }
+        } catch (err) {
+            console.error('Failed to load recommended:', err);
+        } finally {
+            setLoadingRecommended(false);
         }
     };
 
@@ -80,6 +101,47 @@ function HomePage() {
                         Good {HourTime}{user ? `, ${user.username}` : ''}
                     </h1>
                     <div className="w-full h-150 max-sm:h-fit flex flex-col">
+                        <span className="flex justify-between items-center text-gray-500 max-sm:text-sm">
+                            <h3>Recommended for you</h3>
+                        </span>
+                        <div className="w-full h-fit mt-2 flex flex-col">
+                            {loadingRecommended ? (
+                                <div className="w-full h-44 flex justify-center items-center">
+                                    <p className="text-gray-400 text-lg">Loading recommendations...</p>
+                                </div>
+                            ) : recommended.length === 0 ? (
+                                <div className="w-full h-44 flex flex-col justify-center items-center gap-3">
+                                    <i className="fa fa-book-open text-5xl text-gray-600"></i>
+                                    <p className="text-gray-400 text-lg">No recommendations at the moment</p>
+                                    <div className="flex gap-3 text-sm">
+                                        <Link to="/search" className="text-purple-400 hover:text-purple-300 transition">
+                                            <i className="fa fa-search"></i> Browse Books
+                                        </Link>
+                                        <span className="text-gray-600">|</span>
+                                        <Link to="/profile" className="text-purple-400 hover:text-purple-300 transition">
+                                            <i className="fa fa-user-edit"></i> Edit Interests
+                                        </Link>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className={`w-full ${containerHeight[0]} overflow-hidden flex justify-evenly flex-wrap gap-3 max-[900px]:gap-2 max-sm:gap-1 transition-all duration-300`}>
+                                    {recommended.map((book) => (
+                                        <BookItem 
+                                            key={book.id}
+                                            bookId={book.id}
+                                            bookImage={getBookCoverUrl(book.cover_image)} 
+                                            bookDetails={{ 
+                                                title: book.title, 
+                                                author: book.author, 
+                                                year: book.publication_year, 
+                                                rating: book.average_rating 
+                                            }}
+                                        />
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
                         <span className="flex justify-between items-center text-gray-500 mt-4">
                             <h3 className="text-sm">Recent Readings</h3>
                         </span>

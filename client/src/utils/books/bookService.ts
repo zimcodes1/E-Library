@@ -148,3 +148,12 @@ export const getNewArrivals = async () => {
     if (!response.ok) throw new Error('Failed to fetch new arrivals');
     return response.json();
 };
+
+export const recordBookView = async (bookId: number) => {
+    const response = await fetch(`${API_BASE_URL}/books/${bookId}/view/`, {
+        method: 'POST',
+        headers: getAuthHeaders(),
+    });
+    if (!response.ok) throw new Error('Failed to record view');
+    return response.json();
+};

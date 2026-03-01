@@ -17,3 +17,12 @@ export const getBookCoverUrl = (coverPath: string | null | undefined): string =>
   }
   return `${API_BASE_URL.replace('/api', '')}/media/${coverPath}`;
 };
+
+export const getBookFileUrl = (filePath: string | null | undefined): string => {
+  if (!filePath) return '';
+  if (filePath.startsWith('http')) return filePath;
+  if (filePath.startsWith('/media/')) {
+    return `${API_BASE_URL.replace('/api', '')}${filePath}`;
+  }
+  return `${API_BASE_URL.replace('/api', '')}/media/${filePath}`;
+};

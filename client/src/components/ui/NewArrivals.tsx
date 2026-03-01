@@ -30,7 +30,7 @@ const NewArrivals: React.FC<NewArrivalsProps> = ({ books }) => {
           <div className="flex items-center justify-start gap-3 max-sm:gap-2">
             {books.map((book, index) => (
               <div key={`${book.id}-${index}`}>
-                <BookItem bookImage={book.bookImage} bookDetails={book.bookDetails} />
+                <BookItem bookId={book.id as number} bookImage={book.bookImage} bookDetails={book.bookDetails} />
               </div>
             ))}
           </div>
