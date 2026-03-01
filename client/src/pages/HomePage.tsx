@@ -14,6 +14,7 @@ function HomePage() {
     const [books, setBooks] = useState<any[]>([]);
     const [recommended, setRecommended] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
+    loading
     const [loadingRecommended, setLoadingRecommended] = useState(false);
     const [quotes, setQuotes] = useState<any[]>([]);
     
@@ -29,7 +30,7 @@ function HomePage() {
     })
     
     const [containerHeight, setContainerHeight] = useState(['h-44', 'Show More', 'fa-plus']);
-
+    setContainerHeight
     useEffect(() => {
         if (isAuthenticated()) {
             setUser(getUser());
