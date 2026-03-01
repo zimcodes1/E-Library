@@ -12,4 +12,5 @@ urlpatterns = [
     path('shelves/<int:pk>/', views.remove_from_shelf, name='remove-from-shelf'),
     path('quote/today/', views.today_quote, name='today-quote'),
     path('my-books/', views.user_uploaded_books, name='user-uploaded-books'),
+    path('new-arrivals/', views.new_arrivals, name='new-arrivals'),
 ]

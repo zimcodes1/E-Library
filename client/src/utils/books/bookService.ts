@@ -140,3 +140,11 @@ export const getTodayQuote = async () => {
     if (!response.ok) throw new Error('Failed to fetch quote');
     return response.json();
 };
+
+export const getNewArrivals = async () => {
+    const response = await fetch(`${API_BASE_URL}/new-arrivals/`, {
+        headers: getAuthHeaders(),
+    });
+    if (!response.ok) throw new Error('Failed to fetch new arrivals');
+    return response.json();
+};

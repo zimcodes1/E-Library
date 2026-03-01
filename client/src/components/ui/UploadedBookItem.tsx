@@ -1,5 +1,6 @@
 import { getBookCoverUrl } from "../../utils/imageUtils";
 import { useState } from "react";
+import ConfirmModal from "./ConfirmModal";
 
 interface UploadedBookItemProps {
   book: {
@@ -14,9 +15,9 @@ interface UploadedBookItemProps {
 
 const UploadedBookItem = ({ book, onDelete, onEdit }: UploadedBookItemProps) => {
   const [deleting, setDeleting] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const handleDelete = async () => {
-    if (!confirm(`Delete "${book.title}"?`)) return;
     setDeleting(true);
     try {
       await onDelete(book.id);
@@ -39,7 +40,7 @@ const UploadedBookItem = ({ book, onDelete, onEdit }: UploadedBookItemProps) => 
           <i className="fa fa-edit"></i> Edit
         </button>
         <button
-          onClick={handleDelete}
+          onClick={() => setShowConfirm(true)}
           disabled={deleting}
           className="flex-1 bg-red-500 hover:bg-red-600 disabled:bg-gray-500 text-white text-xs py-1.5 rounded transition flex items-center justify-center gap-1"
           title="Delete book"
@@ -47,6 +48,15 @@ const UploadedBookItem = ({ book, onDelete, onEdit }: UploadedBookItemProps) => 
           <i className="fa fa-trash"></i> Delete
         </button>
       </div>
+      <ConfirmModal
+        isOpen={showConfirm}
+        onClose={() => setShowConfirm(false)}
+        onConfirm={handleDelete}
+        title="Delete Book"
+        message={`Are you sure you want to delete "${book.title}"? This action cannot be undone.`}
+        confirmText="Delete"
+        type="danger"
+      />
     </div>
   );
 };

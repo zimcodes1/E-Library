@@ -171,9 +171,11 @@ def reading_progress(request, pk):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def today_quote(request):
-    quote = Quote.get_today_quote()
-    if quote:
-        serializer = QuoteSerializer(quote)
+    quotes = list(Quote.objects.filter(is_active=True))
+    if quotes:
+        import random
+        selected_quotes = random.sample(quotes, min(5, len(quotes)))
+        serializer = QuoteSerializer(selected_quotes, many=True)
         return Response(serializer.data)
     return Response({'message': 'No quote available'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -182,5 +184,23 @@ def today_quote(request):
 @permission_classes([IsAuthenticated])
 def user_uploaded_books(request):
     books = Book.objects.filter(uploaded_by=request.user)
+    serializer = BookSerializer(books, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def new_arrivals(request):
+    user = request.user
+    user_interests = user.interests.all()
+    
+    if user_interests.exists():
+        books = Book.objects.filter(
+            category__in=user_interests,
+            is_published=True
+        ).order_by('-upload_date')[:10]
+    else:
+        books = Book.objects.filter(is_published=True).order_by('-upload_date')[:10]
+    
     serializer = BookSerializer(books, many=True)
     return Response(serializer.data)

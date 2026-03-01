@@ -21,13 +21,20 @@ const NewArrivals: React.FC<NewArrivalsProps> = ({ books }) => {
       </div>
 
       <div className="w-12/13 px-2 h-fit flex relative overflow-x-scroll no-scrollbar">
-        <div className="flex items-center justify-start gap-3 max-sm:gap-2">
-          {books.map((book, index) => (
-            <div key={`${book.id}-${index}`}>
-              <BookItem bookImage={book.bookImage} bookDetails={book.bookDetails} />
-            </div>
-          ))}
-        </div>
+        {books.length === 0 ? (
+          <div className="text-gray-500 w-full h-full flex flex-col items-center justify-center">
+            <i className="fa fa-chain-broken text-6xl mt-10"></i>
+            <p className="text-sm">No new books to load</p>
+          </div>
+        ) : (
+          <div className="flex items-center justify-start gap-3 max-sm:gap-2">
+            {books.map((book, index) => (
+              <div key={`${book.id}-${index}`}>
+                <BookItem bookImage={book.bookImage} bookDetails={book.bookDetails} />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

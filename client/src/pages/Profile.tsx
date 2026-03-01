@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Tabs from "../components/ui/Tabs";
 import InterestsModal from "../components/ui/InterestModal";
+import ConfirmModal from "../components/ui/ConfirmModal";
 import {
 	getUser,
 	getToken,
@@ -25,6 +26,7 @@ const UserProfile = () => {
 	const [activeTab, setActiveTab] = useState(0);
 	const [showModal, setShowModal] = useState(false);
 	const [showBioEditModal, setShowBioEditModal] = useState(false);
+	const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 	const [user, setUser] = useState<any>(null);
 	const [interests, setInterests] = useState<string[]>([]);
     const [bio, setBio] = useState<string|undefined>()
@@ -190,7 +192,7 @@ const UserProfile = () => {
 								</div>
 							</div>
 							<button
-								onClick={handleLogout}
+								onClick={() => setShowLogoutConfirm(true)}
 								className="text-gray-50 bg-red-500 px-5 py-2 rounded-lg hover:bg-red-600 transition"
 							>
 								<i className="fa fa-power-off"></i> Logout
@@ -334,6 +336,17 @@ const UserProfile = () => {
 					></EditBioModal>
 				</div>
 			)}
+
+			{/* Logout confirmation modal */}
+			<ConfirmModal
+				isOpen={showLogoutConfirm}
+				onClose={() => setShowLogoutConfirm(false)}
+				onConfirm={handleLogout}
+				title="Logout"
+				message="Are you sure you want to logout?"
+				confirmText="Logout"
+				type="warning"
+			/>
 		</div>
 	);
 };
