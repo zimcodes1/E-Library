@@ -65,9 +65,15 @@ function HomePage() {
         try {
             const userData = getUser();
             if (userData?.interests && userData.interests.length > 0) {
-                const categorySlug = userData.interests[0].slug;
-                const data = await getBooks({ category: categorySlug });
-                setRecommended(data.slice(0, 10));
+                // Get books from all user interests, not just the first one
+                const allBooks: any[] = [];
+                for (const interest of userData.interests) {
+                    const data = await getBooks({ category: interest.slug });
+                    allBooks.push(...data);
+                }
+                // Shuffle and limit to 10 books
+                const shuffled = allBooks.sort(() => Math.random() - 0.5);
+                setRecommended(shuffled.slice(0, 10));
             }
         } catch (err) {
             console.error('Failed to load recommended:', err);

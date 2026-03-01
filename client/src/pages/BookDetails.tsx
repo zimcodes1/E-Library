@@ -190,6 +190,8 @@ function BookDetails() {
 											text={review.content}
 											userName={review.user.username}
 											userImage={getAvatarUrl(review.user.avatar)}
+											rating={review.rating}
+											date={new Date(review.created_at).toLocaleDateString()}
 										/>
 									))
 							)}

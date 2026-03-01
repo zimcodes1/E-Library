@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react"
 import { useParams, useNavigate, Link } from "react-router-dom"
 import { Document, Page, pdfjs } from "react-pdf"
 import { getBookDetail, getBookReviews, recordBookView, addToShelf, downloadBook } from "../utils/books/bookService"
-import { getBookCoverUrl, getBookFileUrl } from "../utils/imageUtils"
+import { getBookFileUrl } from "../utils/imageUtils"
 import { getAvatarUrl } from "../utils/avatarUtils"
 import truncate from "../utils/truncateText"
 
@@ -126,7 +126,7 @@ function ReadBook() {
                 <TopBar />
 
                 {/* Book Info Header */}
-                <div className="w-full max-w-4xl mx-auto mt-15 mb-6 p-6 bg-[#48576019] border border-gray-700 rounded-2xl">
+                <div className="w-full max-w-4xl mx-auto mt-15 max-sm:mt-2 mb-6 p-6 bg-[#48576019] border border-gray-700 rounded-2xl">
                     <div className="flex gap-6 max-sm:flex-col">
                         <div className="flex-1">
                             <h1 className="text-3xl max-sm:text-2xl font-bold text-gray-50 mb-2">{book.title}</h1>

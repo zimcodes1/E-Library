@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view, permission_classes, parser_class
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
-from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from django.contrib.auth import authenticate
 from .serializers import SignupSerializer, LoginSerializer, UserSerializer
 
@@ -51,7 +51,7 @@ def logout(request):
 
 @api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
-@parser_classes((MultiPartParser, FormParser))
+@parser_classes((MultiPartParser, FormParser, JSONParser))
 def profile(request):
     if request.method == 'GET':
         serializer = UserSerializer(request.user, context={'request': request})
