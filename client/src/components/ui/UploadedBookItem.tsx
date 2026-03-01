@@ -26,8 +26,8 @@ const UploadedBookItem = ({ book, onDelete, onEdit }: UploadedBookItemProps) => 
   };
 
   return (
-    <div className="flex flex-col p-2 bg-[#48576019] border border-gray-700 rounded-lg hover:border-purple-500 transition">
-      <img src={getBookCoverUrl(book.cover_image)} alt={book.title} className="w-full h-32 object-cover rounded-lg" />
+    <div className="flex flex-col p-2 bg-[#48576019] border border-gray-700 rounded-xl hover:border-purple-500 transition">
+      <img src={getBookCoverUrl(book.cover_image)} alt={book.title} className="w-full h-32 object-cover rounded-xl" />
       <h3 className="text-xs text-gray-50 mt-2 truncate">{book.title}</h3>
       <p className="text-[10px] text-gray-400 truncate mb-2">{book.author}</p>
       <div className="flex gap-2 mt-auto">

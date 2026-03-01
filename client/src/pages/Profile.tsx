@@ -143,7 +143,7 @@ const UserProfile = () => {
 		<div className="w-full flex justify-end items-center bgImage overflow-clip min-h-dvh pb-10 max-sm:pb-0">
 			<SideMenu />
 			<div className="w-6/7 max-sm:w-full h-dvh max-sm:h-fit flex flex-col px-10 max-sm:p-3 pt-5 pb-20 max-sm:pb-28 relative">
-				<div className="w-full h-full flex items-center justify-center flex-col">
+				<div className="w-full h-full flex items-center justify-start flex-col">
 					<div className="w-full max-w-5xl max-h-fit max-[900px]:h-fit rounded-2xl bg-[#4857605a] p-8 max-sm:p-4 border border-gray-700 flex flex-col">
 						{/* Profile Header */}
 						<div className="flex max-sm:flex-col items-center gap-6 pb-6 border-b border-gray-700">

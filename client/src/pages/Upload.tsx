@@ -4,7 +4,8 @@ import CustomSelect from "../components/ui/CustomSelect";
 import { useState, useEffect } from "react";
 import Button from "../components/ui/Button";
 import Message from "../components/ui/Message";
-import { uploadBook, getUserUploadedBooks } from "../utils/books";
+import ConfirmModal from "../components/ui/ConfirmModal";
+import { uploadBook, getUserUploadedBooks, deleteBook } from "../utils/books";
 import API_BASE_URL from "../utils/auth/config";
 import { getCategories } from "../utils/user/interests";
 import { getBookCoverUrl } from "../utils/imageUtils";
@@ -18,6 +19,7 @@ function UploadPage() {
   const [message, setMessage] = useState<{type: string, text: string} | null>(null);
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<{id: number, name: string}[]>([]);
+  const [deleteModal, setDeleteModal] = useState<{isOpen: boolean, bookId: number | null}>({isOpen: false, bookId: null});
   
   const [formData, setFormData] = useState({
     title: '',
@@ -49,9 +51,11 @@ function UploadPage() {
   const fetchUserBooks = async () => {
     try {
       const books = await getUserUploadedBooks();
+      console.log('Fetched user books:', books);
       setUserBooks(books);
     } catch (err) {
-      console.error('Failed to fetch user books');
+      console.error('Failed to fetch user books:', err);
+      showMessage('error', 'Failed to load your books');
     }
   };
 
@@ -128,9 +132,29 @@ function UploadPage() {
     }
   };
 
+  const handleDelete = async (bookId: number) => {
+    try {
+      await deleteBook(bookId);
+      showMessage('success', 'Book deleted successfully');
+      fetchUserBooks();
+    } catch (err: any) {
+      showMessage('error', err.message || 'Failed to delete book');
+    }
+  };
+
   return (
     <div className="w-full flex justify-end items-center bgImage min-h-screen pb-10 max-sm:pb-25">
       {message && <Message type={message.type} text={message.text} />}
+      <ConfirmModal
+        isOpen={deleteModal.isOpen}
+        onClose={() => setDeleteModal({isOpen: false, bookId: null})}
+        onConfirm={() => deleteModal.bookId && handleDelete(deleteModal.bookId)}
+        title="Delete Book"
+        message="Are you sure you want to delete this book? This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+        type="danger"
+      />
       <SideMenu />
       <div className="w-6/7 max-[900px]:w-8/9 max-sm:w-full max-sm:px-3 min-h-screen flex flex-col px-10 pt-5 relative">
         <TopBar />
@@ -206,7 +230,14 @@ function UploadPage() {
               ) : (
                 <div className="w-full flex flex-wrap gap-3">
                   {userBooks.slice(0, 4).map((book) => (
-                    <div key={book.id} className="w-27 h-40 flex flex-col p-2 bg-[#31303e6d] border border-gray-700 rounded-2xl">
+                    <div key={book.id} className="w-27 h-40 flex flex-col p-2 bg-[#31303e6d] border border-gray-700 rounded-2xl relative group">
+                      <button
+                        onClick={() => setDeleteModal({isOpen: true, bookId: book.id})}
+                        className="absolute top-1 right-1 w-6 h-6 bg-red-600 hover:bg-red-700 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                        title="Delete book"
+                      >
+                        <i className="fa fa-trash text-xs text-white"></i>
+                      </button>
                       <img src={getBookCoverUrl(book.cover_image)} alt={book.title} className="h-7/11 w-full object-cover rounded-lg" />
                       <h3 className="text-xs text-gray-50 mt-1.5">{book.title}</h3>
                       <p className="text-[10px] text-gray-400">{book.author}</p>
