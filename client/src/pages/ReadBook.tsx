@@ -3,9 +3,10 @@ import { TopBar } from "../components/TopMenu"
 import { useState, useRef, useEffect } from "react"
 import { useParams, useNavigate, Link } from "react-router-dom"
 import { Document, Page, pdfjs } from "react-pdf"
-import { getBookDetail, getBookReviews, recordBookView, addToShelf } from "../utils/books/bookService"
+import { getBookDetail, getBookReviews, recordBookView, addToShelf, downloadBook } from "../utils/books/bookService"
 import { getBookCoverUrl, getBookFileUrl } from "../utils/imageUtils"
 import { getAvatarUrl } from "../utils/avatarUtils"
+import truncate from "../utils/truncateText"
 
 import 'react-pdf/dist/Page/TextLayer.css'
 import 'react-pdf/dist/Page/AnnotationLayer.css'
@@ -74,6 +75,19 @@ function ReadBook() {
         }
     };
 
+    const handleDownload = async () => {
+        try {
+            await downloadBook(Number(bookId));
+            const link = document.createElement('a');
+            link.href = fileUrl;
+            link.download = `${book.title}.pdf`;
+            link.click();
+            setBook({ ...book, download_count: book.download_count + 1 });
+        } catch (err) {
+            console.error('Failed to download:', err);
+        }
+    };
+
     const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
         setNumPages(numPages);
         if (!viewRecorded && bookId) {
@@ -114,7 +128,6 @@ function ReadBook() {
                 {/* Book Info Header */}
                 <div className="w-full max-w-4xl mx-auto mt-15 mb-6 p-6 bg-[#48576019] border border-gray-700 rounded-2xl">
                     <div className="flex gap-6 max-sm:flex-col">
-                        <img src={getBookCoverUrl(book.cover_image)} alt={book.title} className="w-32 h-48 object-cover rounded-lg" />
                         <div className="flex-1">
                             <h1 className="text-3xl max-sm:text-2xl font-bold text-gray-50 mb-2">{book.title}</h1>
                             <p className="text-gray-400 mb-1">by {book.author}</p>
@@ -124,7 +137,7 @@ function ReadBook() {
                                 <span><i className="fa fa-eye"></i> {book.view_count} views</span>
                                 <span><i className="fa fa-download"></i> {book.download_count} downloads</span>
                             </div>
-                            <p className="text-gray-300 text-sm mb-4">{book.description}</p>
+                            <p className="text-gray-300 text-sm mb-4">{truncate(book.description, 100)}</p>
                             <div className="flex gap-3 flex-wrap">
                                 <button onClick={handleFavorite} className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition flex items-center gap-2">
                                     <i className="fa fa-star"></i> Favorite
@@ -132,7 +145,10 @@ function ReadBook() {
                                 <button onClick={handleBookmark} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition flex items-center gap-2">
                                     <i className="fa fa-bookmark"></i> Bookmark
                                 </button>
-                                <Link to="/bookdetails" className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition flex items-center gap-2">
+                                <button onClick={handleDownload} className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition flex items-center gap-2">
+                                    <i className="fa fa-download"></i> Download
+                                </button>
+                                <Link to={`/bookdetails/${bookId}`} className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition flex items-center gap-2">
                                     <i className="fa fa-arrow-left"></i> Back to Details
                                 </Link>
                             </div>
