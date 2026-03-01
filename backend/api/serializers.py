@@ -23,17 +23,16 @@ class UserBasicSerializer(serializers.ModelSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
-    category_name = serializers.CharField(source='category.name', read_only=True)
-    uploaded_by_username = serializers.CharField(source='uploaded_by.username', read_only=True)
-    uploaded_by_avatar = serializers.ImageField(source='uploaded_by.avatar', read_only=True)
+    category = CategorySerializer(read_only=True)
+    uploaded_by = UserBasicSerializer(read_only=True)
 
     class Meta:
         model = Book
-        fields = ['id', 'title', 'author', 'description', 'category', 'category_name', 
+        fields = ['id', 'title', 'author', 'description', 'category', 
                   'cover_image', 'file', 'file_url', 'publication_year', 'language', 
-                  'uploaded_by', 'uploaded_by_username', 'uploaded_by_avatar', 'upload_date', 
-                  'updated_at', 'file_type', 'pages', 'is_published', 'view_count', 
-                  'download_count', 'average_rating', 'total_reviews', 'is_featured']
+                  'uploaded_by', 'upload_date', 'updated_at', 'file_type', 'pages', 
+                  'is_published', 'view_count', 'download_count', 'average_rating', 
+                  'total_reviews', 'is_featured']
         read_only_fields = ['uploaded_by', 'upload_date', 'updated_at', 'view_count', 
                             'download_count', 'average_rating', 'total_reviews']
 
@@ -53,13 +52,12 @@ class BookCreateSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    user_username = serializers.CharField(source='user.username', read_only=True)
-    user_avatar = serializers.ImageField(source='user.avatar', read_only=True)
+    user = UserBasicSerializer(read_only=True)
 
     class Meta:
         model = Review
-        fields = ['id', 'user', 'user_username', 'user_avatar', 'book', 'rating', 
-                  'title', 'content', 'created_at', 'updated_at', 'helpful_count']
+        fields = ['id', 'user', 'book', 'rating', 'title', 'content', 
+                  'created_at', 'updated_at', 'helpful_count']
         read_only_fields = ['user', 'created_at', 'updated_at']
 
 

@@ -57,7 +57,6 @@ def book_detail(request, pk):
     book = get_object_or_404(Book, pk=pk)
     
     if request.method == 'GET':
-        book.increment_views()
         serializer = BookSerializer(book)
         return Response(serializer.data)
     
@@ -90,6 +89,14 @@ def book_download(request, pk):
     )
     
     return Response({'message': 'Download recorded'}, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def book_view(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    book.increment_views()
+    return Response({'message': 'View recorded'}, status=status.HTTP_200_OK)
 
 
 @api_view(['GET', 'POST'])
