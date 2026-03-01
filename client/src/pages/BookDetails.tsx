@@ -4,10 +4,12 @@ import Review from "../components/Review";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import ReviewModal from "../components/ui/ReviewModal";
+import Message from "../components/ui/Message";
 import {
 	getBookDetail,
 	getBookReviews,
 	addToShelf,
+	addReview,
 } from "../utils/books/bookService";
 import { getBookCoverUrl } from "../utils/imageUtils";
 import { getAvatarUrl } from "../utils/avatarUtils";
@@ -20,6 +22,7 @@ function BookDetails() {
 	const [reviews, setReviews] = useState<any[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [activeState, setActiveState] = useState("hidden");
+	const [message, setMessage] = useState<{ type: string; text: string } | null>(null);
 
 	useEffect(() => {
 		if (bookId) {
@@ -53,9 +56,27 @@ function BookDetails() {
 	const handleBookmark = async () => {
 		try {
 			await addToShelf(Number(bookId), "bookmark");
-			alert("Added to bookmarks!");
+			showMessage('success', 'Added to bookmarks!');
 		} catch (err) {
 			console.error("Failed to bookmark:", err);
+			showMessage('error', 'Failed to add bookmark');
+		}
+	};
+
+	const showMessage = (type: string, text: string) => {
+		setMessage({ type, text });
+		setTimeout(() => setMessage(null), 3000);
+	};
+
+	const handleSubmitReview = async (rating: number, title: string, content: string) => {
+		try {
+			await addReview(Number(bookId), { rating, title, content });
+			showMessage('success', 'Review submitted successfully!');
+			loadReviews();
+			loadBook();
+		} catch (err: any) {
+			console.error('Failed to submit review:', err);
+			showMessage('error', 'Failed to submit review. You may have already reviewed this book.');
 		}
 	};
 
@@ -70,6 +91,7 @@ function BookDetails() {
 	if (!book) return null;
 	return (
 		<div className="w-full flex justify-end items-center bgImage min-h-screen pb-10 max-sm:pb-25">
+			{message && <Message type={message.type} text={message.text} />}
 			{/* Side Navigation Menu */}
 			<SideMenu />
 			<div className="w-6/7 max-[900px]:w-7/8 max-sm:w-full min-h-screen flex flex-col px-10 max-[900px]:px-5 max-sm:px-3 pt-5 relative">
@@ -185,12 +207,13 @@ function BookDetails() {
 				</button>
 			</div>
 			<div
-				className={`w-full h-full top-0 left-0 ${activeState} justify-center items-center bg-[#48576019] backdrop-blur-2xl fixed z-50"`}
+				className={`w-full h-full top-0 left-0 ${activeState} justify-center items-center bg-[#48576019] backdrop-blur-2xl fixed z-999`}
 			>
 				<ReviewModal
 					onClose={() => {
 						setActiveState("hidden");
 					}}
+					onSubmit={handleSubmitReview}
 				></ReviewModal>
 			</div>
 		</div>
