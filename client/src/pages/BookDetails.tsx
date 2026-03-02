@@ -13,7 +13,6 @@ import {
 } from "../utils/books/bookService";
 import { getBookCoverUrl } from "../utils/imageUtils";
 import { getAvatarUrl } from "../utils/avatarUtils";
-import truncate from "../utils/truncateText";
 
 function BookDetails() {
 	const { bookId } = useParams();
@@ -133,9 +132,6 @@ function BookDetails() {
 										<i className="fa fa-calendar"></i>{" "}
 										<span className="text-gray-200">Year: </span>{" "}
 										{book.publication_year}
-									</p>
-									<p className="mt-2 text-gray-200 text-sm">
-										{truncate(book.description, 80)}
 									</p>
 									<span className="flex items-center mt-2">
 										<span className="w-8 h-8 flex rounded-full overflow-hidden">

@@ -56,18 +56,7 @@ export function TopBar() {
     };
 
     return (
-        <div className="w-6/7 max-[900px]:w-8/9 max-[900px]:px-5 max-sm:hidden bg-gray-950/50 backdrop-blur-3xl h-15 max-sm:h-10 flex justify-between items-center fixed top-0 right-0 px-10 z-50">
-            {/* Search Bar */}
-            <span className="flex h-9 min-w-2/6 rounded-4xl bg-[#4857605a] justify-between items-center border border-gray-700">
-                <CustomSelect defaultValue="All" options={[{ value: "Book", label: "Book" }, { value: "Author", label: "Author" }]}></CustomSelect>
-                <span className="flex justify-between items-center h-full w-2/3 max-[900px]:w-auto text-xs text-gray-300">
-                    <input type="text" className="w-full h-full outline-0 ring-0 caret-purple-500" placeholder="Search..." />
-                    <i className="fa fa-search"></i>
-                </span>
-                <span className="w-auto px-2 flex justify-center items-center cursor-pointer h-6/10 border-l border-purple-300" title="Scan ISBN/ISSN Code">
-                    <i className="fa fa-barcode text-sm text-gray-300"></i>
-                </span>
-            </span>
+        <div className="w-6/7 max-[900px]:w-8/9 max-[900px]:px-5 max-sm:hidden bg-gray-950/50 backdrop-blur-3xl h-15 max-sm:h-10 flex justify-between items-center gap-4 fixed top-0 right-0 px-10 z-50">
             {/* Language Selector - Future Feature */}
             <span className="flex h-9 min-w-25 px-2 rounded-4xl bg-[#4857605a] justify-center items-center border border-gray-700 shadow cursor-pointer">
                 <i className="fa fa-language text-gray-300"></i>
