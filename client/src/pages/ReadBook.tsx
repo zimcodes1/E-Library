@@ -79,13 +79,23 @@ function ReadBook() {
     const handleDownload = async () => {
         try {
             await downloadBook(Number(bookId));
+            
+            // Fetch the file as blob and download
+            const response = await fetch(fileUrl);
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
-            link.href = fileUrl;
+            link.href = url;
             link.download = `${book.title}.pdf`;
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+            
             setBook({ ...book, download_count: book.download_count + 1 });
         } catch (err) {
             console.error('Failed to download:', err);
+            alert('Failed to download book. Please try again.');
         }
     };
 
