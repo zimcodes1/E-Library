@@ -211,3 +211,12 @@ def new_arrivals(request):
     
     serializer = BookSerializer(books, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def recent_readings(request):
+    recent = ReadingProgress.objects.filter(user=request.user).order_by('-last_read_at')[:10]
+    books = [rp.book for rp in recent]
+    serializer = BookSerializer(books, many=True)
+    return Response(serializer.data)

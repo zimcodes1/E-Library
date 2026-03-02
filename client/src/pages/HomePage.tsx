@@ -3,7 +3,7 @@ import { TopBar } from "../components/TopMenu"
 import BookItem from "../components/BookItem"
 import { useState, useEffect } from "react";
 import { getUser, isAuthenticated } from "../utils/auth";
-import { getTodayQuote, getNewArrivals, getBooks } from "../utils/books/bookService";
+import { getTodayQuote, getNewArrivals, getBooks, getRecentReadings } from "../utils/books/bookService";
 import { getBookCoverUrl } from "../utils/imageUtils";
 import TodayQuotes from "../components/ui/TodayQuote";
 import NewArrivals from "../components/ui/NewArrivals";
@@ -13,9 +13,10 @@ function HomePage() {
     const [user, setUser] = useState<any>(null);
     const [books, setBooks] = useState<any[]>([]);
     const [recommended, setRecommended] = useState<any[]>([]);
+    const [recentReadings, setRecentReadings] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
-    loading
     const [loadingRecommended, setLoadingRecommended] = useState(false);
+    const [loadingRecent, setLoadingRecent] = useState(false);
     const [quotes, setQuotes] = useState<any[]>([]);
     
     let hour = new Date().getHours();
@@ -30,12 +31,13 @@ function HomePage() {
     })
     
     const [containerHeight, setContainerHeight] = useState(['h-44', 'Show More', 'fa-plus']);
-    setContainerHeight
+    
     useEffect(() => {
         if (isAuthenticated()) {
             setUser(getUser());
             loadNewArrivals();
             loadRecommended();
+            loadRecentReadings();
         }
         loadQuote();
     }, []);
@@ -66,13 +68,11 @@ function HomePage() {
         try {
             const userData = getUser();
             if (userData?.interests && userData.interests.length > 0) {
-                // Get books from all user interests, not just the first one
                 const allBooks: any[] = [];
                 for (const interest of userData.interests) {
                     const data = await getBooks({ category: interest.slug });
                     allBooks.push(...data);
                 }
-                // Shuffle and limit to 10 books
                 const shuffled = allBooks.sort(() => Math.random() - 0.5);
                 setRecommended(shuffled.slice(0, 10));
             }
@@ -80,6 +80,18 @@ function HomePage() {
             console.error('Failed to load recommended:', err);
         } finally {
             setLoadingRecommended(false);
+        }
+    };
+
+    const loadRecentReadings = async () => {
+        setLoadingRecent(true);
+        try {
+            const data = await getRecentReadings();
+            setRecentReadings(data);
+        } catch (err) {
+            console.error('Failed to load recent readings:', err);
+        } finally {
+            setLoadingRecent(false);
         }
     };
 
@@ -131,7 +143,7 @@ function HomePage() {
                                     </div>
                                 </div>
                             ) : (
-                                <div className={`w-full ${containerHeight[0]} overflow-hidden flex justify-evenly flex-wrap gap-3 max-[900px]:gap-2 max-sm:gap-1 transition-all duration-300`}>
+                                <div className={`w-fit ${containerHeight[0]} overflow-hidden flex justify-evenly flex-wrap gap-3 max-[900px]:gap-2 max-sm:gap-1 transition-all duration-300`}>
                                     {recommended.map((book) => (
                                         <BookItem 
                                             key={book.id}
@@ -153,9 +165,31 @@ function HomePage() {
                             <h3 className="text-sm">Recent Readings</h3>
                         </span>
                         <div className="w-full h-fit mt-2 flex flex-col">
-                            <div className='w-full overflow-hidden flex justify-center items-center py-5 flex-wrap gap-2 transition-all duration-300'>
-                                <p className="text-gray-500 text-sm">No recent readings</p>
-                            </div>
+                            {loadingRecent ? (
+                                <div className='w-full overflow-hidden flex justify-center items-center py-5'>
+                                    <p className="text-gray-400 text-sm">Loading...</p>
+                                </div>
+                            ) : recentReadings.length === 0 ? (
+                                <div className='w-full overflow-hidden flex justify-center items-center py-5'>
+                                    <p className="text-gray-500 text-sm">No recent readings</p>
+                                </div>
+                            ) : (
+                                <div className='w-full overflow-hidden flex justify-start items-center py-2 flex-wrap gap-3 max-[900px]:gap-2 max-sm:gap-1'>
+                                    {recentReadings.map((book) => (
+                                        <BookItem 
+                                            key={book.id}
+                                            bookId={book.id}
+                                            bookImage={getBookCoverUrl(book.cover_image)} 
+                                            bookDetails={{ 
+                                                title: book.title, 
+                                                author: book.author, 
+                                                year: book.publication_year, 
+                                                rating: book.average_rating 
+                                            }}
+                                        />
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
 

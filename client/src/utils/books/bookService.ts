@@ -149,6 +149,14 @@ export const getNewArrivals = async () => {
     return response.json();
 };
 
+export const getRecentReadings = async () => {
+    const response = await fetch(`${API_BASE_URL}/recent-readings/`, {
+        headers: getAuthHeaders(),
+    });
+    if (!response.ok) throw new Error('Failed to fetch recent readings');
+    return response.json();
+};
+
 export const recordBookView = async (bookId: number) => {
     const response = await fetch(`${API_BASE_URL}/books/${bookId}/view/`, {
         method: 'POST',
