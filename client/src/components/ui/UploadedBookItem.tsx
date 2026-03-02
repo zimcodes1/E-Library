@@ -1,6 +1,7 @@
 import { getBookCoverUrl } from "../../utils/imageUtils";
 import { useState } from "react";
 import ConfirmModal from "./ConfirmModal";
+import truncate from "../../utils/truncateText";
 
 interface UploadedBookItemProps {
   book: {
@@ -29,8 +30,8 @@ const UploadedBookItem = ({ book, onDelete, onEdit }: UploadedBookItemProps) => 
   return (
     <div className="flex flex-col p-2 bg-[#48576019] border border-gray-700 rounded-xl hover:border-purple-500 transition">
       <img src={getBookCoverUrl(book.cover_image)} alt={book.title} className="w-full h-32 object-cover rounded-xl" />
-      <h3 className="text-xs text-gray-50 mt-2 truncate">{book.title}</h3>
-      <p className="text-[10px] text-gray-400 truncate mb-2">{book.author}</p>
+      <h3 className="text-xs text-gray-50 mt-2" title={book.title}>{truncate(book.title, 20)}</h3>
+      <p className="text-[10px] text-gray-400 mb-2" title={book.author}>{truncate(book.author, 25)}</p>
       <div className="flex gap-2 mt-auto">
         <button
           onClick={() => onEdit(book.id)}

@@ -3,7 +3,7 @@ import { TopBar } from "../components/TopMenu"
 import { useState, useRef, useEffect } from "react"
 import { useParams, useNavigate, Link } from "react-router-dom"
 import { Document, Page, pdfjs } from "react-pdf"
-import { getBookDetail, getBookReviews, recordBookView, addToShelf, downloadBook } from "../utils/books/bookService"
+import { getBookDetail, getBookReviews, recordBookView, addToShelf, downloadBook, getUserShelves, removeFromShelf } from "../utils/books/bookService"
 import { getBookFileUrl } from "../utils/imageUtils"
 import { getAvatarUrl } from "../utils/avatarUtils"
 import truncate from "../utils/truncateText"
@@ -27,12 +27,15 @@ function ReadBook() {
     const [containerWidth, setContainerWidth] = useState<number>(0);
     const [viewRecorded, setViewRecorded] = useState(false);
     const [pageLoading, setPageLoading] = useState(false);
+    const [bookmarkStatus, setBookmarkStatus] = useState<{isBookmarked: boolean, shelveId?: number}>({isBookmarked: false});
+    const [favoriteStatus, setFavoriteStatus] = useState<{isFavorited: boolean, shelveId?: number}>({isFavorited: false});
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (bookId) {
             loadBook();
             loadReviews();
+            checkShelveStatus();
         }
     }, [bookId]);
 
@@ -58,10 +61,29 @@ function ReadBook() {
         }
     };
 
+    const checkShelveStatus = async () => {
+        try {
+            const shelves = await getUserShelves();
+            const bookmark = shelves.find((s: any) => s.book === Number(bookId) && s.shelf_type === 'bookmark');
+            const favorite = shelves.find((s: any) => s.book === Number(bookId) && s.shelf_type === 'favorite');
+            setBookmarkStatus({isBookmarked: !!bookmark, shelveId: bookmark?.id});
+            setFavoriteStatus({isFavorited: !!favorite, shelveId: favorite?.id});
+        } catch (err) {
+            console.error('Failed to check shelve status:', err);
+        }
+    };
+
     const handleBookmark = async () => {
         try {
-            await addToShelf(Number(bookId), 'bookmark');
-            alert('Added to bookmarks!');
+            if (bookmarkStatus.isBookmarked && bookmarkStatus.shelveId) {
+                await removeFromShelf(bookmarkStatus.shelveId);
+                setBookmarkStatus({isBookmarked: false});
+                alert('Removed from bookmarks!');
+            } else {
+                const result = await addToShelf(Number(bookId), 'bookmark');
+                setBookmarkStatus({isBookmarked: true, shelveId: result.id});
+                alert('Added to bookmarks!');
+            }
         } catch (err) {
             console.error('Failed to bookmark:', err);
         }
@@ -69,8 +91,15 @@ function ReadBook() {
 
     const handleFavorite = async () => {
         try {
-            await addToShelf(Number(bookId), 'favorite');
-            alert('Added to favorites!');
+            if (favoriteStatus.isFavorited && favoriteStatus.shelveId) {
+                await removeFromShelf(favoriteStatus.shelveId);
+                setFavoriteStatus({isFavorited: false});
+                alert('Removed from favorites!');
+            } else {
+                const result = await addToShelf(Number(bookId), 'favorite');
+                setFavoriteStatus({isFavorited: true, shelveId: result.id});
+                alert('Added to favorites!');
+            }
         } catch (err) {
             console.error('Failed to favorite:', err);
         }
@@ -150,11 +179,11 @@ function ReadBook() {
                             </div>
                             <p className="text-gray-300 text-sm mb-4">{truncate(book.description, 100)}</p>
                             <div className="flex gap-3 flex-wrap">
-                                <button onClick={handleFavorite} className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition flex items-center gap-2">
-                                    <i className="fa fa-star"></i> Favorite
+                                <button onClick={handleFavorite} className={`px-4 py-2 ${favoriteStatus.isFavorited ? 'bg-red-600 hover:bg-red-700' : 'bg-purple-600 hover:bg-purple-700'} text-white rounded-lg transition flex items-center gap-2`}>
+                                    <i className={`fa ${favoriteStatus.isFavorited ? 'fa-heart-broken' : 'fa-star'}`}></i> {favoriteStatus.isFavorited ? 'Unfavorite' : 'Favorite'}
                                 </button>
-                                <button onClick={handleBookmark} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition flex items-center gap-2">
-                                    <i className="fa fa-bookmark"></i> Bookmark
+                                <button onClick={handleBookmark} className={`px-4 py-2 ${bookmarkStatus.isBookmarked ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700'} text-white rounded-lg transition flex items-center gap-2`}>
+                                    <i className={`fa ${bookmarkStatus.isBookmarked ? 'fa-bookmark-o' : 'fa-bookmark'}`}></i> {bookmarkStatus.isBookmarked ? 'Remove Bookmark' : 'Bookmark'}
                                 </button>
                                 <button onClick={handleDownload} className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition flex items-center gap-2">
                                     <i className="fa fa-download"></i> Download

@@ -8,6 +8,7 @@ import ConfirmModal from "../components/ui/ConfirmModal";
 import { uploadBook, getUserUploadedBooks, deleteBook } from "../utils/books";
 import { getCategories } from "../utils/user/interests";
 import { getBookCoverUrl } from "../utils/imageUtils";
+import truncate from "../utils/truncateText";
 
 function UploadPage() {
   useEffect(() => { document.title = 'Upload Your Book | Libronet' }, [])
@@ -238,8 +239,8 @@ function UploadPage() {
                         <i className="fa fa-trash text-xs text-white"></i>
                       </button>
                       <img src={getBookCoverUrl(book.cover_image)} alt={book.title} className="h-7/11 w-full object-cover rounded-lg" />
-                      <h3 className="text-xs text-gray-50 mt-1.5">{book.title}</h3>
-                      <p className="text-[10px] text-gray-400">{book.author}</p>
+                      <h3 className="text-xs text-gray-50 mt-1.5" title={book.title}>{truncate(book.title, 15)}</h3>
+                      <p className="text-[10px] text-gray-400" title={book.author}>{truncate(book.author, 20)}</p>
                     </div>
                   ))}
                 </div>
