@@ -26,6 +26,7 @@ function ReadBook() {
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [containerWidth, setContainerWidth] = useState<number>(0);
     const [viewRecorded, setViewRecorded] = useState(false);
+    const [pageLoading, setPageLoading] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -160,13 +161,34 @@ function ReadBook() {
                 <div className="w-full h-fit flex flex-col justify-center items-center">
                     <div
                         ref={containerRef}
-                        className="w-full max-w-4xl flex justify-center items-center h-fit bg-[#48576019] rounded-xl overflow-hidden border border-gray-700"
+                        className="w-full max-w-4xl flex justify-center items-center min-h-150 bg-[#48576019] rounded-xl overflow-hidden border border-gray-700 relative"
                     >
-                        <Document file={fileUrl} onLoadSuccess={onDocumentLoadSuccess}>
+                        {pageLoading && (
+                            <div className="absolute inset-0 flex items-center justify-center bg-[#48576099] backdrop-blur-sm z-10">
+                                <div className="flex flex-col items-center gap-3">
+                                    <div className="w-12 h-12 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
+                                    <p className="text-gray-300 text-sm">Loading page...</p>
+                                </div>
+                            </div>
+                        )}
+                        <Document 
+                            file={fileUrl} 
+                            onLoadSuccess={onDocumentLoadSuccess}
+                            loading={
+                                <div className="flex items-center justify-center p-20">
+                                    <div className="flex flex-col items-center gap-3">
+                                        <div className="w-12 h-12 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
+                                        <p className="text-gray-300 text-sm">Loading document...</p>
+                                    </div>
+                                </div>
+                            }
+                        >
                             <Page
                                 pageNumber={pageNumber}
                                 width={containerWidth > 0 ? containerWidth : undefined}
                                 renderMode="canvas"
+                                loading=""
+                                onRenderSuccess={() => setPageLoading(false)}
                             />
                         </Document>
                     </div>
@@ -205,8 +227,12 @@ function ReadBook() {
                 {/* Navigation Buttons */}
                 {pageNumber > 1 && (
                     <button
-                        onClick={() => setPageNumber(pageNumber - 1)}
-                        className="fixed z-50 left-[18%] max-sm:left-5 top-1/2 -translate-y-1/2 p-4 max-sm:p-3 rounded-full bg-purple-600 hover:bg-purple-700 border-2 border-purple-400 text-white shadow-lg shadow-purple-500/50 transition-all hover:scale-110"
+                        onClick={() => {
+                            setPageLoading(true);
+                            setPageNumber(pageNumber - 1);
+                        }}
+                        disabled={pageLoading}
+                        className="fixed z-50 left-[18%] max-sm:left-5 top-1/2 -translate-y-1/2 p-4 max-sm:p-3 rounded-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 disabled:cursor-not-allowed border-2 border-purple-400 text-white shadow-lg shadow-purple-500/50 transition-all hover:scale-110 disabled:hover:scale-100"
                         aria-label="Previous page"
                     >
                         <i className="fa fa-chevron-left text-xl"></i>
@@ -215,8 +241,12 @@ function ReadBook() {
 
                 {pageNumber < numPages && (
                     <button
-                        onClick={() => setPageNumber(pageNumber + 1)}
-                        className="fixed z-50 right-[5%] max-sm:right-5 top-1/2 -translate-y-1/2 p-4 max-sm:p-3 rounded-full bg-purple-600 hover:bg-purple-700 border-2 border-purple-400 text-white shadow-lg shadow-purple-500/50 transition-all hover:scale-110"
+                        onClick={() => {
+                            setPageLoading(true);
+                            setPageNumber(pageNumber + 1);
+                        }}
+                        disabled={pageLoading}
+                        className="fixed z-50 right-[5%] max-sm:right-5 top-1/2 -translate-y-1/2 p-4 max-sm:p-3 rounded-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 disabled:cursor-not-allowed border-2 border-purple-400 text-white shadow-lg shadow-purple-500/50 transition-all hover:scale-110 disabled:hover:scale-100"
                         aria-label="Next page"
                     >
                         <i className="fa fa-chevron-right text-xl"></i>
