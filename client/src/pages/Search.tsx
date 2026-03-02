@@ -55,7 +55,7 @@ function SearchPage() {
 					{/* Search Bar */}
 					<div className="w-full max-w-4xl mx-auto">
 						<div className="flex gap-3 max-sm:flex-col">
-							<div className="flex-1 flex h-12 border border-gray-700 rounded-2xl overflow-hidden bg-[#4857605a]">
+							<div className="md:flex-1 flex h-12 border border-gray-700 rounded-2xl overflow-hidden bg-[#4857605a]">
 								<input
 									type="text"
 									placeholder="Search by title or author..."
@@ -115,10 +115,12 @@ function SearchPage() {
 								</div>
 							</>
 						) : searchQuery || selectedCategory ? (
+              <div className="text-center mt-10">
+                <i className="fa fa-search text-6xl text-gray-700 mb-4"></i>
 							<p className="text-gray-500 text-center mt-10">
 								No books found. Try different search terms.
 							</p>
-						) : (
+						</div>) : (
 							<div className="text-center mt-10">
 								<i className="fa fa-search text-6xl text-gray-700 mb-4"></i>
 								<p className="text-gray-500">
