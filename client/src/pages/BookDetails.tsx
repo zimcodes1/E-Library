@@ -2,7 +2,7 @@ import SideMenu from "../components/SideMenu";
 import { TopBar } from "../components/TopMenu";
 import Review from "../components/Review";
 import { useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ReviewModal from "../components/ui/ReviewModal";
 import Message from "../components/ui/Message";
 import Preloader from "../components/ui/Preloader";

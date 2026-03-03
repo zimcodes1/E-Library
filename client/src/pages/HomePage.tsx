@@ -39,7 +39,7 @@ function HomePage() {
 		"Show More",
 		"fa-plus",
 	]);
-
+    setContainerHeight
 	useEffect(() => {
 		if (isAuthenticated()) {
 			setUser(getUser());
