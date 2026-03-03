@@ -99,7 +99,7 @@ function SearchPage() {
 								<p className="text-gray-400 mb-4">
 									{books.length} results found
 								</p>
-								<div className="grid grid-cols-5 max-[900px]:grid-cols-3 max-sm:grid-cols-2 gap-4">
+								<div className="w-full overflow-hidden flex justify-start items-center py-2 flex-wrap gap-3 max-[900px]:gap-2 max-sm:gap-1">
 									{books.map((book) => (
 										<BookItem
 											key={book.id}
