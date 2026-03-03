@@ -19,14 +19,15 @@ class UserSerializer(serializers.ModelSerializer):
         write_only=True, 
         required=False
     )
-    avatar = serializers.SerializerMethodField()
+    avatar = serializers.ImageField(required=False, allow_null=True, use_url=False)
+    avatar_url = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'avatar', 'bio', 'reading_hours', 'books_read', 'interests', 'interest_ids', 'recent_books']
-        read_only_fields = ['id', 'reading_hours', 'books_read', 'recent_books']
+        fields = ['id', 'username', 'email', 'avatar', 'avatar_url', 'bio', 'reading_hours', 'books_read', 'interests', 'interest_ids', 'recent_books']
+        read_only_fields = ['id', 'reading_hours', 'books_read', 'recent_books', 'avatar_url']
 
-    def get_avatar(self, obj):
+    def get_avatar_url(self, obj):
         if obj.avatar:
             request = self.context.get('request')
             if request:

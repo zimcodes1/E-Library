@@ -4,17 +4,18 @@ import { useNavigate } from "react-router-dom";
 import Tabs from "../components/ui/Tabs";
 import InterestsModal from "../components/ui/InterestModal";
 import ConfirmModal from "../components/ui/ConfirmModal";
+import EditModal from "../components/ui/EditModal";
 import Preloader from "../components/ui/Preloader";
+import Message from "../components/ui/Message";
 import {
 	getUser,
 	getToken,
 	logout,
 	clearAuth,
 	isAuthenticated,
+	updateProfile,
 } from "../utils/auth";
 import { saveUserInterests } from "../utils/user/interests";
-import EditBioModal from "../components/ui/EditBioModal";
-import { saveBio } from "../utils/user/bio";
 import { updateAvatar } from "../utils/user/avatar";
 import { getAvatarUrl } from "../utils/avatarUtils";
 import { getUserUploadedBooks, deleteBook, getUserReviewsCount } from "../utils/books";
@@ -26,15 +27,18 @@ const UserProfile = () => {
 	}, []);
 	const [activeTab, setActiveTab] = useState(0);
 	const [showModal, setShowModal] = useState(false);
-	const [showBioEditModal, setShowBioEditModal] = useState(false);
 	const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+	const [showEditModal, setShowEditModal] = useState<'username' | 'email' | 'bio' | null>(null);
 	const [user, setUser] = useState<any>(null);
 	const [interests, setInterests] = useState<string[]>([]);
-    const [bio, setBio] = useState<string|undefined>()
-	const [avatarUploading, setAvatarUploading] = useState(false);
 	const [uploadedBooks, setUploadedBooks] = useState<any[]>([]);
 	const [reviewsCount, setReviewsCount] = useState(0);
 	const [loading, setLoading] = useState(false);
+	const [message, setMessage] = useState<{ type: string; text: string } | null>(null);
+	const [pendingChanges, setPendingChanges] = useState<any>({});
+	const [selectedAvatar, setSelectedAvatar] = useState<File | null>(null);
+	const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+	const [editValue, setEditValue] = useState('');
 	const avatarInputRef = useRef<HTMLInputElement>(null);
 	const navigate = useNavigate();
 
@@ -53,9 +57,9 @@ const UserProfile = () => {
 		if (userData?.interests) {
 			setInterests(userData.interests.map((i: any) => i.name));
 		}
-        if (userData?.bio){
-            setBio(userData.bio)
-        }
+		setPendingChanges({});
+		setSelectedAvatar(null);
+		setAvatarPreview(null);
 	};
 
 	useEffect(() => {
@@ -86,65 +90,85 @@ const UserProfile = () => {
 		}
 	};
 
+	const showMessage = (type: string, text: string) => {
+		setMessage({ type, text });
+		setTimeout(() => setMessage(null), 3000);
+	};
+
+	const handleOpenEdit = (field: 'username' | 'email' | 'bio') => {
+		setShowEditModal(field);
+		setEditValue(pendingChanges[field] || user?.[field] || '');
+	};
+
+	const handleSaveEdit = () => {
+		if (showEditModal) {
+			setPendingChanges({ ...pendingChanges, [showEditModal]: editValue });
+			setShowEditModal(null);
+		}
+	};
+
+	const handleAvatarSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+		if (file) {
+			setSelectedAvatar(file);
+			const reader = new FileReader();
+			reader.onloadend = () => setAvatarPreview(reader.result as string);
+			reader.readAsDataURL(file);
+		}
+	};
+
+	const handleSaveChanges = async () => {
+		setLoading(true);
+		try {
+			const token = getToken();
+			if (!token) throw new Error('Not authenticated');
+
+			if (selectedAvatar) {
+				await updateAvatar(selectedAvatar);
+			}
+
+			const updates: any = {};
+			if (pendingChanges.username) updates.username = pendingChanges.username;
+			if (pendingChanges.email) updates.email = pendingChanges.email;
+			if (pendingChanges.bio !== undefined) updates.bio = pendingChanges.bio;
+
+			if (Object.keys(updates).length > 0) {
+				await updateProfile(token, updates);
+			}
+
+			setTimeout(() => loadUserData(), 500);
+			showMessage('success', 'Profile updated successfully!');
+		} catch (error: any) {
+			console.error('Failed to update profile:', error);
+			showMessage('error', error.message || 'Failed to update profile');
+		} finally {
+			setLoading(false);
+			if (avatarInputRef.current) avatarInputRef.current.value = '';
+		}
+	};
+
 	const handleDeleteBook = async (bookId: number) => {
 		try {
 			await deleteBook(bookId);
 			setUploadedBooks(uploadedBooks.filter(book => book.id !== bookId));
 		} catch (error) {
 			console.error("Failed to delete book:", error);
-			alert("Failed to delete book. Please try again.");
+			showMessage('error', 'Failed to delete book');
 		}
 	};
 
 	const handleEditBook = (bookId: number) => {
-		// TODO: Implement edit functionality
 		console.log("Edit book:", bookId);
-		alert("Edit functionality coming soon!");
+		showMessage('info', 'Edit functionality coming soon!');
 	};
 
 	const handleSaveInterests = async (newInterests: string[]) => {
 		try {
 			await saveUserInterests(newInterests);
-			// Wait a bit for backend to update
-			setTimeout(() => {
-				loadUserData();
-			}, 500);
+			setTimeout(() => loadUserData(), 500);
 		} catch (error) {
 			console.error("Failed to update interests:", error);
-			alert("Failed to save interests. Please try again.");
-		}
-	};
-
-    const handleSetBio = async (newBio:string)=>{
-        try{
-            await saveBio(newBio);
-            setTimeout(()=>{
-                loadUserData();
-            }, 500);
-        } catch (err){
-            console.error("Failed to update interests:", err);
-            alert('Failed to update bio. Please try again later.')
-        }
-    }
-
-	const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-		const file = e.target.files?.[0];
-		if (!file) return;
-
-		setAvatarUploading(true);
-		try {
-			await updateAvatar(file);
-			setTimeout(() => {
-				loadUserData();
-			}, 500);
-		} catch (error) {
-			console.error("Failed to update avatar:", error);
-			alert("Failed to update avatar. Please try again.");
-		} finally {
-			setAvatarUploading(false);
-			if (avatarInputRef.current) {
-				avatarInputRef.current.value = '';
-			}
+			showMessage('error', 'Failed to save interests');
 		}
 	};
 
@@ -161,29 +185,30 @@ const UserProfile = () => {
 		navigate("/login");
 	};
 
+	const hasChanges = Object.keys(pendingChanges).length > 0 || selectedAvatar !== null;
+
 	if (!user) return null;
 
 	return (
 		<div className="w-full flex justify-end items-center bgImage overflow-clip min-h-dvh pb-10 max-sm:pb-0">
-			<Preloader isLoading={loading || avatarUploading} />
+			<Preloader isLoading={loading} />
+			{message && <Message type={message.type} text={message.text} />}
 			<SideMenu />
 			<div className="w-6/7 max-sm:w-full h-dvh max-sm:h-fit flex flex-col px-10 max-sm:p-3 pt-5 pb-20 max-sm:pb-28 relative">
 				<div className="w-full h-full flex items-center justify-start flex-col">
 					<div className="w-full max-w-5xl max-h-fit max-[900px]:h-fit rounded-2xl bg-[#4857605a] p-8 max-sm:p-4 border border-gray-700 flex flex-col">
-						{/* Profile Header */}
 						<div className="flex max-sm:flex-col items-center gap-6 pb-6 border-b border-gray-700">
 							<div className="relative">
 								<div className="w-24 h-24 rounded-full overflow-hidden border-2 border-purple-500">
 									<img
-										src={getAvatarUrl(user?.avatar)}
+										src={avatarPreview || getAvatarUrl(user?.avatar_url)}
 										alt="User"
 										className="w-full h-full object-cover"
 									/>
 								</div>
 								<button
 									onClick={() => avatarInputRef.current?.click()}
-									disabled={avatarUploading}
-									className="absolute bottom-0 right-0 bg-purple-500 hover:bg-purple-600 disabled:bg-gray-500 text-white rounded-full p-2 transition"
+									className="absolute bottom-0 right-0 bg-purple-500 hover:bg-purple-600 text-white rounded-full h-8 w-8 transition"
 									title="Change avatar"
 								>
 									<i className="fa fa-camera text-sm"></i>
@@ -192,16 +217,16 @@ const UserProfile = () => {
 									ref={avatarInputRef}
 									type="file"
 									accept="image/*"
-									onChange={handleAvatarChange}
+									onChange={handleAvatarSelect}
 									className="hidden"
 								/>
 							</div>
 							<div className="flex-1 max-sm:text-center">
 								<h1 className="text-2xl font-bold text-gray-50">
-									{user?.username || "User"}
+									{pendingChanges.username || user?.username || "User"}
 								</h1>
 								<p className="text-gray-400 text-sm mt-1">
-									{user?.email || "No email"}
+									{pendingChanges.email || user?.email || "No email"}
 								</p>
 								<div className="flex max-sm:justify-center gap-4 mt-3 text-sm">
 									<span className="text-gray-300">
@@ -222,7 +247,6 @@ const UserProfile = () => {
 							</button>
 						</div>
 
-						{/* Tabs */}
 						<div className="mt-6 max-sm:mt-3 flex-1 flex flex-col">
 							<Tabs
 								tabs={["Account", "Reading Stats", "Interests", "Uploads"]}
@@ -230,35 +254,42 @@ const UserProfile = () => {
 								onTabChange={setActiveTab}
 							/>
 
-							{/* Tab Content */}
 							{activeTab === 0 && (
 								<div className="space-y-4 overflow-y-auto">
 									<div className="flex justify-between items-center p-4 rounded-lg bg-[#31303e] border border-gray-700">
 										<div>
 											<span className="text-gray-400">Username:</span>{" "}
 											<span className="text-gray-50 ml-2">
-												{user?.username}
+												{pendingChanges.username || user?.username}
 											</span>
 										</div>
+										<i onClick={() => handleOpenEdit('username')} className="fa fa-edit cursor-pointer text-purple-400 hover:scale-105 transition"></i>
 									</div>
 									<div className="flex justify-between items-center p-4 rounded-lg bg-[#31303e] border border-gray-700">
 										<div>
 											<span className="text-gray-400">Email:</span>{" "}
-											<span className="text-gray-50 ml-2">{user?.email}</span>
+											<span className="text-gray-50 ml-2">{pendingChanges.email || user?.email}</span>
 										</div>
+										<i onClick={() => handleOpenEdit('email')} className="fa fa-edit cursor-pointer text-purple-400 hover:scale-105 transition"></i>
 									</div>
 									<div className="flex justify-between items-center p-4 rounded-lg bg-[#31303e] border border-gray-700">
-										<div className="relative w-full">
+										<div className="flex-1">
 											<span className="text-gray-400">Bio:</span>{" "}
 											<span className="text-gray-50 ml-2">
-												{user?.bio || "No bio yet"}
+												{pendingChanges.bio !== undefined ? pendingChanges.bio : (user?.bio || "No bio yet")}
 											</span>
-											<i
-												onClick={() => setShowBioEditModal(true)}
-												className="fa fa-edit cursor-pointer hover:scale-105 transition duration-200 text-purple-400 absolute right-0 "
-											></i>
 										</div>
+										<i onClick={() => handleOpenEdit('bio')} className="fa fa-edit cursor-pointer text-purple-400 hover:scale-105 transition ml-4"></i>
 									</div>
+									{hasChanges && (
+										<button
+											onClick={handleSaveChanges}
+											disabled={loading}
+											className="w-full py-3 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white rounded-lg transition font-medium"
+										>
+											Save Changes
+										</button>
+									)}
 								</div>
 							)}
 
@@ -293,8 +324,7 @@ const UserProfile = () => {
 											<p className="text-gray-400 mb-3">Your Interests:</p>
 											{interests.length === 0 ? (
 												<p className="text-gray-500 text-sm">
-													No interests selected yet. Click edit to add at least
-													3 interests.
+													No interests selected yet. Click edit to add at least 3 interests.
 												</p>
 											) : (
 												<div className="flex flex-wrap gap-2">
@@ -336,7 +366,6 @@ const UserProfile = () => {
 				</div>
 			</div>
 
-			{/* Interests selection modal */}
 			{showModal && (
 				<div className="w-full h-full flex justify-center items-center bg-[#48576019] backdrop-blur-2xl fixed z-50 top-0 left-0">
 					<InterestsModal
@@ -347,20 +376,17 @@ const UserProfile = () => {
 				</div>
 			)}
 
-			{/* Bio edit modal here */}
-			{showBioEditModal && (
-				<div className="w-full h-full flex justify-center items-center bg-[#48576019] backdrop-blur-2xl fixed z-50 top-0 left-0">
-					<EditBioModal
-						onClose={() => {
-							setShowBioEditModal(false);
-						}}
-                        userBio={bio}
-                        setBio={handleSetBio}
-					></EditBioModal>
-				</div>
-			)}
+			<EditModal
+				isOpen={!!showEditModal}
+				title={`Edit ${showEditModal}`}
+				value={editValue}
+				onChange={setEditValue}
+				onSave={handleSaveEdit}
+				onClose={() => setShowEditModal(null)}
+				type={showEditModal === 'bio' ? 'textarea' : showEditModal === 'email' ? 'email' : 'text'}
+				placeholder={showEditModal === 'bio' ? 'Enter your bio...' : `Enter ${showEditModal}...`}
+			/>
 
-			{/* Logout confirmation modal */}
 			<ConfirmModal
 				isOpen={showLogoutConfirm}
 				onClose={() => setShowLogoutConfirm(false)}
