@@ -3,6 +3,7 @@ import { TopBar } from "../components/TopMenu"
 import CustomSelect from "../components/ui/CustomSelect"
 import ShelveItem from "../components/ShelveItem"
 import Preloader from "../components/ui/Preloader"
+import Message from "../components/ui/Message"
 import { useEffect, useState } from "react"
 import { getUserShelves, removeFromShelf } from "../utils/books"
 
@@ -11,6 +12,7 @@ const Shelve = () => {
     const [shelveItems, setShelveItems] = useState<any[]>([]);
     const [filter, setFilter] = useState<string>('all');
     const [loading, setLoading] = useState(true);
+    const [message, setMessage] = useState<{ type: string; text: string } | null>(null);
 
     useEffect(() => {
         loadShelveItems();
@@ -31,16 +33,24 @@ const Shelve = () => {
 
     const handleRemove = async (shelveId: number) => {
         try {
+            const removedItem = shelveItems.find(item => item.id === shelveId);
             await removeFromShelf(shelveId);
             setShelveItems(shelveItems.filter(item => item.id !== shelveId));
+            showMessage('success', `${removedItem?.book_details?.title || 'Book'} was removed from your shelve`);
         } catch (err) {
             console.error('Failed to remove item:', err);
-            alert('Failed to remove item. Please try again.');
+            showMessage('error', 'Failed to remove item. Please try again.');
         }
+    };
+
+    const showMessage = (type: string, text: string) => {
+        setMessage({ type, text });
+        setTimeout(() => setMessage(null), 3000);
     };
     return (
         <div className="w-full flex justify-end items-center bgImage min-h-screen pb-10 max-sm:pb-25">
             <Preloader isLoading={loading} />
+            {message && <Message type={message.type} text={message.text} />}
             {/* Side Navigation Menu */}
             <SideMenu />
             <div className="w-6/7 max-[900px]:w-7/8 max-sm:w-full min-h-screen flex flex-col px-10 max-[900px]:px-5 max-sm:px-3 pt-5 relative">
