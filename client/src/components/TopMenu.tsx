@@ -43,7 +43,12 @@ export function TopBar() {
         if (isAuthenticated()) {
             setUser(getUser());
         }
-        const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+        const timer = setInterval(() => {
+            setCurrentTime(new Date());
+            if (isAuthenticated()) {
+                setUser(getUser());
+            }
+        }, 1000);
         return () => clearInterval(timer);
     }, []);
 
@@ -53,6 +58,13 @@ export function TopBar() {
 
     const formatDate = (date: Date) => {
         return date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    };
+
+    const formatReadingTime = (hours: number) => {
+        const totalMinutes = Math.floor(hours * 60);
+        const h = Math.floor(totalMinutes / 60);
+        const m = totalMinutes % 60;
+        return `${h}h ${m}m`;
     };
 
     return (
@@ -72,6 +84,12 @@ export function TopBar() {
                     <i className="fa fa-calendar mx-2"></i>
                     <p>{formatDate(currentTime)}</p>
                 </span>
+                {user && (
+                    <span className="text-purple-400 flex justify-between items-center px-2 border-l border-gray-600">
+                        <i className="fa fa-book-reader mx-2"></i>
+                        <p>{formatReadingTime(user.reading_hours || 0)}</p>
+                    </span>
+                )}
             </span>
             {/* User Profile */}
             <Link to='/profile' className="max-[900px]:hidden">

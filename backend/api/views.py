@@ -222,3 +222,10 @@ def recent_readings(request):
     ordered_books = [books_dict[book_id] for book_id in book_ids if book_id in books_dict]
     serializer = BookSerializer(ordered_books, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def user_reviews_count(request):
+    count = Review.objects.filter(user=request.user).count()
+    return Response({'count': count}, status=status.HTTP_200_OK)

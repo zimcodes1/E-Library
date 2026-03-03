@@ -55,8 +55,24 @@ def add_recent_book(request):
     book_id = request.data.get('book_id')
     if book_id:
         request.user.add_recent_book(int(book_id))
-        return Response({'message': 'Book added to recent readings'}, status=status.HTTP_200_OK)
+        serializer = UserSerializer(request.user, context={'request': request})
+        return Response({
+            'message': 'Book added to recent readings',
+            'user': serializer.data
+        }, status=status.HTTP_200_OK)
     return Response({'error': 'book_id required'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def add_reading_time(request):
+    minutes = request.data.get('minutes', 0)
+    if minutes > 0:
+        request.user.reading_hours += minutes / 60
+        request.user.save(update_fields=['reading_hours'])
+        serializer = UserSerializer(request.user, context={'request': request})
+        return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+    return Response({'error': 'minutes required'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'PUT'])

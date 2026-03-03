@@ -7,4 +7,5 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('profile/', views.profile, name='profile'),
     path('add-recent-book/', views.add_recent_book, name='add-recent-book'),
+    path('add-reading-time/', views.add_reading_time, name='add-reading-time'),
 ]

@@ -16,7 +16,7 @@ import EditBioModal from "../components/ui/EditBioModal";
 import { saveBio } from "../utils/user/bio";
 import { updateAvatar } from "../utils/user/avatar";
 import { getAvatarUrl } from "../utils/avatarUtils";
-import { getUserUploadedBooks, deleteBook } from "../utils/books";
+import { getUserUploadedBooks, deleteBook, getUserReviewsCount } from "../utils/books";
 import UploadedBookItem from "../components/ui/UploadedBookItem";
 
 const UserProfile = () => {
@@ -32,6 +32,7 @@ const UserProfile = () => {
     const [bio, setBio] = useState<string|undefined>()
 	const [avatarUploading, setAvatarUploading] = useState(false);
 	const [uploadedBooks, setUploadedBooks] = useState<any[]>([]);
+	const [reviewsCount, setReviewsCount] = useState(0);
 	const avatarInputRef = useRef<HTMLInputElement>(null);
 	const navigate = useNavigate();
 
@@ -53,6 +54,22 @@ const UserProfile = () => {
         if (userData?.bio){
             setBio(userData.bio)
         }
+	};
+
+	useEffect(() => {
+		if (activeTab === 1) {
+			loadUserData();
+			loadReviewsCount();
+		}
+	}, [activeTab]);
+
+	const loadReviewsCount = async () => {
+		try {
+			const data = await getUserReviewsCount();
+			setReviewsCount(data.count);
+		} catch (error) {
+			console.error('Failed to load reviews count:', error);
+		}
 	};
 
 	const loadUploadedBooks = async () => {
@@ -251,13 +268,13 @@ const UserProfile = () => {
 									<div className="p-6 rounded-lg bg-[#31303e] border border-gray-700 text-center">
 										<i className="fa fa-clock text-3xl text-purple-400"></i>
 										<h3 className="text-2xl font-bold text-gray-50 mt-3">
-											{user?.reading_hours || 0}hrs
+											{Math.floor((user?.reading_hours || 0) * 60)}m
 										</h3>
 										<p className="text-gray-400 text-sm">Reading Time</p>
 									</div>
 									<div className="p-6 rounded-lg bg-[#31303e] border border-gray-700 text-center">
 										<i className="fa fa-star text-3xl text-purple-400"></i>
-										<h3 className="text-2xl font-bold text-gray-50 mt-3">0</h3>
+										<h3 className="text-2xl font-bold text-gray-50 mt-3">{reviewsCount}</h3>
 										<p className="text-gray-400 text-sm">Reviews Written</p>
 									</div>
 								</div>

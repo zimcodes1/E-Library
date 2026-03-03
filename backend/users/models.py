@@ -34,11 +34,14 @@ class User(AbstractUser):
         }
 
     def add_recent_book(self, book_id):
+        is_new_book = book_id not in self.recent_books
         if book_id in self.recent_books:
             self.recent_books.remove(book_id)
         self.recent_books.insert(0, book_id)
         self.recent_books = self.recent_books[:10]
-        self.save(update_fields=['recent_books'])
+        if is_new_book:
+            self.books_read += 1
+        self.save(update_fields=['recent_books', 'books_read'])
 
     def __str__(self):
         return self.username

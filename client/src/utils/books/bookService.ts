@@ -176,5 +176,34 @@ export const addRecentBook = async (bookId: number) => {
         body: JSON.stringify({ book_id: bookId }),
     });
     if (!response.ok) throw new Error('Failed to add recent book');
+    const result = await response.json();
+    if (result.user) {
+        localStorage.setItem('user', JSON.stringify(result.user));
+    }
+    return result;
+};
+
+export const addReadingTime = async (minutes: number) => {
+    const response = await fetch(`${API_BASE_URL}/auth/add-reading-time/`, {
+        method: 'POST',
+        headers: {
+            ...getAuthHeaders(),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ minutes }),
+    });
+    if (!response.ok) throw new Error('Failed to add reading time');
+    const result = await response.json();
+    if (result.user) {
+        localStorage.setItem('user', JSON.stringify(result.user));
+    }
+    return result;
+};
+
+export const getUserReviewsCount = async () => {
+    const response = await fetch(`${API_BASE_URL}/user-reviews-count/`, {
+        headers: getAuthHeaders(),
+    });
+    if (!response.ok) throw new Error('Failed to fetch reviews count');
     return response.json();
 };

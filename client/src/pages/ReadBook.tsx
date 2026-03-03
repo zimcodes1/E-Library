@@ -3,7 +3,7 @@ import { TopBar } from "../components/TopMenu"
 import { useState, useRef, useEffect } from "react"
 import { useParams, useNavigate, Link } from "react-router-dom"
 import { Document, Page, pdfjs } from "react-pdf"
-import { getBookDetail, getBookReviews, recordBookView, addToShelf, downloadBook, getUserShelves, removeFromShelf, addRecentBook } from "../utils/books/bookService"
+import { getBookDetail, getBookReviews, recordBookView, addToShelf, downloadBook, getUserShelves, removeFromShelf, addRecentBook, addReadingTime } from "../utils/books/bookService"
 import { getBookFileUrl } from "../utils/imageUtils"
 import { getAvatarUrl } from "../utils/avatarUtils"
 import truncate from "../utils/truncateText"
@@ -29,6 +29,7 @@ function ReadBook() {
     const [pageLoading, setPageLoading] = useState(false);
     const [bookmarkStatus, setBookmarkStatus] = useState<{isBookmarked: boolean, shelveId?: number}>({isBookmarked: false});
     const [favoriteStatus, setFavoriteStatus] = useState<{isFavorited: boolean, shelveId?: number}>({isFavorited: false});
+    const [readingStartTime, setReadingStartTime] = useState<number>(Date.now());
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -147,6 +148,24 @@ function ReadBook() {
         window.addEventListener("resize", updateWidth);
         return () => window.removeEventListener("resize", updateWidth);
     }, []);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const minutesRead = Math.floor((Date.now() - readingStartTime) / 60000);
+            if (minutesRead >= 1) {
+                addReadingTime(minutesRead).catch(err => console.error('Failed to track time:', err));
+                setReadingStartTime(Date.now());
+            }
+        }, 60000);
+
+        return () => {
+            clearInterval(interval);
+            const minutesRead = Math.floor((Date.now() - readingStartTime) / 60000);
+            if (minutesRead >= 1) {
+                addReadingTime(minutesRead).catch(err => console.error('Failed to track time:', err));
+            }
+        };
+    }, [readingStartTime]);
 
     if (loading) {
         return (
