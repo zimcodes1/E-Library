@@ -10,6 +10,7 @@ import {
 	getBookReviews,
 	addToShelf,
 	addReview,
+	addRecentBook,
 } from "../utils/books/bookService";
 import { getBookCoverUrl } from "../utils/imageUtils";
 import { getAvatarUrl } from "../utils/avatarUtils";
@@ -76,6 +77,13 @@ function BookDetails() {
 		} catch (err: any) {
 			console.error('Failed to submit review:', err);
 			showMessage('error', 'Failed to submit review. You may have already reviewed this book.');
+		}
+	};
+
+	const handleReadNow = async () => {
+		if (bookId) {
+			await addRecentBook(Number(bookId)).catch(err => console.error('Failed to add recent book:', err));
+			navigate(`/reading/${bookId}`);
 		}
 	};
 
@@ -148,12 +156,12 @@ function BookDetails() {
 								</div>
 							</div>
 							<div className="w-1/5 max-sm:w-full h-full flex flex-col justify-between items-end max-sm:flex-row max-sm:mt-4">
-								<Link
-									to={`/reading/${bookId}`}
+								<button
+									onClick={handleReadNow}
 									className="text-gray-50 font-semibold bg-white/20 backdrop-blur-sm px-5 py-2.5 rounded-lg hover:bg-white hover:text-purple-600 transition duration-300 border border-white/30"
 								>
 									Read Now
-								</Link>
+								</button>
 							</div>
 							<i
 								onClick={handleBookmark}

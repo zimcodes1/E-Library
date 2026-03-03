@@ -23,8 +23,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'avatar', 'bio', 'reading_hours', 'books_read', 'interests', 'interest_ids']
-        read_only_fields = ['id', 'reading_hours', 'books_read']
+        fields = ['id', 'username', 'email', 'avatar', 'bio', 'reading_hours', 'books_read', 'interests', 'interest_ids', 'recent_books']
+        read_only_fields = ['id', 'reading_hours', 'books_read', 'recent_books']
 
     def get_avatar(self, obj):
         if obj.avatar:

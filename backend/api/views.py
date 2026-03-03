@@ -216,7 +216,9 @@ def new_arrivals(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def recent_readings(request):
-    recent = ReadingProgress.objects.filter(user=request.user).order_by('-last_read_at')[:10]
-    books = [rp.book for rp in recent]
-    serializer = BookSerializer(books, many=True)
+    book_ids = request.user.recent_books
+    books = Book.objects.filter(id__in=book_ids, is_published=True)
+    books_dict = {book.id: book for book in books}
+    ordered_books = [books_dict[book_id] for book_id in book_ids if book_id in books_dict]
+    serializer = BookSerializer(ordered_books, many=True)
     return Response(serializer.data)

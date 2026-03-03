@@ -3,7 +3,7 @@ import { TopBar } from "../components/TopMenu"
 import { useState, useRef, useEffect } from "react"
 import { useParams, useNavigate, Link } from "react-router-dom"
 import { Document, Page, pdfjs } from "react-pdf"
-import { getBookDetail, getBookReviews, recordBookView, addToShelf, downloadBook, getUserShelves, removeFromShelf } from "../utils/books/bookService"
+import { getBookDetail, getBookReviews, recordBookView, addToShelf, downloadBook, getUserShelves, removeFromShelf, addRecentBook } from "../utils/books/bookService"
 import { getBookFileUrl } from "../utils/imageUtils"
 import { getAvatarUrl } from "../utils/avatarUtils"
 import truncate from "../utils/truncateText"
@@ -132,6 +132,7 @@ function ReadBook() {
         setNumPages(numPages);
         if (!viewRecorded && bookId) {
             recordBookView(Number(bookId)).catch(err => console.error('Failed to record view:', err));
+            addRecentBook(Number(bookId)).catch(err => console.error('Failed to add recent book:', err));
             setViewRecorded(true);
         }
     }

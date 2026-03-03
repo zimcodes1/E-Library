@@ -17,6 +17,7 @@ class User(AbstractUser):
     interests = models.ManyToManyField('api.Category', related_name='interested_users', blank=True)
     reading_hours = models.IntegerField(default=0)
     books_read = models.IntegerField(default=0)
+    recent_books = models.JSONField(default=list, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -31,6 +32,13 @@ class User(AbstractUser):
             'books_read': self.books_read,
             'reading_hours': self.reading_hours,
         }
+
+    def add_recent_book(self, book_id):
+        if book_id in self.recent_books:
+            self.recent_books.remove(book_id)
+        self.recent_books.insert(0, book_id)
+        self.recent_books = self.recent_books[:10]
+        self.save(update_fields=['recent_books'])
 
     def __str__(self):
         return self.username

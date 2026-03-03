@@ -165,3 +165,16 @@ export const recordBookView = async (bookId: number) => {
     if (!response.ok) throw new Error('Failed to record view');
     return response.json();
 };
+
+export const addRecentBook = async (bookId: number) => {
+    const response = await fetch(`${API_BASE_URL}/auth/add-recent-book/`, {
+        method: 'POST',
+        headers: {
+            ...getAuthHeaders(),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ book_id: bookId }),
+    });
+    if (!response.ok) throw new Error('Failed to add recent book');
+    return response.json();
+};

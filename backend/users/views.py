@@ -49,6 +49,16 @@ def logout(request):
     return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def add_recent_book(request):
+    book_id = request.data.get('book_id')
+    if book_id:
+        request.user.add_recent_book(int(book_id))
+        return Response({'message': 'Book added to recent readings'}, status=status.HTTP_200_OK)
+    return Response({'error': 'book_id required'}, status=status.HTTP_400_BAD_REQUEST)
+
+
 @api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
 @parser_classes((MultiPartParser, FormParser, JSONParser))
