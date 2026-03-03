@@ -12,6 +12,7 @@ import {
 import { getBookCoverUrl } from "../utils/imageUtils";
 import TodayQuotes from "../components/ui/TodayQuote";
 import NewArrivals from "../components/ui/NewArrivals";
+import Preloader from "../components/ui/Preloader";
 import { Link } from "react-router-dom";
 
 function HomePage() {
@@ -104,6 +105,7 @@ function HomePage() {
 
 	return (
 		<div className="w-full flex justify-end max-sm:items-start items-center bgImage min-h-screen max-sm:h-fit pb-10">
+			<Preloader isLoading={loading || loadingRecommended || loadingRecent} />
 			<SideMenu />
 			<div className="w-6/7 max-[900px]:w-8/9 max-[900px]:px-3 max-sm:w-full max-sm:px-3 h-full max-sm:h-fit flex flex-col px-10 pt-5 max-[900px]:pt-0 relative">
 				<TopBar />

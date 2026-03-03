@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import TopMenu from "../components/TopMenu";
 import HeroSection from "../components/landing_page/HeroSection";
 import PoweredBy from "../components/landing_page/PoweredBy";
@@ -9,14 +9,19 @@ import Categories from "../components/landing_page/Categories";
 import NewTitles from "../components/landing_page/NewTitles";
 import Reading from "../components/landing_page/Reading";
 import ReadAnywhere from "../components/landing_page/ReadAnywhere";
+import Preloader from "../components/ui/Preloader";
 
 function LandingPage() {
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         document.title = 'Libronet | Welcome Page'
+        setLoading(false);
     }, [])
 
     return (
         <>
+            <Preloader isLoading={loading} />
             <div className="w-full h-fit max-sm:px-5 max-[900px]:px-10 px-20 bgImage pt-5 pb-10 ">
                 {/* Top Menu */}
                 <TopMenu></TopMenu>

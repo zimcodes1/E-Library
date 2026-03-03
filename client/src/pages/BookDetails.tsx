@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import ReviewModal from "../components/ui/ReviewModal";
 import Message from "../components/ui/Message";
+import Preloader from "../components/ui/Preloader";
 import {
 	getBookDetail,
 	getBookReviews,
@@ -98,6 +99,7 @@ function BookDetails() {
 	if (!book) return null;
 	return (
 		<div className="w-full flex justify-end items-center bgImage min-h-screen pb-10 max-sm:pb-25">
+			<Preloader isLoading={loading} />
 			{message && <Message type={message.type} text={message.text} />}
 			{/* Side Navigation Menu */}
 			<SideMenu />

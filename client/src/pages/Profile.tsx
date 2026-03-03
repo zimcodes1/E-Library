@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Tabs from "../components/ui/Tabs";
 import InterestsModal from "../components/ui/InterestModal";
 import ConfirmModal from "../components/ui/ConfirmModal";
+import Preloader from "../components/ui/Preloader";
 import {
 	getUser,
 	getToken,
@@ -33,6 +34,7 @@ const UserProfile = () => {
 	const [avatarUploading, setAvatarUploading] = useState(false);
 	const [uploadedBooks, setUploadedBooks] = useState<any[]>([]);
 	const [reviewsCount, setReviewsCount] = useState(0);
+	const [loading, setLoading] = useState(false);
 	const avatarInputRef = useRef<HTMLInputElement>(null);
 	const navigate = useNavigate();
 
@@ -64,11 +66,14 @@ const UserProfile = () => {
 	}, [activeTab]);
 
 	const loadReviewsCount = async () => {
+		setLoading(true);
 		try {
 			const data = await getUserReviewsCount();
 			setReviewsCount(data.count);
 		} catch (error) {
 			console.error('Failed to load reviews count:', error);
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -160,6 +165,7 @@ const UserProfile = () => {
 
 	return (
 		<div className="w-full flex justify-end items-center bgImage overflow-clip min-h-dvh pb-10 max-sm:pb-0">
+			<Preloader isLoading={loading || avatarUploading} />
 			<SideMenu />
 			<div className="w-6/7 max-sm:w-full h-dvh max-sm:h-fit flex flex-col px-10 max-sm:p-3 pt-5 pb-20 max-sm:pb-28 relative">
 				<div className="w-full h-full flex items-center justify-start flex-col">

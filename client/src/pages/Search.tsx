@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { getBooks } from "../utils/books/bookService";
 import { getCategories } from "../utils/categoryService";
 import CustomSelect from "../components/ui/CustomSelect";
+import Preloader from "../components/ui/Preloader";
 
 function SearchPage() {
 	const [books, setBooks] = useState<any[]>([]);
@@ -48,6 +49,7 @@ function SearchPage() {
 
 	return (
 		<div className="w-full flex justify-end items-center bgImage min-h-screen pb-10 max-sm:pb-40">
+			<Preloader isLoading={loading} />
 			<SideMenu />
 			<div className="w-6/7 max-[900px]:w-8/9 max-sm:w-full min-h-screen flex flex-col px-10 max-[900px]:px-5 max-sm:px-3 pt-5 relative">
 				<TopBar />
