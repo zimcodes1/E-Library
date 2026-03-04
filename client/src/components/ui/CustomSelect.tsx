@@ -33,7 +33,7 @@ function CustomSelect({
       onClick={() => {
         activeState == "hidden" ? setActiveState("") : setActiveState("hidden");
       }}
-      className="flex h-6/10 w-50 text-gray-300 text-sm relative rounded-l-2xl items-center px-2 justify-center cursor-pointer"
+      className="flex h-6/10 w-50 text-gray-300 text-sm relative rounded-l-2xl items-center px-2 justify-center cursor-pointer select-none"
     >
       <p>
         {value} <i className="fa fa-angle-down"></i>{" "}

@@ -220,7 +220,7 @@ function ReadBook() {
                 <div className="w-full h-fit flex flex-col justify-center items-center">
                     <div
                         ref={containerRef}
-                        className="w-full max-w-4xl flex justify-center items-center min-h-150 bg-[#48576019] rounded-xl overflow-hidden border border-gray-700 relative"
+                        className="w-full max-w-4xl flex justify-center items-center min-h-150 bg-[#48576019] rounded-xl overflow-x-auto border border-gray-700 relative"
                     >
                         {pageLoading && (
                             <div className="absolute inset-0 flex items-center justify-center bg-[#48576099] backdrop-blur-sm z-10">
@@ -244,7 +244,7 @@ function ReadBook() {
                         >
                             <Page
                                 pageNumber={pageNumber}
-                                width={containerWidth > 0 ? containerWidth : undefined}
+                                width={containerWidth > 0 ? Math.min(containerWidth - 20, containerWidth * 0.95) : undefined}
                                 renderMode="canvas"
                                 loading=""
                                 onRenderSuccess={() => setPageLoading(false)}
