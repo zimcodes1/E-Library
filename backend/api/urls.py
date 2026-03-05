@@ -14,6 +14,7 @@ urlpatterns = [
     path('quote/today/', views.today_quote, name='today-quote'),
     path('my-books/', views.user_uploaded_books, name='user-uploaded-books'),
     path('new-arrivals/', views.new_arrivals, name='new-arrivals'),
+    path('recent-books/', views.recent_books, name='recent-books'),
     path('recent-readings/', views.recent_readings, name='recent-readings'),
     path('user-reviews-count/', views.user_reviews_count, name='user-reviews-count'),
 ]

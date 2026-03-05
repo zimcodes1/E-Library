@@ -225,6 +225,14 @@ def recent_readings(request):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
+def recent_books(request):
+    books = Book.objects.filter(is_published=True).order_by('-upload_date')[:4]
+    serializer = BookSerializer(books, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def user_reviews_count(request):
     count = Review.objects.filter(user=request.user).count()

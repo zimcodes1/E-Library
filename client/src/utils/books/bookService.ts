@@ -157,6 +157,12 @@ export const getRecentReadings = async () => {
     return response.json();
 };
 
+export const getRecentBooks = async () => {
+    const response = await fetch(`${API_BASE_URL}/recent-books/`);
+    if (!response.ok) throw new Error('Failed to fetch recent books');
+    return response.json();
+};
+
 export const recordBookView = async (bookId: number) => {
     const response = await fetch(`${API_BASE_URL}/books/${bookId}/view/`, {
         method: 'POST',
