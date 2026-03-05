@@ -8,7 +8,7 @@ function PoweredBy() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="flex flex-col justify-between items-center mt-10 max-sm:mt-120"
+            className="flex flex-col justify-between items-center mt-10"
         >
             <h1 className="text-3xl max-[900px]:text-xl text-gray-400 font-semibold">Powered by:</h1>
             <div className="flex mt-20 max-sm:mt-0 max-[900px]:mt-5 max-sm:flex-wrap gap-5 max-sm:gap-0 justify-evenly items-center w-full max-[900px]:w-full h-fit max-sm:h-fit rounded-2xl">
