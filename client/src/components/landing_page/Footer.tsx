@@ -1,29 +1,32 @@
+import { Link } from "react-router-dom";
+
 function Footer() {
     return (
         <div className="w-full px-10 rounded-3xl max-sm:px-5 py-10 radial-bg h-80 max-sm:h-fit flex flex-col justify-evenly items-start">
             <div className="w-full h-3/4 max-sm:flex-wrap max-sm:h-fit flex justify-evenly items-start">
                 <span className="w-1/4 max-sm:w-1/2 flex flex-col items-start justify-center text-gray-200">
                     <h3 className="text-lg font-semibold text-gray-50">Company</h3>
-                    <p className="text-sm mt-2">About Us</p>
-                    <p className="text-sm mt-2">Careers</p>
-                    <p className="text-sm mt-2">Our Team</p>
+                    <Link to="/" className="text-sm mt-2 hover:text-purple-400 transition">About Us</Link>
+                    <Link to="/" className="text-sm mt-2 hover:text-purple-400 transition">Careers</Link>
+                    <Link to="/" className="text-sm mt-2 hover:text-purple-400 transition">Our Team</Link>
                 </span>
                 <span className="w-1/4 max-sm:w-1/2 max-sm:items-end flex flex-col items-start justify-center text-gray-200">
                     <h3 className="text-lg font-semibold text-gray-50">Resources</h3>
-                    <p className="text-sm mt-2">Blog</p>
-                    <p className="text-sm mt-2">Help Center</p>
-                    <p className="text-sm mt-2">Support</p>
+                    <Link to="/search" className="text-sm mt-2 hover:text-purple-400 transition">Browse Books</Link>
+                    <Link to="/home" className="text-sm mt-2 hover:text-purple-400 transition">Library</Link>
+                    <Link to="/shelve" className="text-sm mt-2 hover:text-purple-400 transition">My Shelve</Link>
                 </span>
                 <span className="w-1/4 max-sm:w-1/2 max-sm:mt-5 flex flex-col items-start justify-center text-gray-200">
-                    <h3 className="text-lg font-semibold text-gray-50">Legal</h3>
-                    <p className="text-sm mt-2">Privacy Policy</p>
-                    <p className="text-sm mt-2">Terms of Service</p>
+                    <h3 className="text-lg font-semibold text-gray-50">Account</h3>
+                    <Link to="/login" className="text-sm mt-2 hover:text-purple-400 transition">Login</Link>
+                    <Link to="/signup" className="text-sm mt-2 hover:text-purple-400 transition">Sign Up</Link>
+                    <Link to="/profile" className="text-sm mt-2 hover:text-purple-400 transition">Profile</Link>
                 </span>
                 <span className="w-1/4 max-sm:w-1/2 max-sm:mt-5 max-sm:items-end flex flex-col items-start justify-center text-gray-200">
                     <h3 className="text-lg font-semibold text-gray-50">Contact</h3>
-                    <p className="text-sm mt-2"><i className="fa fa-envelope text-red-500"></i> Email Us</p>
-                    <p className="text-sm mt-2"><i className="fa fa-phone"></i>Call Us</p>
-                    <p className="text-sm mt-2"><i className="fa fab fa-facebook text-blue-500"></i>acebook</p>
+                    <a href="mailto:support@libronet.com" className="text-sm mt-2 hover:text-purple-400 transition"><i className="fa fa-envelope text-red-500"></i> Email Us</a>
+                    <p className="text-sm mt-2"><i className="fa fa-phone"></i> Call Us</p>
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-sm mt-2 hover:text-purple-400 transition"><i className="fa fab fa-facebook text-blue-500"></i> Facebook</a>
                 </span>
             </div>
 
