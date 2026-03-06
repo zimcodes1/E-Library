@@ -24,6 +24,7 @@ function ReadBook() {
     const [loading, setLoading] = useState(true);
     const [numPages, setNumPages] = useState<number>(0);
     const [pageNumber, setPageNumber] = useState<number>(1);
+    const [goToPage, setGoToPage] = useState<string>('');
     const [containerWidth, setContainerWidth] = useState<number>(0);
     const [viewRecorded, setViewRecorded] = useState(false);
     const [pageLoading, setPageLoading] = useState(false);
@@ -151,18 +152,20 @@ function ReadBook() {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            const minutesRead = Math.floor((Date.now() - readingStartTime) / 60000);
-            if (minutesRead >= 1) {
-                addReadingTime(minutesRead).catch(err => console.error('Failed to track time:', err));
+            const secondsRead = Math.floor((Date.now() - readingStartTime) / 1000);
+            if (secondsRead >= 30) {
+                const minutes = secondsRead / 60;
+                addReadingTime(minutes).catch(err => console.error('Failed to track time:', err));
                 setReadingStartTime(Date.now());
             }
-        }, 60000);
+        }, 30000);
 
         return () => {
             clearInterval(interval);
-            const minutesRead = Math.floor((Date.now() - readingStartTime) / 60000);
-            if (minutesRead >= 1) {
-                addReadingTime(minutesRead).catch(err => console.error('Failed to track time:', err));
+            const secondsRead = Math.floor((Date.now() - readingStartTime) / 1000);
+            if (secondsRead >= 30) {
+                const minutes = secondsRead / 60;
+                addReadingTime(minutes).catch(err => console.error('Failed to track time:', err));
             }
         };
     }, [readingStartTime]);
@@ -180,7 +183,7 @@ function ReadBook() {
     const fileUrl = book.file_type === 'url' ? book.file_url : getBookFileUrl(book.file);
 
     return (
-        <div className="w-full flex justify-end items-start bgImage min-h-screen pb-10">
+        <div className="w-full flex justify-end items-start bgImage min-h-screen pb-10 max-sm:pb-25">
             <SideMenu />
             <div className="w-6/7 max-[900px]:w-7/8 max-sm:w-full h-fit flex flex-col px-10 pt-5 max-sm:p-3 relative">
                 <TopBar />
@@ -251,7 +254,34 @@ function ReadBook() {
                             />
                         </Document>
                     </div>
-                    <p className="mt-4 text-gray-400">Page {pageNumber} of {numPages}</p>
+                    <div className="mt-4 flex items-center gap-3">
+                        <p className="text-gray-400">Page {pageNumber} of {numPages}</p>
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="number"
+                                min="1"
+                                max={numPages}
+                                value={goToPage}
+                                onChange={(e) => setGoToPage(e.target.value)}
+                                placeholder="Go to"
+                                className="w-20 px-2 py-1 bg-[#31303e] border border-gray-700 rounded text-gray-200 text-sm outline-none focus:border-purple-500"
+                            />
+                            <button
+                                onClick={() => {
+                                    const page = parseInt(goToPage);
+                                    if (page >= 1 && page <= numPages) {
+                                        setPageLoading(true);
+                                        setPageNumber(page);
+                                        setGoToPage('');
+                                    }
+                                }}
+                                disabled={!goToPage || pageLoading}
+                                className="px-3 py-1 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white text-sm rounded transition"
+                            >
+                                Go
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Reviews Section */}
