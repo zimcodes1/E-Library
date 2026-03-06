@@ -31,7 +31,7 @@ function HeroLeft() {
 			</div>
 
 			<div className="flex max-sm:flex-col gap-4 max-sm:gap-3 mt-8 max-sm:mt-5 max-sm:w-full">
-				<Link to='/login' className="max-sm:w-1/3 max-sm:mx-auto">
+				<Link to='/login' className="max-sm:w-1/2 max-sm:mx-auto">
 					<Button
 						icon="fa-arrow-right"
 						text="Get Started"
