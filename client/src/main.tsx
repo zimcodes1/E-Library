@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/Login';
@@ -15,25 +15,27 @@ import ReadBook from './pages/ReadBook';
 import BookDetails from './pages/BookDetails';
 import About from './pages/About';
 import TermsAndConditions from './pages/TermsAndConditions';
+import ScrollToTop from './components/ScrollToTop';
 
-const router = createBrowserRouter([
-  { path: "/", element: <LandingPage /> },
-  { path: '/login', element: <LoginPage /> },
-  { path: '/signup', element: <SignUp /> },
-  { path: '/home', element: <HomePage /> },
-  { path: '/search', element: <SearchPage /> },
-  { path: '/myshelve', element: <Shelve /> },
-  { path: '/upload', element: <UploadPage /> },
-  { path: '/profile', element: <UserProfile /> },
-  { path: '/reading/:bookId', element: <ReadBook /> },
-  { path: '/bookdetails/:bookId', element: <BookDetails /> },
-  { path: '/about', element: <About /> },
-  { path: '/terms', element: <TermsAndConditions /> },
-  { path: '*', element: <Lost /> },
-]
-)
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <BrowserRouter>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/signup' element={<SignUp />} />
+        <Route path='/home' element={<HomePage />} />
+        <Route path='/search' element={<SearchPage />} />
+        <Route path='/myshelve' element={<Shelve />} />
+        <Route path='/upload' element={<UploadPage />} />
+        <Route path='/profile' element={<UserProfile />} />
+        <Route path='/reading/:bookId' element={<ReadBook />} />
+        <Route path='/bookdetails/:bookId' element={<BookDetails />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/terms' element={<TermsAndConditions />} />
+        <Route path='*' element={<Lost />} />
+      </Routes>
+    </BrowserRouter>
   </StrictMode>
 )
