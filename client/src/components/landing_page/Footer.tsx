@@ -6,9 +6,9 @@ function Footer() {
             <div className="w-full h-3/4 max-sm:flex-wrap max-sm:h-fit flex justify-evenly items-start">
                 <span className="w-1/4 max-sm:w-1/2 flex flex-col items-start justify-center text-gray-200">
                     <h3 className="text-lg font-semibold text-gray-50">Company</h3>
-                    <Link to="/" className="text-sm mt-2 hover:text-purple-400 transition">About Us</Link>
-                    <Link to="/" className="text-sm mt-2 hover:text-purple-400 transition">Careers</Link>
-                    <Link to="/" className="text-sm mt-2 hover:text-purple-400 transition">Our Team</Link>
+                    <Link to="/about" className="text-sm mt-2 hover:text-purple-400 transition">About Us</Link>
+                    <Link to="/terms" className="text-sm mt-2 hover:text-purple-400 transition">Terms & Conditions</Link>
+                    <Link to="/" className="text-sm mt-2 hover:text-purple-400 transition">Privacy Policy</Link>
                 </span>
                 <span className="w-1/4 max-sm:w-1/2 max-sm:items-end flex flex-col items-start justify-center text-gray-200">
                     <h3 className="text-lg font-semibold text-gray-50">Resources</h3>

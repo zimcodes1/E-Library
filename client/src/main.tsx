@@ -14,6 +14,7 @@ import Lost from './pages/Lost';
 import ReadBook from './pages/ReadBook';
 import BookDetails from './pages/BookDetails';
 import About from './pages/About';
+import TermsAndConditions from './pages/TermsAndConditions';
 
 const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
   { path: '/reading/:bookId', element: <ReadBook /> },
   { path: '/bookdetails/:bookId', element: <BookDetails /> },
   { path: '/about', element: <About /> },
+  { path: '/terms', element: <TermsAndConditions /> },
   { path: '*', element: <Lost /> },
 ]
 )
