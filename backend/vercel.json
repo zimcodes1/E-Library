@@ -2,23 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "core/wsgi.py",
-      "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb" }
+      "src": "vercel_app.py",
+      "use": "@vercel/python"
     }
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "/media/(.*)",
-      "dest": "/media/$1"
-    },
-    {
       "src": "/(.*)",
-      "dest": "core/wsgi.py"
+      "dest": "vercel_app.py"
     }
   ]
 }
