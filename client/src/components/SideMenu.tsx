@@ -54,7 +54,7 @@ function SideMenu() {
 				<Link to="#" className="my-2 hover:underline">
 					Contact
 				</Link>
-				<Link to="#" className="hover:underline">
+				<Link to="/terms" className="hover:underline">
 					Terms & Conditions
 				</Link>
 			</span>
