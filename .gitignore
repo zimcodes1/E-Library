@@ -1,1 +1,5 @@
 backend/reset_db.sh
+backend/setup_production.sh
+backend/.env.example
+backend/.env.vercel
+backend/.env.example

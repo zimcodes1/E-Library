@@ -15,6 +15,9 @@ import ReadBook from './pages/ReadBook';
 import BookDetails from './pages/BookDetails';
 import About from './pages/About';
 import TermsAndConditions from './pages/TermsAndConditions';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminUsers from './pages/AdminUsers';
+import AdminBooks from './pages/AdminBooks';
 import ScrollToTop from './components/ScrollToTop';
 
 createRoot(document.getElementById('root')!).render(
@@ -34,6 +37,9 @@ createRoot(document.getElementById('root')!).render(
         <Route path='/bookdetails/:bookId' element={<BookDetails />} />
         <Route path='/about' element={<About />} />
         <Route path='/terms' element={<TermsAndConditions />} />
+        <Route path='/admin/dashboard' element={<AdminDashboard />} />
+        <Route path='/admin/dashboard/users' element={<AdminUsers />} />
+        <Route path='/admin/dashboard/books' element={<AdminBooks />} />
         <Route path='*' element={<Lost />} />
       </Routes>
     </BrowserRouter>
