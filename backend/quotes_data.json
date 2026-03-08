@@ -1,0 +1,112 @@
+[
+  {
+    "model": "api.quote",
+    "pk": 1,
+    "fields": {
+      "text": "A reader lives a thousand lives before he dies. The man who never reads lives only one.",
+      "author": "George R.R. Martin",
+      "category": "",
+      "created_at": "2024-01-01T00:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "api.quote",
+    "pk": 2,
+    "fields": {
+      "text": "The only way to do great work is to love what you do.",
+      "author": "Steve Jobs",
+      "category": "",
+      "created_at": "2024-01-02T00:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "api.quote",
+    "pk": 3,
+    "fields": {
+      "text": "Education is the most powerful weapon which you can use to change the world.",
+      "author": "Nelson Mandela",
+      "category": "",
+      "created_at": "2024-01-03T00:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "api.quote",
+    "pk": 4,
+    "fields": {
+      "text": "The more that you read, the more things you will know. The more that you learn, the more places you'll go.",
+      "author": "Dr. Seuss",
+      "category": "",
+      "created_at": "2024-01-04T00:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "api.quote",
+    "pk": 5,
+    "fields": {
+      "text": "Knowledge is power. Information is liberating.",
+      "author": "Kofi Annan",
+      "category": "",
+      "created_at": "2024-01-05T00:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "api.quote",
+    "pk": 6,
+    "fields": {
+      "text": "Reading is to the mind what exercise is to the body.",
+      "author": "Joseph Addison",
+      "category": "",
+      "created_at": "2024-01-06T00:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "api.quote",
+    "pk": 7,
+    "fields": {
+      "text": "The beautiful thing about learning is that no one can take it away from you.",
+      "author": "B.B. King",
+      "category": "",
+      "created_at": "2024-01-07T00:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "api.quote",
+    "pk": 8,
+    "fields": {
+      "text": "Books are a uniquely portable magic.",
+      "author": "Stephen King",
+      "category": "",
+      "created_at": "2024-01-08T00:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "api.quote",
+    "pk": 9,
+    "fields": {
+      "text": "There is no friend as loyal as a book.",
+      "author": "Ernest Hemingway",
+      "category": "",
+      "created_at": "2024-01-09T00:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "api.quote",
+    "pk": 10,
+    "fields": {
+      "text": "A room without books is like a body without a soul.",
+      "author": "Marcus Tullius Cicero",
+      "category": "",
+      "created_at": "2024-01-10T00:00:00Z",
+      "is_active": true
+    }
+  }
+]
