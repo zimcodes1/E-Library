@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 import InterestsModal from "../components/ui/InterestModal"
 import { signup, saveAuth } from "../utils/auth"
 import { saveUserInterests } from "../utils/user/interests"
+import Message from "../components/ui/Message"
 
 function SignUp() {
     useEffect(() => {
@@ -93,12 +94,8 @@ function SignUp() {
     return (
         // Changed bg-purple-100 to bgImage and h-screen
         <div className="w-full flex justify-center items-center bgImage h-screen max-sm:h-dvh">
-            {success && (
-                <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-green-500/90 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2 animate-fade-in">
-                    <i className="fa fa-check-circle"></i>
-                    <span>Account created successfully! Redirecting to login...</span>
-                </div>
-            )}
+            {success && <Message type="success" text="Account created successfully! Redirecting to login..." />}
+            {error && <Message type="error" text={error} />}
             {/* Changed background and border to match Login dark theme */}
             <div className="w-[80%] max-[900px]:w-[60%] max-[900px]:h-200 max-sm:w-full max-sm:h-full max-sm:rounded-none h-[90%] border bg-[#48576019] max-sm:bg-transparent max-sm:border-none border-gray-800 rounded-3xl flex justify-between items-center overflow-hidden p-2">
                 <div className="w-1/2 max-[900px]:w-full h-full flex flex-col items-start max-sm:items-center justify-start pt-10 max-sm:pt-0 pl-20 max-[900px]:pl-0 overflow-scroll no-scrollbar">
@@ -119,8 +116,6 @@ function SignUp() {
                             <img src={avatarPreview} className="w-full h-auto opacity-70" alt=" User" />
                         </span>
                         <input type="file" accept="image/*" onChange={handleImageChange} className="invisible" id='imgInput' name="imageInput" />
-
-                        {error && <p className="text-red-400 text-xs mb-2">{error}</p>}
                         
                         {/* Updated inputs to match Login styling (bg-[#4857602f], border-gray-800, text-gray-300) */}
                         <input 

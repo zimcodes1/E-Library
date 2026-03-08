@@ -36,9 +36,8 @@ function LoginPage() {
     };
     return (
         <div className="w-full flex justify-center items-center bgImage h-screen max-sm:h-dvh">
-            {success && (
-                <Message type="success" text="Login successful! Redirecting..." />
-            )}
+            {success && <Message type="success" text="Login successful! Redirecting..." />}
+            {error && <Message type="error" text={error} />}
             <div className="w-[80%] max-[900px]:w-[60%] max-[900px]:h-200 max-sm:w-full max-sm:h-full
             max-sm:bg-transparent max-sm:rounded-none max-sm:m-0 max-[900px]:flex-col-reverse h-[90%]
             border bg-[#48576019] border-gray-800 rounded-3xl max-sm:justify-end flex 
@@ -51,7 +50,6 @@ function LoginPage() {
                     <h1 className="text-3xl font-[Super] font-semibold text-gray-50 mt-5 max-[900px]:mx-auto max-[900px]:text-center max-sm:text-2xl">Holla Bookie, <br />Welcome Back</h1>
                     <p className="text-xs text-gray-400 mt-3 max-[900px]:mx-auto">Hey, welcome back to your silent spot.  </p>
                     <form onSubmit={handleSubmit} className="flex w-[60%] max-[900px]:w-8/10 max-[900px]:mx-auto pt-10 max-sm:pt-5 flex-col">
-                        {error && <p className="text-red-400 text-xs mb-2">{error}</p>}
                         
                         <input 
                             type="text" 
