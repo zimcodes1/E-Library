@@ -10,6 +10,7 @@ import NewTitles from "../components/landing_page/NewTitles";
 import Reading from "../components/landing_page/Reading";
 import ReadAnywhere from "../components/landing_page/ReadAnywhere";
 import Preloader from "../components/ui/Preloader";
+import { Link } from "react-router-dom";
 
 function LandingPage() {
     const [loading, setLoading] = useState(true);
@@ -41,7 +42,9 @@ function LandingPage() {
                 <Reviews></Reviews>
                 {/* Call to Action Section */}
                 <span className="flex mt-20 max-sm:mt-5">
-                    <Button text='30 days free trial' styles="mx-auto mb-10"></Button>
+                    <Link to="/signup"  className="mx-auto mb-10">
+                        <Button text='Sign Up'></Button>
+                    </Link>
                 </span>
 
             {/* Footer Section */}
