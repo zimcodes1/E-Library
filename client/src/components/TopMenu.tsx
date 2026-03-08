@@ -78,7 +78,7 @@ export function TopBar() {
             <span className="flex h-9 w-fit rounded-4xl bg-[#4857605a] justify-between items-center border border-gray-700 shadow font-[digi]">
                 <span className="text-gray-300 flex justify-between items-center">
                     <i className="fa fa-clock mx-2"></i>
-                    <p>{formatTime(currentTime)} HRS</p>
+                    <p>{formatTime(currentTime)}</p>
                 </span>
                 <span className="text-gray-300 flex justify-between items-center px-2">
                     <i className="fa fa-calendar mx-2"></i>
