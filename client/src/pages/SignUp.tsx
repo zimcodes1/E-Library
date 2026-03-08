@@ -20,7 +20,7 @@ function SignUp() {
 	});
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [avatarPreview, setAvatarPreview] = useState("/images/user.png");
+	const [avatarPreview, setAvatarPreview] = useState("/images/defaultUser.jpg");
 	const [avatarFile, setAvatarFile] = useState<File | null>(null);
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -138,7 +138,7 @@ function SignUp() {
 								let inputElement = document.getElementById("imgInput");
 								inputElement?.click();
 							}}
-							className="w-15 h-15 mx-auto my-2 cursor-pointer overflow-hidden flex justify-center items-center rounded-full"
+							className="w-15 border-3 border-purple-400 h-15 mx-auto my-2 cursor-pointer overflow-hidden flex justify-center items-center rounded-full"
 						>
 							<img
 								src={avatarPreview}
