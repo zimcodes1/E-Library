@@ -34,7 +34,7 @@ const TodayQuotes: React.FC<TodayQuotesProps> = ({ quotes }) => {
 
   return (
     <div className="w-4/10 h-full max-sm:h-40 max-sm:w-full flex rounded-xl bg-linear-to-br to-purple-900 from-[#b30220] transition-colors duration-500">
-      <div className="w-full h-full flex flex-col p-5">
+      <div className="w-full h-full flex flex-col relative p-5">
         <h1 className="text-lg text-gray-50 font-semibold">Today's Quote</h1>
         
         {/* Quote Text Container */}
@@ -49,13 +49,13 @@ const TodayQuotes: React.FC<TodayQuotesProps> = ({ quotes }) => {
         </div>
 
         {/* Dynamic Pagination Dots */}
-        <div className="flex justify-start items-center gap-1 mt-4">
+        <div className="absolute left-5 bottom-5 w-fit flex justify-start items-center gap-1 mt-4">
           {quotes.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
               aria-label={`Go to quote ${index + 1}`}
-              className={`w-2 h-2 rounded-full border border-gray-50 transition-all duration-300 ${
+              className={`w-2 h-2 cursor-pointer rounded-full border border-gray-50 transition-all duration-300 ${
                 index === currentIndex ? "bg-amber-50" : "bg-transparent opacity-50"
               }`}
             />
