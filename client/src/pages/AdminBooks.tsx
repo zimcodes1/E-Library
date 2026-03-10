@@ -2,28 +2,41 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import BookTable from '../components/admin/BookTable';
 import Preloader from '../components/ui/Preloader';
+import { adminService } from '../utils/admin/adminService';
 
 const AdminBooks = () => {
 	const [isLoading, setIsLoading] = useState(true);
-
-	useEffect(() => {
-		document.title = 'Books Management | Libronet Admin';
-		setTimeout(() => setIsLoading(false), 2000);
-	}, []);
-
 	const [searchQuery, setSearchQuery] = useState('');
 	const [filterCategory, setFilterCategory] = useState('all');
 	const [filterStatus, setFilterStatus] = useState('all');
+	const [books, setBooks] = useState([]);
 
-	// Mock data - replace with API call
-	const [books] = useState([
-		{ id: 1, title: 'Clean Code', author: 'Robert C. Martin', category: 'Technology', uploadedBy: 'johndoe', uploadDate: '2024-01-15', downloads: 1234, rating: 4.8, status: 'approved' as const },
-		{ id: 2, title: 'The Pragmatic Programmer', author: 'Andrew Hunt', category: 'Technology', uploadedBy: 'janesmith', uploadDate: '2024-01-20', downloads: 1100, rating: 4.7, status: 'approved' as const },
-		{ id: 3, title: 'Design Patterns', author: 'Gang of Four', category: 'Technology', uploadedBy: 'mikejohnson', uploadDate: '2024-02-10', downloads: 980, rating: 4.6, status: 'pending' as const },
-		{ id: 4, title: 'Refactoring', author: 'Martin Fowler', category: 'Technology', uploadedBy: 'sarahwilliams', uploadDate: '2024-02-15', downloads: 850, rating: 4.5, status: 'approved' as const },
-		{ id: 5, title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', category: 'Fiction', uploadedBy: 'tombrown', uploadDate: '2024-03-01', downloads: 720, rating: 4.4, status: 'pending' as const },
-		{ id: 6, title: 'A Brief History of Time', author: 'Stephen Hawking', category: 'Science', uploadedBy: 'johndoe', uploadDate: '2024-03-05', downloads: 650, rating: 4.7, status: 'rejected' as const },
-	]);
+	useEffect(() => {
+		document.title = 'Books Management | Libronet Admin';
+		fetchBooks();
+	}, []);
+
+	const fetchBooks = async () => {
+		try {
+			const booksData = await adminService.getAllBooks();
+			const formattedBooks = booksData.map((book: any) => ({
+				id: book.id,
+				title: book.title,
+				author: book.author,
+				category: book.category.name,
+				uploadedBy: book.uploaded_by.username,
+				uploadDate: new Date(book.upload_date).toLocaleDateString(),
+				downloads: book.download_count,
+				rating: book.average_rating,
+				status: 'approved' as const
+			}));
+			setBooks(formattedBooks);
+		} catch (error) {
+			console.error('Error fetching books:', error);
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	const filteredBooks = books.filter(book => {
 		const matchesSearch = book.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -33,20 +46,25 @@ const AdminBooks = () => {
 		return matchesSearch && matchesCategory && matchesStatus;
 	});
 
-	const handleBookClick = (bookId: number) => {
-		console.log('Book clicked:', bookId);
+	const handleApprove = async (bookId: number) => {
+		try {
+			await adminService.approveBook(bookId);
+			fetchBooks();
+		} catch (error) {
+			console.error('Error approving book:', error);
+		}
 	};
 
-	const handleApprove = (bookId: number) => {
-		console.log('Approve book:', bookId);
-	};
-
-	const handleReject = (bookId: number) => {
-		console.log('Reject book:', bookId);
-	};
-
-	const handleDelete = (bookId: number) => {
-		console.log('Delete book:', bookId);
+	const handleReject = async (bookId: number) => {
+		const reason = prompt('Enter rejection reason:');
+		if (reason) {
+			try {
+				await adminService.rejectBook(bookId, reason);
+				fetchBooks();
+			} catch (error) {
+				console.error('Error rejecting book:', error);
+			}
+		}
 	};
 
 	return (
@@ -158,10 +176,10 @@ const AdminBooks = () => {
 					{/* Books Table */}
 					<BookTable 
 						books={filteredBooks} 
-						onBookClick={handleBookClick}
+						onBookClick={() => {}}
 						onApprove={handleApprove}
 						onReject={handleReject}
-						onDelete={handleDelete}
+						onDelete={() => {}}
 					/>
 				</div>
 			</div>

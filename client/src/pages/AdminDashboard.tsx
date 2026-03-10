@@ -6,112 +6,78 @@ import CategoryDistributionChart from "../components/admin/CategoryDistributionC
 import RecentActivityList from "../components/admin/RecentActivityList";
 import TopBooksList from "../components/admin/TopBooksList";
 import Preloader from "../components/ui/Preloader";
+import { adminService } from "../utils/admin/adminService";
 
 const AdminDashboard = () => {
 	const [isLoading, setIsLoading] = useState(true);
+	const [stats, setStats] = useState({
+		totalUsers: 0,
+		totalBooks: 0,
+		totalDownloads: 0,
+		activeUsers: 0,
+	});
+	const [activities, setActivities] = useState([]);
+	const [topBooks, setTopBooks] = useState([]);
 
 	useEffect(() => {
 		document.title = "Admin Dashboard | Libronet";
-		setTimeout(() => setIsLoading(false), 2000);
+		fetchDashboardData();
 	}, []);
 
-	// Mock data - replace with API calls later
-	const [stats] = useState({
-		totalUsers: 1234,
-		totalBooks: 567,
-		totalDownloads: 8901,
-		activeUsers: 234,
-	});
+	const fetchDashboardData = async () => {
+		try {
+			const [statsData, activitiesData, booksData] = await Promise.all([
+				adminService.getStats(),
+				adminService.getActivities(),
+				adminService.getAllBooks()
+			]);
 
-	const [userActivityData] = useState({
+			setStats({
+				totalUsers: statsData.total_users,
+				totalBooks: statsData.total_books,
+				totalDownloads: statsData.total_downloads,
+				activeUsers: statsData.active_users,
+			});
+
+			const formattedActivities = activitiesData.map((activity: any) => ({
+				id: activity.id,
+				user: activity.user.username,
+				action: activity.activity_type.replace('_', ' '),
+				book: activity.book_title,
+				time: new Date(activity.timestamp).toLocaleString(),
+				type: activity.activity_type.includes('upload') ? 'upload' : 
+				      activity.activity_type.includes('download') ? 'download' :
+				      activity.activity_type.includes('review') ? 'review' : 'register'
+			}));
+			setActivities(formattedActivities);
+
+			const topBooksData = booksData
+				.sort((a: any, b: any) => b.download_count - a.download_count)
+				.slice(0, 5)
+				.map((book: any) => ({
+					id: book.id,
+					title: book.title,
+					author: book.author,
+					downloads: book.download_count,
+					rating: book.average_rating
+				}));
+			setTopBooks(topBooksData);
+		} catch (error) {
+			console.error('Error fetching dashboard data:', error);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	const userActivityData = {
 		labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
 		data: [120, 150, 180, 140, 200, 170, 190],
-	});
+	};
 
-	const [categoryData] = useState({
+	const categoryData = {
 		labels: ["Science", "Technology", "Fiction", "History", "Arts"],
 		data: [120, 95, 150, 80, 60],
-	});
-
-	const [recentActivities] = useState([
-		{
-			id: 1,
-			user: "John Doe",
-			action: "uploaded",
-			book: "Clean Code",
-			time: "2 minutes ago",
-			type: "upload" as const,
-		},
-		{
-			id: 2,
-			user: "Jane Smith",
-			action: "downloaded",
-			book: "The Pragmatic Programmer",
-			time: "5 minutes ago",
-			type: "download" as const,
-		},
-		{
-			id: 3,
-			user: "Mike Johnson",
-			action: "left a review on",
-			book: "Design Patterns",
-			time: "10 minutes ago",
-			type: "review" as const,
-		},
-		{
-			id: 4,
-			user: "Sarah Williams",
-			action: "registered",
-			time: "15 minutes ago",
-			type: "register" as const,
-		},
-		{
-			id: 5,
-			user: "Tom Brown",
-			action: "uploaded",
-			book: "Refactoring",
-			time: "20 minutes ago",
-			type: "upload" as const,
-		},
-	]);
-
-	const [topBooks] = useState([
-		{
-			id: 1,
-			title: "Clean Code",
-			author: "Robert C. Martin",
-			downloads: 1234,
-			rating: 4.8,
-		},
-		{
-			id: 2,
-			title: "The Pragmatic Programmer",
-			author: "Andrew Hunt",
-			downloads: 1100,
-			rating: 4.7,
-		},
-		{
-			id: 3,
-			title: "Design Patterns",
-			author: "Gang of Four",
-			downloads: 980,
-			rating: 4.6,
-		},
-		{
-			id: 4,
-			title: "Refactoring",
-			author: "Martin Fowler",
-			downloads: 850,
-			rating: 4.5,
-		},
-		{
-			id: 5,
-			title: "Code Complete",
-			author: "Steve McConnell",
-			downloads: 720,
-			rating: 4.4,
-		},
-	]);
+	};
 
 	return (
 		<>
@@ -180,7 +146,7 @@ const AdminDashboard = () => {
 
 					{/* Lists Row */}
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-						<RecentActivityList activities={recentActivities} />
+						<RecentActivityList activities={activities} />
 						<TopBooksList books={topBooks} />
 					</div>
 				</div>
