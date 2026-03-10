@@ -19,6 +19,8 @@ interface UserActivityChartProps {
 }
 
 const UserActivityChart = ({ data, labels }: UserActivityChartProps) => {
+	const hasData = data && data.length > 0 && data.some(d => d > 0);
+
 	const chartData = {
 		labels,
 		datasets: [
@@ -61,7 +63,14 @@ const UserActivityChart = ({ data, labels }: UserActivityChartProps) => {
 		<div className="bg-[#48576019] border border-gray-800 rounded-xl p-6">
 			<h3 className="text-lg font-semibold text-gray-50 mb-4">User Activity</h3>
 			<div className="h-64">
-				<Line data={chartData} options={options} />
+				{hasData ? (
+					<Line data={chartData} options={options} />
+				) : (
+					<div className="flex flex-col items-center justify-center h-full gap-2">
+						<i className="fa fa-chart-line text-gray-500 text-3xl"></i>
+						<p className="text-gray-400">No activity data available</p>
+					</div>
+				)}
 			</div>
 		</div>
 	);

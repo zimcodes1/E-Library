@@ -9,6 +9,8 @@ interface CategoryDistributionChartProps {
 }
 
 const CategoryDistributionChart = ({ data, labels }: CategoryDistributionChartProps) => {
+	const hasData = data && data.length > 0 && data.some(d => d > 0);
+
 	const chartData = {
 		labels,
 		datasets: [
@@ -46,7 +48,14 @@ const CategoryDistributionChart = ({ data, labels }: CategoryDistributionChartPr
 		<div className="bg-[#48576019] border border-gray-800 rounded-xl p-6">
 			<h3 className="text-lg font-semibold text-gray-50 mb-4">Books by Category</h3>
 			<div className="h-64">
-				<Doughnut data={chartData} options={options} />
+				{hasData ? (
+					<Doughnut data={chartData} options={options} />
+				) : (
+					<div className="flex flex-col items-center justify-center h-full gap-2">
+						<i className="fa fa-pie-chart text-gray-500 text-3xl"></i>
+						<p className="text-gray-400">No category data available</p>
+					</div>
+				)}
 			</div>
 		</div>
 	);

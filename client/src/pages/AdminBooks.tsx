@@ -10,6 +10,7 @@ const AdminBooks = () => {
 	const [filterCategory, setFilterCategory] = useState('all');
 	const [filterStatus, setFilterStatus] = useState('all');
 	const [books, setBooks] = useState([]);
+	const [error, setError] = useState('');
 
 	useEffect(() => {
 		document.title = 'Books Management | Libronet Admin';
@@ -18,21 +19,23 @@ const AdminBooks = () => {
 
 	const fetchBooks = async () => {
 		try {
+			setError('');
 			const booksData = await adminService.getAllBooks();
-			const formattedBooks = booksData.map((book: any) => ({
+			const formattedBooks = (booksData || []).map((book: any) => ({
 				id: book.id,
-				title: book.title,
-				author: book.author,
-				category: book.category.name,
-				uploadedBy: book.uploaded_by.username,
+				title: book.title || 'Unknown',
+				author: book.author || 'Unknown',
+				category: book.category?.name || 'Uncategorized',
+				uploadedBy: book.uploaded_by?.username || 'Unknown',
 				uploadDate: new Date(book.upload_date).toLocaleDateString(),
-				downloads: book.download_count,
-				rating: book.average_rating,
+				downloads: book.download_count || 0,
+				rating: book.average_rating || 0,
 				status: 'approved' as const
 			}));
 			setBooks(formattedBooks);
-		} catch (error) {
-			console.error('Error fetching books:', error);
+		} catch (err) {
+			console.error('Error fetching books:', err);
+			setError('Failed to load books. Please check your authentication.');
 		} finally {
 			setIsLoading(false);
 		}
@@ -50,8 +53,9 @@ const AdminBooks = () => {
 		try {
 			await adminService.approveBook(bookId);
 			fetchBooks();
-		} catch (error) {
-			console.error('Error approving book:', error);
+		} catch (err) {
+			console.error('Error approving book:', err);
+			setError('Failed to approve book');
 		}
 	};
 
@@ -61,11 +65,28 @@ const AdminBooks = () => {
 			try {
 				await adminService.rejectBook(bookId, reason);
 				fetchBooks();
-			} catch (error) {
-				console.error('Error rejecting book:', error);
+			} catch (err) {
+				console.error('Error rejecting book:', err);
+				setError('Failed to reject book');
 			}
 		}
 	};
+
+	if (error) {
+		return (
+			<div className="min-h-screen bgImage flex items-center justify-center">
+				<div className="text-center">
+					<p className="text-red-400 text-lg">{error}</p>
+					<button 
+						onClick={fetchBooks}
+						className="mt-4 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
+					>
+						Retry
+					</button>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<>

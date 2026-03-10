@@ -10,6 +10,7 @@ const AdminUsers = () => {
 	const [filterStatus, setFilterStatus] = useState('all');
 	const [filterRole, setFilterRole] = useState('all');
 	const [users, setUsers] = useState([]);
+	const [error, setError] = useState('');
 
 	useEffect(() => {
 		document.title = 'Users Management | Libronet Admin';
@@ -18,10 +19,12 @@ const AdminUsers = () => {
 
 	const fetchUsers = async () => {
 		try {
+			setError('');
 			const usersData = await adminService.getAllUsers();
-			setUsers(usersData);
-		} catch (error) {
-			console.error('Error fetching users:', error);
+			setUsers(usersData || []);
+		} catch (err) {
+			console.error('Error fetching users:', err);
+			setError('Failed to load users. Please check your authentication.');
 		} finally {
 			setIsLoading(false);
 		}
@@ -34,6 +37,22 @@ const AdminUsers = () => {
 		const matchesRole = filterRole === 'all' || user.role === filterRole;
 		return matchesSearch && matchesStatus && matchesRole;
 	});
+
+	if (error) {
+		return (
+			<div className="min-h-screen bgImage flex items-center justify-center">
+				<div className="text-center">
+					<p className="text-red-400 text-lg">{error}</p>
+					<button 
+						onClick={fetchUsers}
+						className="mt-4 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
+					>
+						Retry
+					</button>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<>
@@ -120,7 +139,7 @@ const AdminUsers = () => {
 								</div>
 								<div>
 									<p className="text-gray-400 text-sm">Total Uploads</p>
-									<p className="text-2xl font-bold text-gray-50">{users.reduce((sum, u) => sum + u.books_uploaded, 0)}</p>
+									<p className="text-2xl font-bold text-gray-50">{users.reduce((sum, u) => sum + (u.books_uploaded || 0), 0)}</p>
 								</div>
 							</div>
 						</div>

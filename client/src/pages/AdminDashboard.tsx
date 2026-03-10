@@ -18,6 +18,9 @@ const AdminDashboard = () => {
 	});
 	const [activities, setActivities] = useState([]);
 	const [topBooks, setTopBooks] = useState([]);
+	const [userActivityData, setUserActivityData] = useState({ labels: [], data: [] });
+	const [categoryData, setCategoryData] = useState({ labels: [], data: [] });
+	const [error, setError] = useState('');
 
 	useEffect(() => {
 		document.title = "Admin Dashboard | Libronet";
@@ -26,58 +29,70 @@ const AdminDashboard = () => {
 
 	const fetchDashboardData = async () => {
 		try {
-			const [statsData, activitiesData, booksData] = await Promise.all([
+			const [statsData, activitiesData, booksData, activityChartData, categoryChartData] = await Promise.all([
 				adminService.getStats(),
 				adminService.getActivities(),
-				adminService.getAllBooks()
+				adminService.getAllBooks(),
+				adminService.getUserActivityData(),
+				adminService.getCategoryDistribution()
 			]);
 
 			setStats({
-				totalUsers: statsData.total_users,
-				totalBooks: statsData.total_books,
-				totalDownloads: statsData.total_downloads,
-				activeUsers: statsData.active_users,
+				totalUsers: statsData?.total_users || 0,
+				totalBooks: statsData?.total_books || 0,
+				totalDownloads: statsData?.total_downloads || 0,
+				activeUsers: statsData?.active_users || 0,
 			});
 
-			const formattedActivities = activitiesData.map((activity: any) => ({
+			const formattedActivities = (activitiesData || []).map((activity: any) => ({
 				id: activity.id,
-				user: activity.user.username,
-				action: activity.activity_type.replace('_', ' '),
-				book: activity.book_title,
+				user: activity.user?.username || 'Unknown',
+				action: activity.activity_type?.replace(/_/g, ' ') || 'Unknown',
+				book: activity.book_title || '',
 				time: new Date(activity.timestamp).toLocaleString(),
-				type: activity.activity_type.includes('upload') ? 'upload' : 
-				      activity.activity_type.includes('download') ? 'download' :
-				      activity.activity_type.includes('review') ? 'review' : 'register'
+				type: activity.activity_type?.includes('upload') ? 'upload' : 
+				      activity.activity_type?.includes('download') ? 'download' :
+				      activity.activity_type?.includes('review') ? 'review' : 'register'
 			}));
 			setActivities(formattedActivities);
 
-			const topBooksData = booksData
-				.sort((a: any, b: any) => b.download_count - a.download_count)
+			const topBooksData = (booksData || [])
+				.sort((a: any, b: any) => (b.download_count || 0) - (a.download_count || 0))
 				.slice(0, 5)
 				.map((book: any) => ({
 					id: book.id,
 					title: book.title,
 					author: book.author,
-					downloads: book.download_count,
-					rating: book.average_rating
+					downloads: book.download_count || 0,
+					rating: book.average_rating || 0
 				}));
 			setTopBooks(topBooksData);
-		} catch (error) {
-			console.error('Error fetching dashboard data:', error);
+
+			setUserActivityData(activityChartData);
+			setCategoryData(categoryChartData);
+		} catch (err) {
+			console.error('Error fetching dashboard data:', err);
+			setError('Failed to load dashboard data');
 		} finally {
 			setIsLoading(false);
 		}
 	};
 
-	const userActivityData = {
-		labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-		data: [120, 150, 180, 140, 200, 170, 190],
-	};
-
-	const categoryData = {
-		labels: ["Science", "Technology", "Fiction", "History", "Arts"],
-		data: [120, 95, 150, 80, 60],
-	};
+	if (error) {
+		return (
+			<div className="min-h-screen bgImage flex items-center justify-center">
+				<div className="text-center">
+					<p className="text-red-400 text-lg">{error}</p>
+					<button 
+						onClick={fetchDashboardData}
+						className="mt-4 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
+					>
+						Retry
+					</button>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<>
