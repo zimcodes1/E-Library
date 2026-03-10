@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Book, Review, Shelve, ReadingProgress, BookDownload, Quote
+from .models import Category, Book, Review, Shelve, ReadingProgress, BookDownload, Quote, AdminActivity, BookApprovalStatus
 
 
 @admin.register(Category)
@@ -45,3 +45,17 @@ class BookDownloadAdmin(admin.ModelAdmin):
 class QuoteAdmin(admin.ModelAdmin):
     list_display = ['text', 'author', 'is_active', 'created_at']
     list_filter = ['is_active', 'category']
+
+
+@admin.register(AdminActivity)
+class AdminActivityAdmin(admin.ModelAdmin):
+    list_display = ['user', 'activity_type', 'book', 'timestamp']
+    list_filter = ['activity_type', 'timestamp']
+    readonly_fields = ['user', 'timestamp']
+
+
+@admin.register(BookApprovalStatus)
+class BookApprovalStatusAdmin(admin.ModelAdmin):
+    list_display = ['book', 'status', 'reviewed_by', 'review_date']
+    list_filter = ['status', 'review_date']
+    readonly_fields = ['created_at', 'updated_at']

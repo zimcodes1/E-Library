@@ -4,11 +4,16 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.shortcuts import get_object_or_404
-from .models import Category, Book, Review, Shelve, ReadingProgress, BookDownload, Quote
+from django.utils import timezone
+from django.contrib.auth import get_user_model
+from .models import Category, Book, Review, Shelve, ReadingProgress, BookDownload, Quote, AdminActivity, BookApprovalStatus
 from .serializers import (
     CategorySerializer, BookSerializer, BookCreateSerializer, ReviewSerializer,
-    ShelveSerializer, ReadingProgressSerializer, BookDownloadSerializer, QuoteSerializer
+    ShelveSerializer, ReadingProgressSerializer, BookDownloadSerializer, QuoteSerializer,
+    AdminActivitySerializer, BookApprovalStatusSerializer
 )
+
+User = get_user_model()
 
 
 @api_view(['GET'])
@@ -237,3 +242,128 @@ def recent_books(request):
 def user_reviews_count(request):
     count = Review.objects.filter(user=request.user).count()
     return Response({'count': count}, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def admin_dashboard_stats(request):
+    if not request.user.is_staff:
+        return Response({'error': 'Admin access required'}, status=status.HTTP_403_FORBIDDEN)
+    
+    total_users = User.objects.count()
+    total_books = Book.objects.count()
+    total_downloads = BookDownload.objects.count()
+    active_users = User.objects.filter(is_active=True).count()
+    pending_books = BookApprovalStatus.objects.filter(status='pending').count()
+    
+    return Response({
+        'total_users': total_users,
+        'total_books': total_books,
+        'total_downloads': total_downloads,
+        'active_users': active_users,
+        'pending_books': pending_books,
+    })
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def admin_recent_activities(request):
+    if not request.user.is_staff:
+        return Response({'error': 'Admin access required'}, status=status.HTTP_403_FORBIDDEN)
+    
+    activities = AdminActivity.objects.all()[:20]
+    serializer = AdminActivitySerializer(activities, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def admin_pending_books(request):
+    if not request.user.is_staff:
+        return Response({'error': 'Admin access required'}, status=status.HTTP_403_FORBIDDEN)
+    
+    pending = BookApprovalStatus.objects.filter(status='pending').select_related('book', 'book__uploaded_by')
+    serializer = BookApprovalStatusSerializer(pending, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def admin_all_books(request):
+    if not request.user.is_staff:
+        return Response({'error': 'Admin access required'}, status=status.HTTP_403_FORBIDDEN)
+    
+    books = Book.objects.all().select_related('category', 'uploaded_by')
+    serializer = BookSerializer(books, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def admin_all_users(request):
+    if not request.user.is_staff:
+        return Response({'error': 'Admin access required'}, status=status.HTTP_403_FORBIDDEN)
+    
+    users = User.objects.all()
+    data = [{
+        'id': user.id,
+        'username': user.username,
+        'email': user.email,
+        'is_active': user.is_active,
+        'joined_date': user.date_joined.strftime('%Y-%m-%d'),
+        'books_uploaded': user.uploaded_books.count(),
+        'books_downloaded': BookDownload.objects.filter(user=user).count(),
+        'role': 'admin' if user.is_staff else 'user',
+    } for user in users]
+    return Response(data)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def approve_book(request, book_id):
+    if not request.user.is_staff:
+        return Response({'error': 'Admin access required'}, status=status.HTTP_403_FORBIDDEN)
+    
+    try:
+        approval = BookApprovalStatus.objects.get(book_id=book_id)
+        approval.status = 'approved'
+        approval.reviewed_by = request.user
+        approval.review_date = timezone.now()
+        approval.save()
+        
+        AdminActivity.objects.create(
+            user=request.user,
+            activity_type='book_approved',
+            book_id=book_id,
+            description=f'Approved book: {approval.book.title}'
+        )
+        
+        return Response({'status': 'Book approved'}, status=status.HTTP_200_OK)
+    except BookApprovalStatus.DoesNotExist:
+        return Response({'error': 'Book not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def reject_book(request, book_id):
+    if not request.user.is_staff:
+        return Response({'error': 'Admin access required'}, status=status.HTTP_403_FORBIDDEN)
+    
+    try:
+        approval = BookApprovalStatus.objects.get(book_id=book_id)
+        approval.status = 'rejected'
+        approval.reviewed_by = request.user
+        approval.review_date = timezone.now()
+        approval.rejection_reason = request.data.get('reason', '')
+        approval.save()
+        
+        AdminActivity.objects.create(
+            user=request.user,
+            activity_type='book_rejected',
+            book_id=book_id,
+            description=f'Rejected book: {approval.book.title}'
+        )
+        
+        return Response({'status': 'Book rejected'}, status=status.HTTP_200_OK)
+    except BookApprovalStatus.DoesNotExist:
+        return Response({'error': 'Book not found'}, status=status.HTTP_404_NOT_FOUND)

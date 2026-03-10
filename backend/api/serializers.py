@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Book, Review, Shelve, ReadingProgress, BookDownload, Quote
+from .models import Category, Book, Review, Shelve, ReadingProgress, BookDownload, Quote, AdminActivity, BookApprovalStatus
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -94,3 +94,24 @@ class QuoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Quote
         fields = ['id', 'text', 'author', 'category', 'created_at', 'is_active']
+
+
+class AdminActivitySerializer(serializers.ModelSerializer):
+    user = UserBasicSerializer(read_only=True)
+    book_title = serializers.CharField(source='book.title', read_only=True)
+    target_username = serializers.CharField(source='target_user.username', read_only=True)
+
+    class Meta:
+        model = AdminActivity
+        fields = ['id', 'user', 'activity_type', 'book', 'book_title', 'target_user', 'target_username', 'description', 'timestamp']
+        read_only_fields = ['user', 'timestamp']
+
+
+class BookApprovalStatusSerializer(serializers.ModelSerializer):
+    book_title = serializers.CharField(source='book.title', read_only=True)
+    reviewed_by_username = serializers.CharField(source='reviewed_by.username', read_only=True)
+
+    class Meta:
+        model = BookApprovalStatus
+        fields = ['id', 'book', 'book_title', 'status', 'reviewed_by', 'reviewed_by_username', 'review_date', 'rejection_reason', 'created_at', 'updated_at']
+        read_only_fields = ['created_at', 'updated_at']

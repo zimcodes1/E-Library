@@ -201,3 +201,51 @@ class Quote(models.Model):
         if active_quotes.exists():
             return random.choice(active_quotes)
         return None
+
+
+class AdminActivity(models.Model):
+    ACTIVITY_TYPES = [
+        ('upload', 'Book Upload'),
+        ('download', 'Book Download'),
+        ('review', 'Review Posted'),
+        ('register', 'User Registration'),
+        ('book_approved', 'Book Approved'),
+        ('book_rejected', 'Book Rejected'),
+        ('user_deleted', 'User Deleted'),
+        ('book_deleted', 'Book Deleted'),
+    ]
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='admin_activities')
+    activity_type = models.CharField(max_length=20, choices=ACTIVITY_TYPES)
+    book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True, blank=True)
+    target_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='admin_activity_targets')
+    description = models.TextField(blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-timestamp']
+
+    def __str__(self):
+        return f"{self.user.username} - {self.activity_type} - {self.timestamp}"
+
+
+class BookApprovalStatus(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+    ]
+
+    book = models.OneToOneField(Book, on_delete=models.CASCADE, related_name='approval_status')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    reviewed_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='reviewed_books')
+    review_date = models.DateTimeField(null=True, blank=True)
+    rejection_reason = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = 'Book Approval Statuses'
+
+    def __str__(self):
+        return f"{self.book.title} - {self.status}"

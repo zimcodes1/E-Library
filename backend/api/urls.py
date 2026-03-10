@@ -17,4 +17,11 @@ urlpatterns = [
     path('recent-books/', views.recent_books, name='recent-books'),
     path('recent-readings/', views.recent_readings, name='recent-readings'),
     path('user-reviews-count/', views.user_reviews_count, name='user-reviews-count'),
+    path('admin/stats/', views.admin_dashboard_stats, name='admin-stats'),
+    path('admin/activities/', views.admin_recent_activities, name='admin-activities'),
+    path('admin/pending-books/', views.admin_pending_books, name='admin-pending-books'),
+    path('admin/books/', views.admin_all_books, name='admin-all-books'),
+    path('admin/users/', views.admin_all_users, name='admin-all-users'),
+    path('admin/books/<int:book_id>/approve/', views.approve_book, name='approve-book'),
+    path('admin/books/<int:book_id>/reject/', views.reject_book, name='reject-book'),
 ]
