@@ -59,7 +59,7 @@ const InterestsModal = ({onClose, setInterests, currentInterests}:{onClose:()=>v
     };
 
     return (
-            <div className="w-200 h-fit max-sm:w-9/10 bg-[#1a1b2e] border border-purple-500/30 text-gray-200 rounded-2xl shadow-2xl py-8 px-6 flex flex-col relative">
+            <div className="w-200 max-h-9/10 overflow-y-scroll no-scrollbar max-sm:w-9/10 bg-[#1a1b2e] border border-purple-500/30 text-gray-200 rounded-2xl shadow-2xl py-8 px-6 flex flex-col relative">
                 <i onClick={onClose} className="fa fa-close text-xl text-gray-400 hover:text-gray-50 absolute top-4 right-4 cursor-pointer transition"></i>
                 <h2 className="text-3xl max-sm:text-2xl font-bold gradient text-center">
                     <i className="fa fa-magic-wand-sparkles"></i> Your Interests
