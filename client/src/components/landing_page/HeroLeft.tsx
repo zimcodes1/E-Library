@@ -10,7 +10,7 @@ function HeroLeft() {
 			transition={{ duration: 0.8 }}
 			className="w-1/2 max-[900px]:w-full py-10 max-sm:px-5 max-sm:relative z-10 max-sm:py-8 flex flex-col justify-center max-[900px]:items-center"
 		>
-			<h1 className="font-[Super] text-6xl max-[900px]:text-5xl max-sm:text-3xl max-[900px]:text-center text-blue-50 font-bold leading-tight max-sm:leading-snug">
+			<h1 className="font-[Titan] text-6xl max-[900px]:text-5xl max-sm:text-3xl max-[900px]:text-center text-blue-50 font-bold leading-tight max-sm:leading-snug">
 				Experience the Freedom of a <span className="gradient">Boundless</span>{" "}
 				Library
 			</h1>
