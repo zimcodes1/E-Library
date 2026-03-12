@@ -4,8 +4,8 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface CategoryDistributionChartProps {
-	data: number[];
-	labels: string[];
+	data: number[] | undefined;
+	labels: string[] | undefined;
 }
 
 const CategoryDistributionChart = ({ data, labels }: CategoryDistributionChartProps) => {

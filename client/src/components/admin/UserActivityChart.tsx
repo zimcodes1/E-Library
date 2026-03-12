@@ -1,4 +1,4 @@
-import { Line } from 'react-chartjs-2';
+import { Line } from "react-chartjs-2";
 import {
 	Chart as ChartJS,
 	CategoryScale,
@@ -8,27 +8,36 @@ import {
 	Title,
 	Tooltip,
 	Legend,
-	Filler
-} from 'chart.js';
+	Filler,
+} from "chart.js";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
+ChartJS.register(
+	CategoryScale,
+	LinearScale,
+	PointElement,
+	LineElement,
+	Title,
+	Tooltip,
+	Legend,
+	Filler,
+);
 
 interface UserActivityChartProps {
-	data: number[];
-	labels: string[];
+	data: number[] | undefined;
+	labels: string[] | undefined;
 }
 
 const UserActivityChart = ({ data, labels }: UserActivityChartProps) => {
-	const hasData = data && data.length > 0 && data.some(d => d > 0);
+	const hasData = data && data.length > 0 && data.some((d) => d > 0);
 
 	const chartData = {
 		labels,
 		datasets: [
 			{
-				label: 'Active Users',
+				label: "Active Users",
 				data,
-				borderColor: 'rgb(168, 85, 247)',
-				backgroundColor: 'rgba(168, 85, 247, 0.1)',
+				borderColor: "rgb(168, 85, 247)",
+				backgroundColor: "rgba(168, 85, 247, 0.1)",
 				fill: true,
 				tension: 0.4,
 			},
@@ -41,20 +50,20 @@ const UserActivityChart = ({ data, labels }: UserActivityChartProps) => {
 		plugins: {
 			legend: { display: false },
 			tooltip: {
-				backgroundColor: 'rgba(0, 0, 0, 0.8)',
+				backgroundColor: "rgba(0, 0, 0, 0.8)",
 				padding: 12,
-				titleColor: '#fff',
-				bodyColor: '#fff',
+				titleColor: "#fff",
+				bodyColor: "#fff",
 			},
 		},
 		scales: {
 			y: {
-				grid: { color: 'rgba(255, 255, 255, 0.1)' },
-				ticks: { color: '#9ca3af' },
+				grid: { color: "rgba(255, 255, 255, 0.1)" },
+				ticks: { color: "#9ca3af" },
 			},
 			x: {
 				grid: { display: false },
-				ticks: { color: '#9ca3af' },
+				ticks: { color: "#9ca3af" },
 			},
 		},
 	};

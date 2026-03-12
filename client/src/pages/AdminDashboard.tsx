@@ -8,6 +8,11 @@ import TopBooksList from "../components/admin/TopBooksList";
 import Preloader from "../components/ui/Preloader";
 import { adminService } from "../utils/admin/adminService";
 
+interface ActivityDataTypes {
+	labels: string[], 
+	data: any[]
+}
+
 const AdminDashboard = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [stats, setStats] = useState({
@@ -18,8 +23,8 @@ const AdminDashboard = () => {
 	});
 	const [activities, setActivities] = useState([]);
 	const [topBooks, setTopBooks] = useState([]);
-	const [userActivityData, setUserActivityData] = useState({ labels: [], data: [] });
-	const [categoryData, setCategoryData] = useState({ labels: [], data: [] });
+	const [userActivityData, setUserActivityData] = useState<ActivityDataTypes>();
+	const [categoryData, setCategoryData] = useState<ActivityDataTypes>();
 	const [error, setError] = useState('');
 
 	useEffect(() => {
@@ -150,12 +155,12 @@ const AdminDashboard = () => {
 					{/* Charts Row */}
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
 						<UserActivityChart
-							data={userActivityData.data}
-							labels={userActivityData.labels}
+							data={userActivityData?.data}
+							labels={userActivityData?.labels}
 						/>
 						<CategoryDistributionChart
-							data={categoryData.data}
-							labels={categoryData.labels}
+							data={categoryData?.data}
+							labels={categoryData?.labels}
 						/>
 					</div>
 

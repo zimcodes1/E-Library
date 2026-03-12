@@ -1,15 +1,4 @@
-interface Book {
-	id: number;
-	title: string;
-	author: string;
-	category: string;
-	uploadedBy: string;
-	uploadDate: string;
-	downloads: number;
-	rating: number;
-	status: 'approved' | 'pending' | 'rejected';
-}
-
+import type { FormattedBook as Book } from "../../pages/AdminBooks";
 interface BookTableProps {
 	books: Book[];
 	onBookClick: (bookId: number) => void;
@@ -47,7 +36,7 @@ const BookTable = ({ books, onBookClick, onApprove, onReject, onDelete }: BookTa
 					</thead>
 					<tbody className="divide-y divide-gray-800">
 						{books.map((book) => (
-							<tr key={book.id} className="hover:bg-[#48576033] transition cursor-pointer" onClick={() => onBookClick(book.id)}>
+							<tr key={book.id} className="hover:bg-[#48576033] transition cursor-pointer" onClick={() => onBookClick(+book.id)}>
 								<td className="px-6 py-4">
 									<div className="flex items-center gap-3">
 										<div className="w-10 h-10 rounded bg-blue-500/20 flex items-center justify-center">
@@ -76,18 +65,18 @@ const BookTable = ({ books, onBookClick, onApprove, onReject, onDelete }: BookTa
 									<div className="flex items-center gap-2">
 										{book.status === 'pending' && (
 											<>
-												<button onClick={(e) => { e.stopPropagation(); onApprove(book.id); }} className="text-green-400 hover:text-green-300" title="Approve">
+												<button onClick={(e) => { e.stopPropagation(); onApprove(+book.id); }} className="text-green-400 hover:text-green-300" title="Approve">
 													<i className="fa fa-check"></i>
 												</button>
-												<button onClick={(e) => { e.stopPropagation(); onReject(book.id); }} className="text-yellow-400 hover:text-yellow-300" title="Reject">
+												<button onClick={(e) => { e.stopPropagation(); onReject(+book.id); }} className="text-yellow-400 hover:text-yellow-300" title="Reject">
 													<i className="fa fa-times"></i>
 												</button>
 											</>
 										)}
-										<button onClick={(e) => { e.stopPropagation(); onBookClick(book.id); }} className="text-purple-400 hover:text-purple-300" title="View">
+										<button onClick={(e) => { e.stopPropagation(); onBookClick(+book.id); }} className="text-purple-400 hover:text-purple-300" title="View">
 											<i className="fa fa-eye"></i>
 										</button>
-										<button onClick={(e) => { e.stopPropagation(); onDelete(book.id); }} className="text-red-400 hover:text-red-300" title="Delete">
+										<button onClick={(e) => { e.stopPropagation(); onDelete(+book.id); }} className="text-red-400 hover:text-red-300" title="Delete">
 											<i className="fa fa-trash"></i>
 										</button>
 									</div>

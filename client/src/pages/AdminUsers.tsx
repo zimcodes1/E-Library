@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import UserTable from '../components/admin/UserTable';
 import Preloader from '../components/ui/Preloader';
 import { adminService } from '../utils/admin/adminService';
+import type { User } from '../components/admin/UserTable';
 
 const AdminUsers = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [searchQuery, setSearchQuery] = useState('');
 	const [filterStatus, setFilterStatus] = useState('all');
 	const [filterRole, setFilterRole] = useState('all');
-	const [users, setUsers] = useState([]);
+	const [users, setUsers] = useState<User[]>([]);
 	const [error, setError] = useState('');
 
 	useEffect(() => {
@@ -33,7 +34,7 @@ const AdminUsers = () => {
 	const filteredUsers = users.filter(user => {
 		const matchesSearch = user.username.toLowerCase().includes(searchQuery.toLowerCase()) || 
 							  user.email.toLowerCase().includes(searchQuery.toLowerCase());
-		const matchesStatus = filterStatus === 'all' || (filterStatus === 'active' ? user.is_active : !user.is_active);
+		const matchesStatus = filterStatus === 'all' || (filterStatus === 'active' ? user.isActive : !user.isActive);
 		const matchesRole = filterRole === 'all' || user.role === filterRole;
 		return matchesSearch && matchesStatus && matchesRole;
 	});
@@ -70,7 +71,7 @@ const AdminUsers = () => {
 						</div>
 						<div className="bg-[#48576019] border border-gray-800 rounded-xl px-6 py-4">
 							<p className="text-gray-400 text-sm">Total Users</p>
-							<p className="text-3xl font-bold text-gray-50">{users.length}</p>
+							<p className="text-3xl font-bold text-gray-50">{users?.length}</p>
 						</div>
 					</div>
 
@@ -117,7 +118,7 @@ const AdminUsers = () => {
 								</div>
 								<div>
 									<p className="text-gray-400 text-sm">Active Users</p>
-									<p className="text-2xl font-bold text-gray-50">{users.filter(u => u.is_active).length}</p>
+									<p className="text-2xl font-bold text-gray-50">{users?.filter(u => u.isActive).length}</p>
 								</div>
 							</div>
 						</div>
@@ -128,7 +129,7 @@ const AdminUsers = () => {
 								</div>
 								<div>
 									<p className="text-gray-400 text-sm">Admins</p>
-									<p className="text-2xl font-bold text-gray-50">{users.filter(u => u.role === 'admin').length}</p>
+									<p className="text-2xl font-bold text-gray-50">{users?.filter(u => u.role === 'admin').length}</p>
 								</div>
 							</div>
 						</div>
@@ -139,7 +140,7 @@ const AdminUsers = () => {
 								</div>
 								<div>
 									<p className="text-gray-400 text-sm">Total Uploads</p>
-									<p className="text-2xl font-bold text-gray-50">{users.reduce((sum, u) => sum + (u.books_uploaded || 0), 0)}</p>
+									<p className="text-2xl font-bold text-gray-50">{users?.reduce((sum, u) => sum + (u.booksUploaded || 0), 0)}</p>
 								</div>
 							</div>
 						</div>

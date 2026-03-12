@@ -1,51 +1,80 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import BookTable from '../components/admin/BookTable';
-import Preloader from '../components/ui/Preloader';
-import { adminService } from '../utils/admin/adminService';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import BookTable from "../components/admin/BookTable";
+import Preloader from "../components/ui/Preloader";
+import { adminService } from "../utils/admin/adminService";
+
+//Raw book types interface
+interface RawBook {
+    id: string;
+    title?: string;
+    author?: string;
+    category?: { name: string };
+    uploaded_by?: { username: string };
+    upload_date: string;
+    download_count?: number;
+    average_rating?: number;
+}
+
+// Formatted books type definition
+export interface FormattedBook {
+    id: string;
+    title: string;
+    author: string;
+    category: string;
+    uploadedBy: string;
+    uploadDate: string;
+    downloads: number;
+    rating: number;
+    status: "approved" | "pending" | "rejected";
+}
+
 
 const AdminBooks = () => {
 	const [isLoading, setIsLoading] = useState(true);
-	const [searchQuery, setSearchQuery] = useState('');
-	const [filterCategory, setFilterCategory] = useState('all');
-	const [filterStatus, setFilterStatus] = useState('all');
-	const [books, setBooks] = useState([]);
-	const [error, setError] = useState('');
+	const [searchQuery, setSearchQuery] = useState("");
+	const [filterCategory, setFilterCategory] = useState("all");
+	const [filterStatus, setFilterStatus] = useState("all");
+	const [books, setBooks] = useState<FormattedBook[]>([]);
+	const [error, setError] = useState("");
 
 	useEffect(() => {
-		document.title = 'Books Management | Libronet Admin';
+		document.title = "Books Management | Libronet Admin";
 		fetchBooks();
 	}, []);
 
 	const fetchBooks = async () => {
 		try {
-			setError('');
+			setError("");
 			const booksData = await adminService.getAllBooks();
-			const formattedBooks = (booksData || []).map((book: any) => ({
+			const formattedBooks = (booksData as RawBook[] || []).map((book) => ({
 				id: book.id,
-				title: book.title || 'Unknown',
-				author: book.author || 'Unknown',
-				category: book.category?.name || 'Uncategorized',
-				uploadedBy: book.uploaded_by?.username || 'Unknown',
+				title: book.title || "Unknown",
+				author: book.author || "Unknown",
+				category: book.category?.name || "Uncategorized",
+				uploadedBy: book.uploaded_by?.username || "Unknown",
 				uploadDate: new Date(book.upload_date).toLocaleDateString(),
 				downloads: book.download_count || 0,
 				rating: book.average_rating || 0,
-				status: 'approved' as const
+				status: "approved" as const,
 			}));
 			setBooks(formattedBooks);
 		} catch (err) {
-			console.error('Error fetching books:', err);
-			setError('Failed to load books. Please check your authentication.');
+			console.error("Error fetching books:", err);
+			setError("Failed to load books. Please check your authentication.");
 		} finally {
 			setIsLoading(false);
 		}
 	};
 
-	const filteredBooks = books.filter(book => {
-		const matchesSearch = book.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-							  book.author.toLowerCase().includes(searchQuery.toLowerCase());
-		const matchesCategory = filterCategory === 'all' || book.category === filterCategory;
-		const matchesStatus = filterStatus === 'all' || book.status === filterStatus;
+	const filteredBooks = books.filter((book) => {
+		const matchesSearch =
+			book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			book.author.toLowerCase().includes(searchQuery.toLowerCase());
+		const matchesCategory =
+			filterCategory === "all" || book.category === filterCategory;
+		const matchesStatus =
+			filterStatus === "all" || book.status === filterStatus;
 		return matchesSearch && matchesCategory && matchesStatus;
 	});
 
@@ -54,20 +83,20 @@ const AdminBooks = () => {
 			await adminService.approveBook(bookId);
 			fetchBooks();
 		} catch (err) {
-			console.error('Error approving book:', err);
-			setError('Failed to approve book');
+			console.error("Error approving book:", err);
+			setError("Failed to approve book");
 		}
 	};
 
 	const handleReject = async (bookId: number) => {
-		const reason = prompt('Enter rejection reason:');
+		const reason = prompt("Enter rejection reason:");
 		if (reason) {
 			try {
 				await adminService.rejectBook(bookId, reason);
 				fetchBooks();
 			} catch (err) {
-				console.error('Error rejecting book:', err);
-				setError('Failed to reject book');
+				console.error("Error rejecting book:", err);
+				setError("Failed to reject book");
 			}
 		}
 	};
@@ -77,7 +106,7 @@ const AdminBooks = () => {
 			<div className="min-h-screen bgImage flex items-center justify-center">
 				<div className="text-center">
 					<p className="text-red-400 text-lg">{error}</p>
-					<button 
+					<button
 						onClick={fetchBooks}
 						className="mt-4 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
 					>
@@ -96,11 +125,18 @@ const AdminBooks = () => {
 					{/* Header */}
 					<div className="flex justify-between items-center mb-8">
 						<div>
-							<Link to="/admin/dashboard" className="text-purple-400 hover:text-purple-300 text-sm mb-2 inline-block">
+							<Link
+								to="/admin/dashboard"
+								className="text-purple-400 hover:text-purple-300 text-sm mb-2 inline-block"
+							>
 								<i className="fa fa-arrow-left mr-2"></i>Back to Dashboard
 							</Link>
-							<h1 className="text-3xl font-bold text-gray-50 font-[Super]">Books Management</h1>
-							<p className="text-gray-400 mt-2">Manage and monitor all books in the library</p>
+							<h1 className="text-3xl font-bold text-gray-50 font-[Super]">
+								Books Management
+							</h1>
+							<p className="text-gray-400 mt-2">
+								Manage and monitor all books in the library
+							</p>
 						</div>
 						<div className="bg-[#48576019] border border-gray-800 rounded-xl px-6 py-4">
 							<p className="text-gray-400 text-sm">Total Books</p>
@@ -155,7 +191,9 @@ const AdminBooks = () => {
 								</div>
 								<div>
 									<p className="text-gray-400 text-sm">Approved</p>
-									<p className="text-2xl font-bold text-gray-50">{books.filter(b => b.status === 'approved').length}</p>
+									<p className="text-2xl font-bold text-gray-50">
+										{books.filter((b) => b.status === "approved").length}
+									</p>
 								</div>
 							</div>
 						</div>
@@ -166,7 +204,9 @@ const AdminBooks = () => {
 								</div>
 								<div>
 									<p className="text-gray-400 text-sm">Pending</p>
-									<p className="text-2xl font-bold text-gray-50">{books.filter(b => b.status === 'pending').length}</p>
+									<p className="text-2xl font-bold text-gray-50">
+										{books.filter((b) => b.status === "pending").length}
+									</p>
 								</div>
 							</div>
 						</div>
@@ -177,7 +217,9 @@ const AdminBooks = () => {
 								</div>
 								<div>
 									<p className="text-gray-400 text-sm">Rejected</p>
-									<p className="text-2xl font-bold text-gray-50">{books.filter(b => b.status === 'rejected').length}</p>
+									<p className="text-2xl font-bold text-gray-50">
+										{books.filter((b) => b.status === "rejected").length}
+									</p>
 								</div>
 							</div>
 						</div>
@@ -188,15 +230,17 @@ const AdminBooks = () => {
 								</div>
 								<div>
 									<p className="text-gray-400 text-sm">Total Downloads</p>
-									<p className="text-2xl font-bold text-gray-50">{books.reduce((sum, b) => sum + b.downloads, 0)}</p>
+									<p className="text-2xl font-bold text-gray-50">
+										{books.reduce((sum, b) => sum + b.downloads, 0)}
+									</p>
 								</div>
 							</div>
 						</div>
 					</div>
 
 					{/* Books Table */}
-					<BookTable 
-						books={filteredBooks} 
+					<BookTable
+						books={filteredBooks}
 						onBookClick={() => {}}
 						onApprove={handleApprove}
 						onReject={handleReject}
