@@ -102,7 +102,7 @@ const AdminDashboard = () => {
 	return (
 		<>
 			<Preloader isLoading={isLoading} />
-			<div className="min-h-screen bgImage">
+			<div className="min-h-screen bg-[#060410]">
 				<div className="max-w-7xl mx-auto px-4 py-8">
 					{/* Header */}
 					<div className="mb-8">
