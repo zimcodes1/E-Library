@@ -85,7 +85,7 @@ const AdminDashboard = () => {
 
 	if (error) {
 		return (
-			<div className="min-h-screen bgImage flex items-center justify-center">
+			<div className="min-h-screen bg-[#060410] flex items-center justify-center">
 				<div className="text-center">
 					<p className="text-red-400 text-lg">{error}</p>
 					<button 

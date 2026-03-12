@@ -103,7 +103,7 @@ const AdminBooks = () => {
 
 	if (error) {
 		return (
-			<div className="min-h-screen bgImage flex items-center justify-center">
+			<div className="min-h-screen bg-[#060410] flex items-center justify-center">
 				<div className="text-center">
 					<p className="text-red-400 text-lg">{error}</p>
 					<button
@@ -120,7 +120,7 @@ const AdminBooks = () => {
 	return (
 		<>
 			<Preloader isLoading={isLoading} />
-			<div className="min-h-screen bgImage">
+			<div className="min-h-screen bg-[#060410]">
 				<div className="max-w-7xl mx-auto px-4 py-8">
 					{/* Header */}
 					<div className="flex justify-between items-center mb-8">

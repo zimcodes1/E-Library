@@ -190,7 +190,7 @@ const UserProfile = () => {
 	if (!user) return null;
 
 	return (
-		<div className="w-full flex justify-end max-sm:items-start items-center bgImage min-h-screen max-sm:h-fit pb-10">
+		<div className="w-full flex justify-end max-sm:items-start items-center bg-[#060410] sm:bgImage min-h-screen max-sm:h-fit pb-10">
 			<Preloader isLoading={loading} />
 			{message && <Message type={message.type} text={message.text} />}
 			<SideMenu />

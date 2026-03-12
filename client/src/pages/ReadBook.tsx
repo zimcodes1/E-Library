@@ -172,7 +172,7 @@ function ReadBook() {
 
     if (loading) {
         return (
-            <div className="w-full flex justify-center items-center min-h-screen bgImage">
+            <div className="w-full flex justify-center items-center min-h-screen bg-[#060410]">
                 <p className="text-gray-400 text-lg">Loading book...</p>
             </div>
         );
@@ -183,7 +183,7 @@ function ReadBook() {
     const fileUrl = book.file_type === 'url' ? book.file_url : getBookFileUrl(book.file);
 
     return (
-        <div className="w-full flex justify-end items-start bgImage min-h-screen pb-10 max-sm:pb-25">
+        <div className="w-full flex justify-end items-start bg-[#060410] min-h-screen pb-10 max-sm:pb-25">
             <SideMenu />
             <div className="w-6/7 max-[900px]:w-7/8 max-sm:w-full h-fit flex flex-col px-10 pt-5 max-sm:p-3 relative">
                 <TopBar />

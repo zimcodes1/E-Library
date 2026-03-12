@@ -48,7 +48,7 @@ const Shelve = () => {
         setTimeout(() => setMessage(null), 3000);
     };
     return (
-        <div className="w-full flex justify-end items-center bgImage min-h-screen pb-10 max-sm:pb-25">
+        <div className="w-full flex justify-end items-center bg-[#060410] min-h-screen pb-10 max-sm:pb-25">
             <Preloader isLoading={loading} />
             {message && <Message type={message.type} text={message.text} />}
             {/* Side Navigation Menu */}

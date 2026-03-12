@@ -4,6 +4,7 @@ import UserTable from '../components/admin/UserTable';
 import Preloader from '../components/ui/Preloader';
 import { adminService } from '../utils/admin/adminService';
 import type { User } from '../components/admin/UserTable';
+import Button from '../components/ui/Button';
 
 const AdminUsers = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -44,12 +45,13 @@ const AdminUsers = () => {
 			<div className="min-h-screen bg-[#060410] flex items-center justify-center">
 				<div className="text-center">
 					<p className="text-red-400 text-lg">{error}</p>
-					<button 
+					<Button 
 						onClick={fetchUsers}
 						className="mt-4 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
+						text='Retry'
 					>
-						Retry
-					</button>
+						
+					</Button>
 				</div>
 			</div>
 		);

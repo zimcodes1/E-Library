@@ -90,7 +90,7 @@ function BookDetails() {
 
 	if (loading) {
 		return (
-			<div className="w-full flex justify-center items-center min-h-screen bgImage">
+			<div className="w-full flex justify-center items-center min-h-screen bg-[#060410]">
 				<p className="text-gray-400 text-lg">Loading book details...</p>
 			</div>
 		);
@@ -98,7 +98,7 @@ function BookDetails() {
 
 	if (!book) return null;
 	return (
-		<div className="w-full flex justify-end items-center bgImage min-h-screen pb-10 max-sm:pb-25">
+		<div className="w-full flex justify-end items-center bg-[#060410] min-h-screen pb-10 max-sm:pb-25">
 			<Preloader isLoading={loading} />
 			{message && <Message type={message.type} text={message.text} />}
 			{/* Side Navigation Menu */}

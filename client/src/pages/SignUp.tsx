@@ -107,7 +107,7 @@ function SignUp() {
 			)}
 			{error && <Message type="error" text={error} />}
 			{/* Changed background and border to match Login dark theme */}
-			<div className="w-[80%] max-[900px]:w-[60%] max-[900px]:h-200 max-sm:w-full max-sm:h-full max-sm:rounded-none h-[90%] border bg-[#48576019] max-sm:bg-transparent max-sm:border-none border-gray-800 rounded-3xl flex justify-between items-center overflow-hidden p-2">
+			<div className="w-[80%] max-[900px]:w-[60%] max-[900px]:h-200 max-sm:w-full max-sm:h-full max-sm:rounded-none h-[90%] border bg-[#48576019] max-sm:bg-transparent max-sm:border-none border-purple-600/30 rounded-3xl flex justify-between items-center overflow-hidden p-2">
 				<div className="w-1/2 max-[900px]:w-full h-full flex flex-col items-start max-sm:items-center justify-start pt-10 max-sm:pt-0 pl-20 max-[900px]:pl-0 overflow-scroll no-scrollbar">
 					<span className="w-full h-fit flex justify-start max-[900px]:justify-center items-center">
 						<img src="/images/logo.png" alt="Logo" className="w-10" />
@@ -284,7 +284,7 @@ function SignUp() {
 				</div>
 
 				{/* Right side background changed to match Login right panel */}
-				<div className="w-1/2 max-[900px]:hidden h-full flex bg-[#48576019] overflow-hidden justify-center items-center rounded-3xl">
+				<div className="w-1/2 max-[900px]:hidden h-full flex bg-[#48576019] overflow-hidden justify-center items-center rounded-3xl sm:border border-purple-600/10">
 					<img
 						src="/images/reading4.png"
 						alt="Person Reading"

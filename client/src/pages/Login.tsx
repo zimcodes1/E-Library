@@ -40,7 +40,7 @@ function LoginPage() {
             {error && <Message type="error" text={error} />}
             <div className="w-[80%] max-[900px]:w-[60%] max-[900px]:h-200 max-sm:w-full max-sm:h-full
             max-sm:bg-transparent max-sm:rounded-none max-sm:m-0 max-[900px]:flex-col-reverse h-[90%]
-            border bg-[#48576019] border-gray-800 rounded-3xl max-sm:justify-end flex 
+            border bg-[#48576019] border-purple-600/30 rounded-3xl max-sm:justify-end flex 
             justify-between items-center overflow-hidden p-2">
                 <div className="w-1/2 max-[900px]:pb-10 max-[900px]:w-full max-[900px]:h-fit max-sm:pb-20 h-full flex flex-col items-start justify-start max-sm:justify-center pt-10 max-[900px]:pt-0 pl-20 max-[900px]:pl-0">
                     <span className="w-full h-fit flex justify-start max-[900px]:justify-center items-center">
@@ -96,7 +96,7 @@ function LoginPage() {
                     <p className="text-xs mt-[10%] max-[900px]:mx-auto text-gray-400 text-center">Don't have an account? <Link to={'/signup'} className="text-purple-500">Sign Up</Link></p>
                 </div>
 
-                <div className="w-1/2 max-[900px]:w-full max-[900px]:bg-transparent max-[900px]:h-fit h-full flex bg-[#48576019] justify-center items-center rounded-3xl">
+                <div className="w-1/2 max-[900px]:w-full max-[900px]:bg-transparent max-[900px]:h-fit h-full flex bg-[#48576019] sm:border border-purple-600/10 justify-center items-center rounded-3xl">
                     <img src="/images/reading.png" alt="Person Reading" className="w-full max-[900px]:w-8/10 h-auto" />
                 </div>
             </div>
