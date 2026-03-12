@@ -5,16 +5,15 @@ function SideMenu() {
 	const navLinkStyles = ({ isActive }: { isActive: string | any }) =>
 		`w-full text-sm h-12 flex justify-start max-[900px]:justify-center max-[900px]:mt-3 max-sm:mt-0 items-center cursor-pointer px-2 rounded-md max-sm:rounded-full transition duration-300 ${
 			isActive
-				? "bg-[#48576050] text-white font-medium" // Active styles
+				? "bg-[#1a123c95] text-white font-medium" // Active styles
 				: "text-gray-300 hover:bg-[#48576030]" // Inactive/Hover styles
 		}`;
 
 	return (
 		<div
-			className="w-1/7 max-[900px]:w-1/9 max-sm:w-[95%] max-sm:h-18 backdrop-blur-2xl max-sm:rounded-4xl
-         max-sm:flex-row max-sm:fixed max-sm:z-50 max-sm:bg-black-200/50
-         max-sm:bottom-3 h-full flex flex-col justify-start
-          items-center px-2 fixed left-0 bottom-0 max-sm:left-[2.5%] border-r max-sm:border max-sm:border-gray-700/50 border-gray-800"
+			className="w-1/7 bg-[#0a061b95] max-[900px]:w-1/9 max-sm:w-[95%] max-sm:h-18 backdrop-blur-2xl max-sm:rounded-4xl
+         max-sm:flex-row max-sm:fixed max-sm:z-50 max-sm:bottom-3 h-full flex flex-col justify-start
+          items-center px-2 fixed left-0 bottom-0 max-sm:left-[2.5%] border-r max-sm:border max-sm:border-gray-700/50 border-purple-600/10"
 		>
 			<span className="flex w-full h-15 justify-start max-[900px]:justify-center items-center max-sm:hidden">
 				<img src="/images/logo.png" alt="Logo" className="h-10" />

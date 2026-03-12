@@ -68,14 +68,14 @@ export function TopBar() {
     };
 
     return (
-        <div className="w-6/7 max-[900px]:w-8/9 max-[900px]:px-5 max-sm:hidden bg-gray-950/50 backdrop-blur-3xl h-15 max-sm:h-10 flex justify-between items-center gap-4 fixed top-0 right-0 px-10 z-50">
+        <div className="w-6/7 sm:bg-[#0a061b95] max-[900px]:w-8/9 max-[900px]:px-5 max-sm:hidden bg-gray-950/50 border-b border-purple-500/10 backdrop-blur-3xl h-15 max-sm:h-10 flex justify-between items-center gap-4 fixed top-0 right-0 px-10 z-50">
             {/* Language Selector - Future Feature */}
-            <span className="flex h-9 min-w-25 px-2 rounded-4xl bg-[#4857605a] justify-center items-center border border-gray-700 shadow cursor-pointer">
+            <span className="flex h-9 min-w-25 px-2 rounded-4xl bg-[#5348605a] justify-center items-center border border-purple-500/10 shadow cursor-pointer">
                 <i className="fa fa-language text-gray-300"></i>
                 <CustomSelect defaultValue="English" options={[{ value: "English", label: "English" }, { value: "Spanish", label: "Spanish" }]}></CustomSelect>
             </span>
             {/* Digital Clock and Reading Timer */}
-            <span className="flex h-9 w-fit rounded-4xl bg-[#4857605a] justify-between items-center border border-gray-700 shadow font-[digi]">
+            <span className="flex h-9 w-fit rounded-4xl bg-[#5348605a] justify-between items-center border border-purple-500/10 shadow font-[digi]">
                 <span className="text-gray-300 flex justify-between items-center">
                     <i className="fa fa-clock mx-2"></i>
                     <p>{formatTime(currentTime)}</p>
@@ -93,7 +93,7 @@ export function TopBar() {
             </span>
             {/* User Profile */}
             <Link to='/profile' className="max-[900px]:hidden">
-                <span className="flex h-9 min-w-25 px-0.5 rounded-4xl bg-[#4857605a] justify-start items-center border border-gray-700 shadow cursor-pointer">
+                <span className="flex h-9 min-w-25 px-0.5 rounded-4xl bg-[#5348605a] justify-start items-center border border-purple-500/10 shadow cursor-pointer">
                     <span className="h-8 w-8 rounded-full flex justify-center items-center overflow-hidden">
                         <img src={getAvatarUrl(user?.avatar)} alt="User" className="w-full h-auto" />
                     </span>
