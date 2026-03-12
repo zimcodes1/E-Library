@@ -8,23 +8,18 @@
 @font-face {
     font-family: Super;
     src: url(/fonts/UbuntuSans.ttf);
-    font-weight: bold;
+    font-weight: 900;
 }
 
-@font-face {
-    font-family: Titan;
-    src: url(/fonts/TitanOne-Regular.ttf);
-    font-weight: bold;
-}
 
-.gradient {
+.gradient{
     background: linear-gradient(90deg, #f54129 0%, #561ac5 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 @media (max-width:600px) {
-    .gradient{
+    .gradient-sm{
         color: white;
         background: none;
         -webkit-background-clip: none;

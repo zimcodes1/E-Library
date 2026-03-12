@@ -107,7 +107,7 @@ function SignUp() {
 			)}
 			{error && <Message type="error" text={error} />}
 			{/* Changed background and border to match Login dark theme */}
-			<div className="w-[80%] max-[900px]:w-[60%] max-[900px]:h-200 max-sm:w-full max-sm:h-full max-sm:rounded-none h-[90%] border bg-[#48576019] max-sm:bg-transparent max-sm:border-none border-purple-600/30 rounded-3xl flex justify-between items-center overflow-hidden p-2">
+			<div className="w-[80%] max-[900px]:w-[60%] max-[900px]:h-200 max-sm:w-full max-sm:h-full max-sm:rounded-none h-[90%] border bg-[#48576019] max-sm:bg-transparent max-sm:border-none border-purple-600/10 rounded-3xl flex justify-between items-center overflow-hidden p-2">
 				<div className="w-1/2 max-[900px]:w-full h-full flex flex-col items-start max-sm:items-center justify-start pt-10 max-sm:pt-0 pl-20 max-[900px]:pl-0 overflow-scroll no-scrollbar">
 					<span className="w-full h-fit flex justify-start max-[900px]:justify-center items-center">
 						<img src="/images/logo.png" alt="Logo" className="w-10" />
@@ -155,7 +155,7 @@ function SignUp() {
 							name="imageInput"
 						/>
 
-						{/* Updated inputs to match Login styling (bg-[#4857602f], border-gray-800, text-gray-300) */}
+						{/* Updated inputs to match Login styling*/}
 						<input
 							type="text"
 							placeholder="Username..."
@@ -164,7 +164,7 @@ function SignUp() {
 								setFormData({ ...formData, username: e.target.value })
 							}
 							required
-							className="h-10 text-gray-300 rounded-lg pl-2 w-full bg-[#4857602f] max-sm:bg-[#48576088] border border-gray-800 focus:ring-0 outline-0 caret-purple-500"
+							className="h-13 text-gray-300 rounded-lg pl-2 w-full bg-purple-500/5 border-2 border-purple-500/30 focus:ring-0 outline-0 caret-purple-500"
 						/>
 						<input
 							type="email"
@@ -174,7 +174,7 @@ function SignUp() {
 								setFormData({ ...formData, email: e.target.value })
 							}
 							required
-							className="h-10 text-gray-300 rounded-lg pl-2 w-full mt-4 bg-[#4857602f] max-sm:bg-[#48576088] border border-gray-800 focus:ring-0 outline-0 caret-purple-500"
+							className="h-13 mt-4 text-gray-300 rounded-lg pl-2 w-full bg-purple-500/5 border-2 border-purple-500/30 focus:ring-0 outline-0 caret-purple-500"
 						/>
 						<div className="relative mt-4">
 							<input
@@ -185,7 +185,7 @@ function SignUp() {
 									setFormData({ ...formData, password: e.target.value })
 								}
 								required
-								className="h-10 text-gray-300 rounded-lg pl-2 pr-10 w-full bg-[#4857602f] max-sm:bg-[#48576088] border border-gray-800 focus:ring-0 outline-0 caret-purple-500"
+								className="h-13 text-gray-300 rounded-lg pl-2 w-full bg-purple-500/5 border-2 border-purple-500/30 focus:ring-0 outline-0 caret-purple-500"
 							/>
 							<i
 								onClick={() => setShowPassword(!showPassword)}
@@ -201,7 +201,7 @@ function SignUp() {
 									setFormData({ ...formData, confirmPassword: e.target.value })
 								}
 								required
-								className="h-10 text-gray-300 rounded-lg pl-2 pr-10 w-full bg-[#4857602f] max-sm:bg-[#48576088] border border-gray-800 focus:ring-0 outline-0 caret-purple-500"
+								className="h-13 text-gray-300 rounded-lg pl-2 w-full bg-purple-500/5 border-2 border-purple-500/30 focus:ring-0 outline-0 caret-purple-500"
 							/>
 							<i
 								onClick={() => setShowConfirmPassword(!showConfirmPassword)}

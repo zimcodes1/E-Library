@@ -10,8 +10,8 @@ function HeroLeft() {
 			transition={{ duration: 0.8 }}
 			className="w-1/2 max-[900px]:w-full py-10 max-sm:px-5 max-sm:relative z-10 max-sm:py-8 flex flex-col justify-center max-[900px]:items-center"
 		>
-			<h1 className="font-[Titan] text-6xl max-[900px]:text-5xl max-sm:text-3xl max-[900px]:text-center text-blue-50 font-bold leading-tight max-sm:leading-snug">
-				Experience the Freedom of a <span className="gradient">Boundless</span>{" "}
+			<h1 className="font-[Super] text-6xl max-[900px]:text-5xl max-sm:text-3xl max-[900px]:text-center text-blue-50 font-bold leading-tight max-sm:leading-snug">
+				Experience the Freedom of a <span className="gradient-sm">Boundless</span>{" "}
 				Library
 			</h1>
 			<p className="text-gray-400 max-sm:text-gray-300 text-lg max-sm:text-sm mt-6 max-sm:mt-4 max-[900px]:text-center max-w-xl">
@@ -25,7 +25,7 @@ function HeroLeft() {
 					placeholder="Search for a book..."
 					className="w-full h-full pl-5 max-sm:pl-4 max-sm:text-sm bg-transparent rounded-l-full outline-0 focus:ring-0 caret-purple-500 text-gray-200 placeholder-gray-500"
 				/>
-				<span className="w-12 max-sm:w-10 h-full bg-gradient-to-r from-purple-600 to-purple-400 flex justify-center items-center rounded-full cursor-pointer hover:shadow-lg hover:shadow-purple-500/50 transition">
+				<span className="w-12 max-sm:w-10 h-full bg-linear-to-r from-purple-600 to-purple-400 flex justify-center items-center rounded-full cursor-pointer hover:shadow-lg hover:shadow-purple-500/50 transition">
 					<i className="fa fa-search text-white text-lg max-sm:text-base"></i>
 				</span>
 			</div>
