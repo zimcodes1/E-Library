@@ -39,7 +39,7 @@ function CustomSelect({
         {value} <i className="fa fa-angle-down"></i>{" "}
       </p>
       <div
-        className={`max-sm:w-auto w-50 absolute top-10 z-10 -left-3 max-sm:left-0 bg-gray-800 border border-gray-600 rounded-2xl backdrop-blur-3xl max-h-56 overflow-y-auto flex flex-col p-2 ${customStyles} ${activeState}`}
+        className={`max-sm:w-auto w-50 absolute top-10 z-10 -left-3 max-sm:left-0 bg-[#0a061b] border border-purple-500/20 rounded-2xl backdrop-blur-2xl max-h-56 overflow-y-auto flex flex-col p-2 ${customStyles} ${activeState}`}
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
