@@ -7,3 +7,5 @@ python-dotenv==1.0.0
 gunicorn==21.2.0
 whitenoise==6.6.0
 dj-database-url==2.1.0
+cloudinary==1.41.0
+django-cloudinary-storage==0.3.0
