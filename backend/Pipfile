@@ -13,6 +13,8 @@ django-cors-headers = "*"
 psycopg = {extras = ["binary"], version = "*"}
 pillow = "*"
 whitenoise = "*"
+cloudinary = "*"
+django-cloudinary-storage = "*"
 
 [dev-packages]
 
