@@ -181,6 +181,8 @@ function ReadBook() {
     if (!book) return null;
 
     const fileUrl = book.file_url || getBookFileUrl(book.file);
+    console.log('Book data:', book);
+    console.log('File URL for PDF:', fileUrl);
 
     return (
         <div className="w-full flex justify-end items-start bg-[#060410] min-h-screen pb-10 max-sm:pb-25">
@@ -234,8 +236,12 @@ function ReadBook() {
                             </div>
                         )}
                         <Document 
-                            file={fileUrl} 
+                            file={fileUrl}
                             onLoadSuccess={onDocumentLoadSuccess}
+                            onLoadError={(error) => {
+                                console.error('PDF load error:', error);
+                                console.log('Attempted file URL:', fileUrl);
+                            }}
                             loading={
                                 <div className="flex items-center justify-center p-20">
                                     <div className="flex flex-col items-center gap-3">
