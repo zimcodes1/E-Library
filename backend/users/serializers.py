@@ -19,21 +19,12 @@ class UserSerializer(serializers.ModelSerializer):
         write_only=True, 
         required=False
     )
-    avatar = serializers.ImageField(required=False, allow_null=True, use_url=False)
-    avatar_url = serializers.SerializerMethodField()
+    avatar_url = serializers.URLField(source='avatar', required=False, allow_null=True, allow_blank=True)
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'avatar', 'avatar_url', 'bio', 'reading_hours', 'books_read', 'interests', 'interest_ids', 'recent_books']
-        read_only_fields = ['id', 'reading_hours', 'books_read', 'recent_books', 'avatar_url']
-
-    def get_avatar_url(self, obj):
-        if obj.avatar:
-            request = self.context.get('request')
-            if request:
-                return request.build_absolute_uri(obj.avatar.url)
-            return obj.avatar.url
-        return None
+        fields = ['id', 'username', 'email', 'avatar_url', 'bio', 'reading_hours', 'books_read', 'interests', 'interest_ids', 'recent_books']
+        read_only_fields = ['id', 'reading_hours', 'books_read', 'recent_books']
 
     def update(self, instance, validated_data):
         interest_ids = validated_data.pop('interest_ids', None)
@@ -50,11 +41,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 class SignupSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
-    avatar = serializers.ImageField(required=False, allow_null=True)
+    avatar_url = serializers.URLField(source='avatar', required=False, allow_null=True, allow_blank=True)
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'avatar']
+        fields = ['username', 'email', 'password', 'avatar_url']
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)

@@ -12,7 +12,7 @@ def avatar_upload_path(instance, filename):
 
 
 class User(AbstractUser):
-    avatar = models.ImageField(upload_to=avatar_upload_path, null=True, blank=True)
+    avatar = models.URLField(max_length=500, null=True, blank=True)
     bio = models.TextField(blank=True)
     interests = models.ManyToManyField('api.Category', related_name='interested_users', blank=True)
     reading_hours = models.IntegerField(default=0)

@@ -127,7 +127,7 @@ const UserProfile = () => {
 			
 			if (selectedAvatar) {
 				const avatarUrl = await uploadToCloudinary(selectedAvatar);
-				updates.avatar = avatarUrl;
+				updates.avatar_url = avatarUrl;
 			}
 
 			if (pendingChanges.username) updates.username = pendingChanges.username;

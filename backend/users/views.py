@@ -10,7 +10,6 @@ from .serializers import SignupSerializer, LoginSerializer, UserSerializer
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
-@parser_classes((MultiPartParser, FormParser))
 def signup(request):
     serializer = SignupSerializer(data=request.data)
     if serializer.is_valid():
@@ -77,7 +76,6 @@ def add_reading_time(request):
 
 @api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
-@parser_classes((MultiPartParser, FormParser, JSONParser))
 def profile(request):
     if request.method == 'GET':
         serializer = UserSerializer(request.user, context={'request': request})
