@@ -1,53 +1,63 @@
 # Cloudinary Upload Preset Configuration
 
 ## Problem
-- Files not getting renamed with unique names
-- PDF viewer not loading files
+- PDF files getting 401 Unauthorized error
+- PDFs uploaded as images instead of raw files
 
-## Solution: Update Cloudinary Upload Preset
+## Solution: Create TWO Upload Presets
 
-### Steps:
+### Preset 1: For Images (avatars and covers)
 
 1. Go to Cloudinary Console: https://cloudinary.com/console
 2. Navigate to **Settings** → **Upload** → **Upload presets**
-3. Find your preset `libronet_uploads` and click **Edit**
-4. Configure these settings:
+3. Click **Add upload preset**
+4. Configure:
 
-   **General:**
-   - Signing Mode: **Unsigned**
-   - Folder: Leave empty (we set it in code)
-   - Use filename: **No** (uncheck)
-   - Unique filename: **Yes** (check this)
-   - Overwrite: **No** (uncheck)
-
-   **Access Control:**
-   - Delivery type: **Upload**
-   - Access mode: **Public**
+   **Name:** `libronet_uploads`
+   **Signing Mode:** Unsigned
+   **Folder:** Leave empty
+   **Use filename:** No
+   **Unique filename:** Yes
+   **Overwrite:** No
+   **Resource type:** Image
+   **Access mode:** Public
 
 5. Click **Save**
 
+### Preset 2: For PDFs (books)
+
+1. Click **Add upload preset** again
+2. Configure:
+
+   **Name:** `libronet_raw_uploads`
+   **Signing Mode:** Unsigned
+   **Folder:** Leave empty
+   **Use filename:** No
+   **Unique filename:** Yes
+   **Overwrite:** No
+   **Resource type:** Raw
+   **Access mode:** Public
+
+3. Click **Save**
+
+## Update Frontend Environment Variables
+
+Add to `client/.env`:
+```env
+VITE_CLOUDINARY_CLOUD_NAME=your_cloud_name
+VITE_CLOUDINARY_UPLOAD_PRESET=libronet_uploads
+VITE_CLOUDINARY_RAW_PRESET=libronet_raw_uploads
+```
+
 ## Test After Changes
 
-1. Commit and push frontend changes:
+1. Commit and push:
    ```bash
-   cd client
    git add .
-   git commit -m "Add debug logging and fix Cloudinary upload"
+   git commit -m "Use raw resource type for PDF uploads"
    git push
    ```
 
 2. Upload a new book
-3. Check browser console for:
-   - "Cloudinary upload success: [URL]"
-   - "File URL for PDF: [URL]"
-   - Any PDF load errors
-
-4. Check Cloudinary dashboard to verify:
-   - Files are in `libronet/` folder
-   - Files have unique names like `libronet_book_1234567890_abc123`
-
-## If PDF Still Doesn't Load
-
-The issue might be CORS. Add this to your Cloudinary settings:
-1. Settings → Security → Allowed fetch domains
-2. Add: `*.vercel.app` and your frontend domain
+3. Check URL should be: `https://res.cloudinary.com/.../raw/upload/...` (not image/upload)
+4. PDF should load without 401 error

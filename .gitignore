@@ -3,3 +3,4 @@ backend/setup_production.sh
 backend/.env.example
 backend/.env.vercel
 backend/.env.example
+client/.env

@@ -1,5 +1,6 @@
 const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'your_cloud_name';
 const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'libronet_uploads';
+const CLOUDINARY_RAW_PRESET = import.meta.env.VITE_CLOUDINARY_RAW_PRESET || 'libronet_raw_uploads';
 
 const generateUniqueFilename = (prefix: string): string => {
   const timestamp = Date.now();
@@ -11,13 +12,17 @@ export const uploadToCloudinary = async (file: File, type: 'avatar' | 'cover' | 
   const prefix = type === 'avatar' ? 'libronet_ava' : type === 'cover' ? 'libronet_cover' : 'libronet_book';
   const uniqueFilename = generateUniqueFilename(prefix);
   
+  // Determine resource type and preset based on file type
+  const resourceType = type === 'book' ? 'raw' : 'image';
+  const uploadPreset = type === 'book' ? CLOUDINARY_RAW_PRESET : CLOUDINARY_UPLOAD_PRESET;
+  
   const formData = new FormData();
   formData.append('file', file);
-  formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+  formData.append('upload_preset', uploadPreset);
   formData.append('public_id', `libronet/${uniqueFilename}`);
   
   const response = await fetch(
-    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/auto/upload`,
+    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`,
     {
       method: 'POST',
       body: formData,
