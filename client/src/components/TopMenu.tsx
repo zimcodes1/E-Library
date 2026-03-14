@@ -95,7 +95,7 @@ export function TopBar() {
             <Link to='/profile' className="max-[900px]:hidden">
                 <span className="flex h-9 min-w-25 px-0.5 rounded-4xl bg-[#5348605a] justify-start items-center border border-purple-500/10 shadow cursor-pointer">
                     <span className="h-8 w-8 rounded-full flex justify-center items-center overflow-hidden">
-                        <img src={getAvatarUrl(user?.avatar)} alt="User" className="w-full h-auto" />
+                        <img src={getAvatarUrl(user?.avatar_url)} alt="User" className="w-full h-auto" />
                     </span>
                     <p className="text-xs ml-2 text-gray-300">{user?.username || 'Guest'}</p>
                 </span>

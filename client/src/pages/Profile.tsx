@@ -126,7 +126,7 @@ const UserProfile = () => {
 			const updates: any = {};
 			
 			if (selectedAvatar) {
-				const avatarUrl = await uploadToCloudinary(selectedAvatar);
+				const avatarUrl = await uploadToCloudinary(selectedAvatar, 'avatar');
 				updates.avatar_url = avatarUrl;
 			}
 

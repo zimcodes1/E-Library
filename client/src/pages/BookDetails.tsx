@@ -146,7 +146,7 @@ function BookDetails() {
 									<span className="flex items-center mt-2">
 										<span className="w-8 h-8 flex rounded-full overflow-hidden">
 											<img
-												src={getAvatarUrl(book.uploaded_by.avatar)}
+												src={getAvatarUrl(book.uploaded_by.avatar_url)}
 												className="w-full h-full object-cover"
 												alt={book.uploaded_by.username}
 											/>
@@ -195,7 +195,7 @@ function BookDetails() {
 											key={review.id}
 											text={review.content}
 											userName={review.user.username}
-											userImage={getAvatarUrl(review.user.avatar)}
+											userImage={getAvatarUrl(review.user.avatar_url)}
 											rating={review.rating}
 											date={new Date(review.created_at).toLocaleDateString()}
 										/>

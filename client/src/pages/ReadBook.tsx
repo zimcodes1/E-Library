@@ -180,7 +180,7 @@ function ReadBook() {
 
     if (!book) return null;
 
-    const fileUrl = book.file_type === 'url' ? book.file_url : getBookFileUrl(book.file);
+    const fileUrl = book.file_url || getBookFileUrl(book.file);
 
     return (
         <div className="w-full flex justify-end items-start bg-[#060410] min-h-screen pb-10 max-sm:pb-25">
@@ -292,7 +292,7 @@ function ReadBook() {
                             {reviews.map((review) => (
                                 <div key={review.id} className="p-4 bg-[#31303e] rounded-lg border border-gray-700">
                                     <div className="flex items-center gap-3 mb-2">
-                                        <img src={getAvatarUrl(review.user.avatar)} alt={review.user.username} className="w-10 h-10 rounded-full" />
+                                        <img src={getAvatarUrl(review.user.avatar_url)} alt={review.user.username} className="w-10 h-10 rounded-full" />
                                         <div className="flex-1">
                                             <p className="text-gray-200 font-medium">{review.user.username}</p>
                                             <div className="flex items-center gap-2">

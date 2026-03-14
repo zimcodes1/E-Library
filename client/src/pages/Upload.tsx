@@ -117,12 +117,12 @@ function UploadPage() {
 			setLoading(true);
 			
 			// Upload cover image to Cloudinary
-			const coverUrl = await uploadToCloudinary(formData.cover_image);
+			const coverUrl = await uploadToCloudinary(formData.cover_image, 'cover');
 			
 			// Upload PDF to Cloudinary if file type is pdf
 			let fileUrl = formData.file_url;
 			if (fileUploadFormat === "pdf" && formData.file) {
-				fileUrl = await uploadToCloudinary(formData.file);
+				fileUrl = await uploadToCloudinary(formData.file, 'book');
 			}
 
 			// Send only URLs to backend
