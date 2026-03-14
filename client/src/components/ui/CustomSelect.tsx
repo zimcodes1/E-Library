@@ -5,13 +5,11 @@ function CustomSelect({
   options,
   customStyles,
   onChange,
-  icon
 }: {
   defaultValue?: string;
   options?: Array<{ value: string; label?: string; customStyles?: string }>;
   customStyles?: string;
   onChange?: (value: string) => void;
-  icon?: Element
 }) {
   const [value, setValue] = useState(defaultValue || "Select");
   const [selectedValue, setSelectedValue] = useState(defaultValue || "");

@@ -16,7 +16,6 @@ import {
 	updateProfile,
 } from "../utils/auth";
 import { saveUserInterests } from "../utils/user/interests";
-import { updateAvatar } from "../utils/user/avatar";
 import { getAvatarUrl } from "../utils/avatarUtils";
 import { getUserUploadedBooks, deleteBook, getUserReviewsCount } from "../utils/books";
 import UploadedBookItem from "../components/ui/UploadedBookItem";
