@@ -20,6 +20,7 @@ import { updateAvatar } from "../utils/user/avatar";
 import { getAvatarUrl } from "../utils/avatarUtils";
 import { getUserUploadedBooks, deleteBook, getUserReviewsCount } from "../utils/books";
 import UploadedBookItem from "../components/ui/UploadedBookItem";
+import { uploadToCloudinary } from "../utils/cloudinary";
 
 const UserProfile = () => {
 	useEffect(() => {
@@ -123,11 +124,13 @@ const UserProfile = () => {
 			const token = getToken();
 			if (!token) throw new Error('Not authenticated');
 
+			const updates: any = {};
+			
 			if (selectedAvatar) {
-				await updateAvatar(selectedAvatar);
+				const avatarUrl = await uploadToCloudinary(selectedAvatar);
+				updates.avatar = avatarUrl;
 			}
 
-			const updates: any = {};
 			if (pendingChanges.username) updates.username = pendingChanges.username;
 			if (pendingChanges.email) updates.email = pendingChanges.email;
 			if (pendingChanges.bio !== undefined) updates.bio = pendingChanges.bio;

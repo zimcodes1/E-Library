@@ -24,11 +24,14 @@ export const getBookDetail = async (id: number) => {
     return response.json();
 };
 
-export const uploadBook = async (bookData: FormData) => {
+export const uploadBook = async (bookData: any) => {
     const response = await fetch(`${API_BASE_URL}/books/`, {
         method: 'POST',
-        headers: getAuthHeaders(),
-        body: bookData,
+        headers: {
+            ...getAuthHeaders(),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bookData),
     });
     if (!response.ok) throw new Error('Failed to upload book');
     return response.json();

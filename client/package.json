@@ -12,6 +12,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
     "chart.js": "^4.5.1",
+    "cloudinary-react": "^1.8.1",
     "framer-motion": "^12.34.2",
     "react": "^19.2.0",
     "react-chartjs-2": "^5.3.1",

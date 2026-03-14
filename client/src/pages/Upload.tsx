@@ -9,6 +9,7 @@ import { uploadBook, getUserUploadedBooks, deleteBook } from "../utils/books";
 import { getCategories } from "../utils/user/interests";
 import { getBookCoverUrl } from "../utils/imageUtils";
 import truncate from "../utils/truncateText";
+import { uploadToCloudinary } from "../utils/cloudinary";
 
 function UploadPage() {
 	useEffect(() => {
@@ -114,25 +115,31 @@ function UploadPage() {
 
 		try {
 			setLoading(true);
-			const data = new FormData();
-			data.append("title", formData.title);
-			data.append("author", formData.author);
-			data.append("description", formData.description);
-			data.append("category", formData.category);
-			data.append("publication_year", formData.publication_year);
-			data.append("language", formData.language);
-			data.append("file_type", fileUploadFormat);
-			if (formData.pages) data.append("pages", formData.pages);
-			if (formData.cover_image)
-				data.append("cover_image", formData.cover_image);
-
+			
+			// Upload cover image to Cloudinary
+			const coverUrl = await uploadToCloudinary(formData.cover_image);
+			
+			// Upload PDF to Cloudinary if file type is pdf
+			let fileUrl = formData.file_url;
 			if (fileUploadFormat === "pdf" && formData.file) {
-				data.append("file", formData.file);
-			} else if (fileUploadFormat === "url") {
-				data.append("file_url", formData.file_url);
+				fileUrl = await uploadToCloudinary(formData.file);
 			}
 
-			await uploadBook(data);
+			// Send only URLs to backend
+			const bookData = {
+				title: formData.title,
+				author: formData.author,
+				description: formData.description,
+				category: formData.category,
+				publication_year: formData.publication_year,
+				language: formData.language,
+				file_type: fileUploadFormat,
+				cover_image: coverUrl,
+				file_url: fileUrl,
+				...(formData.pages && { pages: formData.pages }),
+			};
+
+			await uploadBook(bookData);
 			showMessage("success", "Book uploaded successfully!");
 
 			setFormData({
