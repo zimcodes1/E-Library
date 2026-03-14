@@ -25,7 +25,6 @@ def categories(request):
 
 
 @api_view(['GET', 'POST'])
-@parser_classes([MultiPartParser, FormParser])
 def books(request):
     if request.method == 'GET':
         books = Book.objects.filter(is_published=True)

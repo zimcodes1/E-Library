@@ -222,6 +222,7 @@ function UploadPage() {
 											required
 										/>
 										<textarea
+											maxLength={500}
 											value={formData.description}
 											onChange={(e) =>
 												setFormData({
@@ -230,7 +231,7 @@ function UploadPage() {
 												})
 											}
 											placeholder="Description"
-											className="pl-3 pt-3 mt-3 h-20 rounded-lg w-full bg-purple-500/5 border border-purple-500/20 focus:ring-0 text-gray-300 outline-0 ring-0 resize-none"
+											className="pl-3 no-scrollbar pt-3 mt-3 h-20 rounded-lg w-full bg-purple-500/5 border border-purple-500/20 focus:ring-0 text-gray-300 outline-0 ring-0 resize-none"
 										/>
 										<input
 											type="number"
