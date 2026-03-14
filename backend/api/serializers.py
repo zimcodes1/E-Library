@@ -44,10 +44,17 @@ class BookCreateSerializer(serializers.ModelSerializer):
                   'file', 'file_url', 'publication_year', 'language', 'file_type', 'pages']
 
     def validate(self, data):
-        if data.get('file_type') == 'pdf' and not data.get('file'):
-            raise serializers.ValidationError("PDF file is required when file_type is 'pdf'")
-        if data.get('file_type') == 'url' and not data.get('file_url'):
+        file_type = data.get('file_type', 'pdf')
+        
+        # If file_type is pdf, either file or file_url must be provided
+        if file_type == 'pdf':
+            if not data.get('file') and not data.get('file_url'):
+                raise serializers.ValidationError("Either PDF file or file URL is required when file_type is 'pdf'")
+        
+        # If file_type is url, file_url must be provided
+        if file_type == 'url' and not data.get('file_url'):
             raise serializers.ValidationError("URL is required when file_type is 'url'")
+        
         return data
 
 
