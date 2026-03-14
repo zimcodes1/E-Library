@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from api.models import Category
+import cloudinary.uploader
+import os
 
 User = get_user_model()
 
@@ -28,6 +30,20 @@ class UserSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         interest_ids = validated_data.pop('interest_ids', None)
+        
+        # Delete old avatar from Cloudinary if new one is provided
+        if 'avatar' in validated_data and validated_data['avatar']:
+            old_avatar = instance.avatar
+            if old_avatar and 'cloudinary.com' in old_avatar:
+                try:
+                    # Extract public_id from Cloudinary URL
+                    public_id = old_avatar.split('/')[-1].split('.')[0]
+                    folder = '/'.join(old_avatar.split('/')[7:-1])  # Extract folder path
+                    if folder:
+                        public_id = f"{folder}/{public_id}"
+                    cloudinary.uploader.destroy(public_id)
+                except Exception as e:
+                    pass  # Silently fail if deletion fails
         
         for attr, value in validated_data.items():
             setattr(instance, attr, value)

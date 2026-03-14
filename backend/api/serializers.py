@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Category, Book, Review, Shelve, ReadingProgress, BookDownload, Quote, AdminActivity, BookApprovalStatus
 from django.contrib.auth import get_user_model
+import cloudinary.uploader
 
 User = get_user_model()
 
@@ -46,16 +47,43 @@ class BookCreateSerializer(serializers.ModelSerializer):
     def validate(self, data):
         file_type = data.get('file_type', 'pdf')
         
-        # If file_type is pdf, either file or file_url must be provided
         if file_type == 'pdf':
             if not data.get('file') and not data.get('file_url'):
                 raise serializers.ValidationError("Either PDF file or file URL is required when file_type is 'pdf'")
         
-        # If file_type is url, file_url must be provided
         if file_type == 'url' and not data.get('file_url'):
             raise serializers.ValidationError("URL is required when file_type is 'url'")
         
         return data
+    
+    def update(self, instance, validated_data):
+        # Delete old cover from Cloudinary if new one is provided
+        if 'cover_image' in validated_data and validated_data['cover_image']:
+            old_cover = instance.cover_image
+            if old_cover and 'cloudinary.com' in old_cover:
+                try:
+                    public_id = old_cover.split('/')[-1].split('.')[0]
+                    folder = '/'.join(old_cover.split('/')[7:-1])
+                    if folder:
+                        public_id = f"{folder}/{public_id}"
+                    cloudinary.uploader.destroy(public_id)
+                except Exception:
+                    pass
+        
+        # Delete old file from Cloudinary if new one is provided
+        if 'file_url' in validated_data and validated_data['file_url']:
+            old_file = instance.file_url or instance.file
+            if old_file and 'cloudinary.com' in str(old_file):
+                try:
+                    public_id = str(old_file).split('/')[-1].split('.')[0]
+                    folder = '/'.join(str(old_file).split('/')[7:-1])
+                    if folder:
+                        public_id = f"{folder}/{public_id}"
+                    cloudinary.uploader.destroy(public_id, resource_type='raw')
+                except Exception:
+                    pass
+        
+        return super().update(instance, validated_data)
 
 
 class ReviewSerializer(serializers.ModelSerializer):
