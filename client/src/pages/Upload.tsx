@@ -201,7 +201,7 @@ function UploadPage() {
 												setFormData({ ...formData, title: e.target.value })
 											}
 											placeholder="Book Name *"
-											className="pl-3 h-12 rounded-lg w-full bg-purple-500/5 border-2 border-purple-500/30 focus:ring-0 text-gray-300 outline-0 ring-0"
+											className="pl-3 h-12 rounded-lg w-full bg-purple-500/5 border border-purple-500/20  focus:ring-0 text-gray-300 outline-0 ring-0"
 											required
 										/>
 										<input
@@ -211,7 +211,7 @@ function UploadPage() {
 												setFormData({ ...formData, author: e.target.value })
 											}
 											placeholder="Author *"
-											className="pl-3 mt-3 h-12 rounded-lg w-full bg-purple-500/5 border-2 border-purple-500/30 focus:ring-0 text-gray-300 outline-0 ring-0"
+											className="pl-3 mt-3 h-12 rounded-lg w-full bg-purple-500/5 border border-purple-500/20  focus:ring-0 text-gray-300 outline-0 ring-0"
 											required
 										/>
 										<textarea
@@ -223,7 +223,7 @@ function UploadPage() {
 												})
 											}
 											placeholder="Description"
-											className="pl-3 pt-3 mt-3 h-20 rounded-lg w-full bg-purple-500/5 border-2 border-purple-500/30 focus:ring-0 text-gray-300 outline-0 ring-0 resize-none"
+											className="pl-3 pt-3 mt-3 h-20 rounded-lg w-full bg-purple-500/5 border border-purple-500/20 focus:ring-0 text-gray-300 outline-0 ring-0 resize-none"
 										/>
 										<input
 											type="number"
@@ -237,7 +237,7 @@ function UploadPage() {
 											min="1000"
 											max="2026"
 											placeholder="Publication Year *"
-											className="pl-3 mt-3 h-12 rounded-lg w-full bg-purple-500/5 border-2 border-purple-500/30 focus:ring-0 text-gray-300 outline-0 ring-0"
+											className="pl-3 mt-3 h-12 rounded-lg w-full bg-purple-500/5 border border-purple-500/20  focus:ring-0 text-gray-300 outline-0 ring-0"
 											required
 										/>
 										<input
@@ -248,7 +248,7 @@ function UploadPage() {
 											}
 											min="1"
 											placeholder="Number of Pages"
-											className="pl-3 mt-3 h-12 rounded-lg w-full bg-purple-500/5 border-2 border-purple-500/30 focus:ring-0 text-gray-300 outline-0 ring-0"
+											className="pl-3 mt-3 h-12 rounded-lg w-full bg-purple-500/5 border border-purple-500/20  focus:ring-0 text-gray-300 outline-0 ring-0"
 										/>
 										<p className="text-gray-400 text-xs mt-3 text-center">
 											Do you have the URL or the PDF file to upload?
@@ -284,14 +284,14 @@ function UploadPage() {
 													setFormData({ ...formData, file_url: e.target.value })
 												}
 												placeholder="Link to file..."
-												className="pl-3 mt-3 h-12 rounded-lg w-full bg-purple-500/5 border-2 border-purple-500/30 text-gray-300 outline-0 ring-0"
+												className="pl-3 mt-3 h-12 rounded-lg w-full bg-purple-500/5 border border-purple-500/20  text-gray-300 outline-0 ring-0"
 											/>
 										) : (
 											<div
 												onClick={() =>
 													document.getElementById("fileInput")?.click()
 												}
-												className="flex flex-col justify-center items-center mt-2 rounded-lg w-full h-25 bg-purple-500/5 border-2 border-purple-500/30 cursor-pointer"
+												className="flex flex-col justify-center items-center mt-2 rounded-lg w-full h-25 bg-purple-500/5 border border-purple-500/20  cursor-pointer"
 											>
 												<i className="fa fa-file text-4xl text-[#6842ae3a]"></i>
 												<p className="text-gray-300 text-xs mt-1">
@@ -315,7 +315,7 @@ function UploadPage() {
 										onClick={() =>
 											document.getElementById("bookCover")?.click()
 										}
-										className="max-sm:mt-2 w-full h-60 rounded-lg bg-purple-500/5 border-2 border-purple-500/30 cursor-pointer overflow-hidden flex items-center justify-center"
+										className="max-sm:mt-2 w-full h-60 rounded-lg bg-purple-500/5 border border-purple-500/20  cursor-pointer overflow-hidden flex items-center justify-center"
 									>
 										{coverPreview ? (
 											<img

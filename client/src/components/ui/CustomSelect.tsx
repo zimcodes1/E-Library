@@ -5,11 +5,13 @@ function CustomSelect({
   options,
   customStyles,
   onChange,
+  icon
 }: {
   defaultValue?: string;
   options?: Array<{ value: string; label?: string; customStyles?: string }>;
   customStyles?: string;
   onChange?: (value: string) => void;
+  icon?: Element
 }) {
   const [value, setValue] = useState(defaultValue || "Select");
   const [selectedValue, setSelectedValue] = useState(defaultValue || "");
@@ -36,7 +38,7 @@ function CustomSelect({
       className="flex h-6/10 w-50 text-gray-300 text-sm relative rounded-l-2xl items-center px-2 justify-center cursor-pointer select-none"
     >
       <p>
-        {value} <i className="fa fa-angle-down"></i>{" "}
+        <span className="max-sm:hidden">{value}</span> <i className="fa fa-angle-down"></i>{" "}
       </p>
       <div
         className={`max-sm:w-auto w-50 absolute top-10 z-10 -left-3 max-sm:left-0 bg-[#0a061b] border border-purple-500/20 rounded-2xl backdrop-blur-2xl max-h-56 overflow-y-auto flex flex-col p-2 ${customStyles} ${activeState}`}

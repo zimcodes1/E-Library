@@ -74,7 +74,7 @@ function SearchPage() {
 								</button>
 							</div>
 							<div
-								className="h-12 px-4 flex justify-center items-center rounded-2xl bg-[#4857605a] border border-gray-700 text-gray-300 outline-0 cursor-pointer max-sm:w-full"
+								className="h-12 px-4 flex justify-center items-center rounded-2xl bg-purple-500/5 border border-purple-500/20 text-gray-300 outline-0 cursor-pointer max-sm:w-full"
 							>
 								<CustomSelect
 									defaultValue={selectedCategory || "All Categories"}
@@ -86,7 +86,7 @@ function SearchPage() {
 										})),
 									]}
 									onChange={(value) => setSelectedCategory(value)}
-									customStyles="bg-[#4857605a] border border-gray-700 max-sm:w-full"
+									customStyles="border border-gray-700 max-sm:w-full"
 								/>
 							</div>
 						</div>
