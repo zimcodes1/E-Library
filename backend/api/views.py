@@ -317,6 +317,31 @@ def admin_all_users(request):
     return Response(data)
 
 
+@api_view(['PATCH', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def admin_user_detail(request, user_id):
+    if not request.user.is_staff:
+        return Response({'error': 'Admin access required'}, status=status.HTTP_403_FORBIDDEN)
+    
+    user = get_object_or_404(User, id=user_id)
+    
+    if request.method == 'PATCH':
+        role = request.data.get('role')
+        is_active = request.data.get('isActive')
+        
+        if role is not None:
+            user.is_staff = (role == 'admin')
+        if is_active is not None:
+            user.is_active = is_active
+        
+        user.save()
+        return Response({'status': 'User updated'}, status=status.HTTP_200_OK)
+    
+    elif request.method == 'DELETE':
+        user.delete()
+        return Response({'status': 'User deleted'}, status=status.HTTP_204_NO_CONTENT)
+
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def approve_book(request, book_id):

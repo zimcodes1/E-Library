@@ -5,6 +5,8 @@ import Preloader from '../components/ui/Preloader';
 import { adminService } from '../utils/admin/adminService';
 import type { User } from '../components/admin/UserTable';
 import Button from '../components/ui/Button';
+import ConfirmModal from '../components/ui/ConfirmModal';
+import EditUserRoleModal from '../components/admin/EditUserRoleModal';
 
 const AdminUsers = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -13,6 +15,8 @@ const AdminUsers = () => {
 	const [filterRole, setFilterRole] = useState('all');
 	const [users, setUsers] = useState<User[]>([]);
 	const [error, setError] = useState('');
+	const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; user: User | null }>({ isOpen: false, user: null });
+	const [editModal, setEditModal] = useState<{ isOpen: boolean; user: User | null }>({ isOpen: false, user: null });
 
 	useEffect(() => {
 		document.title = 'Users Management | Libronet Admin';
@@ -39,6 +43,28 @@ const AdminUsers = () => {
 		const matchesRole = filterRole === 'all' || user.role === filterRole;
 		return matchesSearch && matchesStatus && matchesRole;
 	});
+
+	const handleDeleteUser = async () => {
+		if (!deleteModal.user) return;
+		try {
+			await adminService.deleteUser(deleteModal.user.id);
+			setUsers(users.filter(u => u.id !== deleteModal.user!.id));
+		} catch (err) {
+			console.error('Error deleting user:', err);
+			setError('Failed to delete user');
+		}
+	};
+
+	const handleUpdateUser = async (role: string, isActive: boolean) => {
+		if (!editModal.user) return;
+		try {
+			await adminService.updateUser(editModal.user.id, { role, isActive });
+			setUsers(users.map(u => u.id === editModal.user!.id ? { ...u, role, isActive } : u));
+		} catch (err) {
+			console.error('Error updating user:', err);
+			setError('Failed to update user');
+		}
+	};
 
 	if (error) {
 		return (
@@ -149,9 +175,33 @@ const AdminUsers = () => {
 					</div>
 
 					{/* Users Table */}
-					<UserTable users={filteredUsers} onUserClick={() => {}} />
+					<UserTable 
+						users={filteredUsers} 
+						onUserClick={() => {}} 
+						onEdit={(user) => setEditModal({ isOpen: true, user })}
+						onDelete={(user) => setDeleteModal({ isOpen: true, user })}
+					/>
 				</div>
 			</div>
+
+			<ConfirmModal
+				isOpen={deleteModal.isOpen}
+				onClose={() => setDeleteModal({ isOpen: false, user: null })}
+				onConfirm={handleDeleteUser}
+				title="Delete User"
+				message={`Are you sure you want to delete ${deleteModal.user?.username}? This action cannot be undone.`}
+				confirmText="Delete"
+				type="danger"
+			/>
+
+			{editModal.user && (
+				<EditUserRoleModal
+					isOpen={editModal.isOpen}
+					onClose={() => setEditModal({ isOpen: false, user: null })}
+					onSave={handleUpdateUser}
+					user={editModal.user}
+				/>
+			)}
 		</>
 	);
 };

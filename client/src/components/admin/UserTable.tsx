@@ -12,9 +12,11 @@ export interface User {
 interface UserTableProps {
 	users: User[];
 	onUserClick: (userId: number) => void;
+	onEdit: (user: User) => void;
+	onDelete: (user: User) => void;
 }
 
-const UserTable = ({ users, onUserClick }: UserTableProps) => {
+const UserTable = ({ users, onUserClick, onEdit, onDelete }: UserTableProps) => {
 	return (
 		<div className="bg-[#48576019] border border-gray-800 rounded-xl overflow-hidden">
 			<div className="overflow-x-auto">
@@ -57,10 +59,10 @@ const UserTable = ({ users, onUserClick }: UserTableProps) => {
 								<td className="px-6 py-4 text-gray-300 text-sm">{user.booksUploaded}</td>
 								<td className="px-6 py-4 text-gray-300 text-sm">{user.booksDownloaded}</td>
 								<td className="px-6 py-4">
-									<button onClick={(e) => { e.stopPropagation(); }} className="text-purple-400 hover:text-purple-300 mr-3">
+									<button onClick={(e) => { e.stopPropagation(); onEdit(user); }} className="text-purple-400 hover:text-purple-300 mr-3">
 										<i className="fa fa-edit"></i>
 									</button>
-									<button onClick={(e) => { e.stopPropagation(); }} className="text-red-400 hover:text-red-300">
+									<button onClick={(e) => { e.stopPropagation(); onDelete(user); }} className="text-red-400 hover:text-red-300">
 										<i className="fa fa-trash"></i>
 									</button>
 								</td>

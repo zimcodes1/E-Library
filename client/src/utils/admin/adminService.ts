@@ -101,5 +101,27 @@ export const adminService = {
     const data = Object.values(categoryCount);
     
     return { labels, data };
+  },
+
+  deleteUser: async (userId: number) => {
+    const response = await fetch(`${API_BASE_URL}/admin/users/${userId}/`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Token ${getAuthToken()}` }
+    });
+    if (!response.ok) throw new Error('Failed to delete user');
+    return response.json();
+  },
+
+  updateUser: async (userId: number, data: { role?: string; isActive?: boolean }) => {
+    const response = await fetch(`${API_BASE_URL}/admin/users/${userId}/`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Token ${getAuthToken()}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    if (!response.ok) throw new Error('Failed to update user');
+    return response.json();
   }
 };

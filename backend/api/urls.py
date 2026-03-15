@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/pending-books/', views.admin_pending_books, name='admin-pending-books'),
     path('admin/books/', views.admin_all_books, name='admin-all-books'),
     path('admin/users/', views.admin_all_users, name='admin-all-users'),
+    path('admin/users/<int:user_id>/', views.admin_user_detail, name='admin-user-detail'),
     path('admin/books/<int:book_id>/approve/', views.approve_book, name='approve-book'),
     path('admin/books/<int:book_id>/reject/', views.reject_book, name='reject-book'),
 ]
