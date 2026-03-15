@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUser, isAuthenticated } from "../utils/auth";
 import { getAvatarUrl } from "../utils/avatarUtils";
+import { setAdminSession } from "../utils/adminAuth";
 import API_BASE_URL from "../utils/auth/config";
 
 function AdminLogin() {
@@ -49,6 +50,7 @@ function AdminLogin() {
 				throw new Error("Invalid password");
 			}
 
+			setAdminSession();
 			navigate("/admin/dashboard");
 		} catch (err: any) {
 			setError(err.message || "Invalid password. Please try again.");

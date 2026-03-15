@@ -19,6 +19,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminUsers from './pages/AdminUsers';
 import AdminBooks from './pages/AdminBooks';
 import AdminLogin from './pages/AdminLogin';
+import AdminProtectedRoute from './components/AdminProtectedRoute';
 import ScrollToTop from './components/ScrollToTop';
 
 createRoot(document.getElementById('root')!).render(
@@ -39,9 +40,9 @@ createRoot(document.getElementById('root')!).render(
         <Route path='/about' element={<About />} />
         <Route path='/terms' element={<TermsAndConditions />} />
         <Route path='/admin' element={<AdminLogin />} />
-        <Route path='/admin/dashboard' element={<AdminDashboard />} />
-        <Route path='/admin/dashboard/users' element={<AdminUsers />} />
-        <Route path='/admin/dashboard/books' element={<AdminBooks />} />
+        <Route path='/admin/dashboard' element={<AdminProtectedRoute><AdminDashboard /></AdminProtectedRoute>} />
+        <Route path='/admin/dashboard/users' element={<AdminProtectedRoute><AdminUsers /></AdminProtectedRoute>} />
+        <Route path='/admin/dashboard/books' element={<AdminProtectedRoute><AdminBooks /></AdminProtectedRoute>} />
         <Route path='*' element={<Lost />} />
       </Routes>
     </BrowserRouter>
