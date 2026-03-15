@@ -10,6 +10,7 @@ import { getCategories } from "../utils/user/interests";
 import { getBookCoverUrl } from "../utils/imageUtils";
 import truncate from "../utils/truncateText";
 import { uploadToCloudinary } from "../utils/cloudinary";
+import { uploadPDFToBlob } from "../utils/blobStorage";
 
 function UploadPage() {
 	useEffect(() => {
@@ -119,10 +120,10 @@ function UploadPage() {
 			// Upload cover image to Cloudinary
 			const coverUrl = await uploadToCloudinary(formData.cover_image, 'cover');
 			
-			// Upload PDF to Cloudinary if file type is pdf
+			// Upload PDF to Vercel Blob if file type is pdf
 			let fileUrl = formData.file_url;
 			if (fileUploadFormat === "pdf" && formData.file) {
-				fileUrl = await uploadToCloudinary(formData.file, 'book');
+				fileUrl = await uploadPDFToBlob(formData.file);
 			}
 
 			// Send only URLs to backend

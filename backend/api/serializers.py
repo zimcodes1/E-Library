@@ -70,18 +70,20 @@ class BookCreateSerializer(serializers.ModelSerializer):
                 except Exception:
                     pass
         
-        # Delete old file from Cloudinary if new one is provided
+        # Delete old file from Cloudinary or Vercel Blob if new one is provided
         if 'file_url' in validated_data and validated_data['file_url']:
             old_file = instance.file_url or instance.file
-            if old_file and 'cloudinary.com' in str(old_file):
-                try:
-                    public_id = str(old_file).split('/')[-1].split('.')[0]
-                    folder = '/'.join(str(old_file).split('/')[7:-1])
-                    if folder:
-                        public_id = f"{folder}/{public_id}"
-                    cloudinary.uploader.destroy(public_id, resource_type='raw')
-                except Exception:
-                    pass
+            if old_file:
+                # Only delete from Cloudinary, Vercel Blob handles its own cleanup
+                if 'cloudinary.com' in str(old_file):
+                    try:
+                        public_id = str(old_file).split('/')[-1].split('.')[0]
+                        folder = '/'.join(str(old_file).split('/')[7:-1])
+                        if folder:
+                            public_id = f"{folder}/{public_id}"
+                        cloudinary.uploader.destroy(public_id, resource_type='raw')
+                    except Exception:
+                        pass
         
         return super().update(instance, validated_data)
 

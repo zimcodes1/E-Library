@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
+    "@vercel/blob": "^2.3.1",
     "chart.js": "^4.5.1",
     "cloudinary-react": "^1.8.1",
     "framer-motion": "^12.34.2",
