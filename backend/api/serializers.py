@@ -20,7 +20,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class UserBasicSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'avatar']
+        fields = ['id', 'username', 'avatar_url']
 
 
 class BookSerializer(serializers.ModelSerializer):
