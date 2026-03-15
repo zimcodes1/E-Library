@@ -1,6 +1,17 @@
-import { NavLink, Link } from "react-router-dom"; // Change Link to NavLink
+import { NavLink, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { getUser, isAuthenticated } from "../utils/auth";
 
 function SideMenu() {
+	const [user, setUser] = useState<any>(null);
+
+	useEffect(() => {
+		if (isAuthenticated()) {
+			setUser(getUser());
+		}
+	}, []);
+
+	const isAdmin = user?.is_staff || false;
 	// Define a helper to handle the active styling logic
 	const navLinkStyles = ({ isActive }: { isActive: string | any }) =>
 		`w-full text-sm h-12 flex justify-start max-[900px]:justify-center max-[900px]:mt-3 max-sm:mt-0 items-center cursor-pointer px-2 rounded-md max-sm:rounded-full transition duration-300 ${
@@ -39,6 +50,13 @@ function SideMenu() {
 					<i className="max-[900px]:text-2xl fa fa-plus-circle"></i>
 					<p className="pl-2 max-[900px]:hidden">Upload</p>
 				</NavLink>
+
+				{isAdmin && (
+					<NavLink to="/admin" className={navLinkStyles}>
+						<i className="max-[900px]:text-2xl fa fa-shield-alt"></i>
+						<p className="pl-2 max-[900px]:hidden">Admin</p>
+					</NavLink>
+				)}
 
 				<NavLink to="/profile" className={navLinkStyles}>
 					<i className="max-[900px]:text-2xl fa-solid fa-user-circle"></i>

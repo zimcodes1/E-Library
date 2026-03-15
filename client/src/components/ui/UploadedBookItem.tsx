@@ -38,7 +38,7 @@ const UploadedBookItem = ({ book, onDelete, onEdit }: UploadedBookItemProps) => 
           className="flex-1 bg-blue-500 hover:bg-blue-600 text-white text-xs py-1.5 rounded transition flex items-center justify-center gap-1"
           title="Edit book"
         >
-          <i className="fa fa-edit"></i> Edit
+          <i className="fa fa-edit"></i> <p className="max-sm:hidden">Edit</p>
         </button>
         <button
           onClick={() => setShowConfirm(true)}
@@ -46,7 +46,7 @@ const UploadedBookItem = ({ book, onDelete, onEdit }: UploadedBookItemProps) => 
           className="flex-1 bg-red-500 hover:bg-red-600 disabled:bg-gray-500 text-white text-xs py-1.5 rounded transition flex items-center justify-center gap-1"
           title="Delete book"
         >
-          <i className="fa fa-trash"></i> Delete
+          <i className="fa fa-trash"></i> <p className="max-sm:hidden">Delete</p>
         </button>
       </div>
       <ConfirmModal
