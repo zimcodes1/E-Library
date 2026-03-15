@@ -107,10 +107,10 @@ function BookDetails() {
 				{/* Topbar component for Search Feature, Language Switch ... */}
 				<TopBar />
 				{/* Main Contents */}
-				<div className="w-full h-full flex mt-15 max-sm:mt-3 justify-center items-start">
+				<div className="w-full h-full flex mt-15 max-sm:mt-0 justify-center items-start">
 					<div className="w-8/10 max-[900px]:w-9/10 max-sm:w-full h-fit flex flex-col">
 						{/* Book Info Section */}
-						<div className="flex relative w-full h-fit overflow-hidden bg-linear-to-br to-purple-900 from-[#b30220] p-6 rounded-2xl justify-between max-sm:flex-col max-sm:justify-center">
+						<div className="flex relative w-full h-fit overflow-hidden bg-linear-to-br from-[#b30220] to-purple-900 p-6 rounded-2xl justify-between max-sm:flex-col max-sm:justify-center">
 							<div className="w-4/5 max-sm:w-full h-full flex gap-4">
 								<div className="max-sm:hidden w-32 h-48 overflow-hidden rounded-lg shrink-0">
 									<img
@@ -119,39 +119,39 @@ function BookDetails() {
 										alt={book.title}
 									/>
 								</div>
-								<div className="flex-1 flex-col text-gray-50">
-									<h2 className="font-semibold text-2xl max-sm:text-xl mb-3">
+								<div className="flex-1 flex-col text-white">
+									<h2 className="font-bold text-2xl max-sm:text-xl mb-3 text-white">
 										{book.title}
 									</h2>
-									<p className="mt-2">
-										<i className="fa fa-user"></i>{" "}
-										<span className="text-gray-200">Author: </span>
-										{book.author}
+									<p className="mt-2 flex items-center">
+										<i className="fa fa-user text-blue-300 mr-2"></i>
+										<span className="text-blue-200 font-medium">Author:</span>
+										<span className="ml-1 text-white">{book.author}</span>
 									</p>
-									<p className="mt-2">
-										<i className="fa fa-folder-open"></i>{" "}
-										<span className="text-gray-200">Category: </span>
-										{book.category.name}
+									<p className="mt-2 flex items-center">
+										<i className="fa fa-folder-open text-green-300 mr-2"></i>
+										<span className="text-green-200 font-medium">Category:</span>
+										<span className="ml-1 text-white">{book.category.name}</span>
 									</p>
-									<p className="mt-2">
-										<i className="fa fa-star text-amber-300"></i>{" "}
-										<span className="text-gray-200">Rating: </span>{" "}
-										{book.average_rating.toFixed(1)}
+									<p className="mt-2 flex items-center">
+										<i className="fa fa-star text-amber-400 mr-2"></i>
+										<span className="text-amber-200 font-medium">Rating:</span>
+										<span className="ml-1 text-white">{book.average_rating.toFixed(1)}</span>
 									</p>
-									<p className="mt-2">
-										<i className="fa fa-calendar"></i>{" "}
-										<span className="text-gray-200">Year: </span>{" "}
-										{book.publication_year}
+									<p className="mt-2 flex items-center">
+										<i className="fa fa-calendar text-pink-300 mr-2"></i>
+										<span className="text-pink-200 font-medium">Year:</span>
+										<span className="ml-1 text-white">{book.publication_year}</span>
 									</p>
 									<span className="flex items-center mt-2">
-										<span className="w-8 h-8 flex rounded-full overflow-hidden">
+										<span className="w-8 h-8 flex rounded-full overflow-hidden border-2 border-white">
 											<img
 												src={getAvatarUrl(book.uploaded_by.avatar_url)}
 												className="w-full h-full object-cover"
 												alt={book.uploaded_by.username}
 											/>
 										</span>
-										<p className="ml-2 text-gray-100">
+										<p className="ml-2 text-white font-semibold">
 											{book.uploaded_by.username}
 										</p>
 									</span>
@@ -167,7 +167,7 @@ function BookDetails() {
 							</div>
 							<i
 								onClick={handleBookmark}
-								className=" right-4 bottom-5 absolute fa fa-bookmark text-3xl text-gray-100 hover:text-amber-300 cursor-pointer transition"
+								className="right-4 bottom-5 absolute fa fa-bookmark text-3xl text-amber-400 hover:text-amber-500 cursor-pointer transition"
 							></i>
 						</div>
 						<div className="w-full h-fit flex flex-col items-center p-5">
