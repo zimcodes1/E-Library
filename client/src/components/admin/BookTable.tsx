@@ -76,8 +76,8 @@ const BookTable = ({ books, onBookClick, onApprove, onReject, onDelete, onToggle
 												</button>
 											</>
 										)}
-										<button onClick={(e) => { e.stopPropagation(); onToggleVisibility(+book.id); }} className={`${book.isPublished ? 'text-blue-400 hover:text-blue-300' : 'text-gray-400 hover:text-gray-300'}`} title={book.isPublished ? 'Hide' : 'Show'}>
-											<i className={`fa fa-eye${book.isPublished ? '' : '-slash'}`}></i>
+										<button onClick={(e) => { e.stopPropagation(); onToggleVisibility(+book.id); }} className={`${book.isPublished ? 'text-green-400 hover:text-green-300' : 'text-red-400 hover:text-red-300'}`} title={book.isPublished ? 'Visible - Click to Hide' : 'Hidden - Click to Show'}>
+											<i className={`fa ${book.isPublished ? 'fa-eye' : 'fa-eye-slash'}`}></i>
 										</button>
 										<button onClick={(e) => { e.stopPropagation(); onDelete(book); }} className="text-red-400 hover:text-red-300" title="Delete">
 											<i className="fa fa-trash"></i>

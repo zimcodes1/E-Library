@@ -5,6 +5,7 @@ import Preloader from "../components/ui/Preloader";
 import { adminService } from "../utils/admin/adminService";
 import ConfirmModal from "../components/ui/ConfirmModal";
 import Message from "../components/ui/Message";
+import { getCategories } from "../utils/user/interests";
 
 //Raw book types interface
 interface RawBook {
@@ -43,10 +44,12 @@ const AdminBooks = () => {
 	const [error, setError] = useState("");
 	const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; book: FormattedBook | null }>({ isOpen: false, book: null });
 	const [message, setMessage] = useState<{ type: string; text: string } | null>(null);
+	const [categories, setCategories] = useState<string[]>([]);
 
 	useEffect(() => {
 		document.title = "Books Management | Libronet Admin";
 		fetchBooks();
+		loadCategories();
 	}, []);
 
 	useEffect(() => {
@@ -78,6 +81,15 @@ const AdminBooks = () => {
 			setError("Failed to load books. Please check your authentication.");
 		} finally {
 			setIsLoading(false);
+		}
+	};
+
+	const loadCategories = async () => {
+		try {
+			const categoriesData = await getCategories();
+			setCategories(categoriesData.map(cat => cat.name));
+		} catch (err) {
+			console.error('Error loading categories:', err);
 		}
 	};
 
@@ -201,11 +213,9 @@ const AdminBooks = () => {
 								className="h-10 px-4 bg-[#4857602f] border border-gray-800 rounded-lg text-gray-300 focus:outline-none focus:border-purple-500 transition"
 							>
 								<option value="all">All Categories</option>
-								<option value="Technology">Technology</option>
-								<option value="Science">Science</option>
-								<option value="Fiction">Fiction</option>
-								<option value="History">History</option>
-								<option value="Arts">Arts</option>
+								{categories.map(cat => (
+									<option key={cat} value={cat}>{cat}</option>
+								))}
 							</select>
 							<select
 								value={filterStatus}
