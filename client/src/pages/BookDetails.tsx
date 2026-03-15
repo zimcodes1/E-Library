@@ -112,7 +112,7 @@ function BookDetails() {
 						{/* Book Info Section */}
 						<div className="flex relative w-full h-fit overflow-hidden bg-linear-to-br to-purple-900 from-[#b30220] p-6 rounded-2xl justify-between max-sm:flex-col max-sm:justify-center">
 							<div className="w-4/5 max-sm:w-full h-full flex gap-4">
-								<div className="w-32 h-48 overflow-hidden rounded-lg shrink-0">
+								<div className="max-sm:hidden w-32 h-48 overflow-hidden rounded-lg shrink-0">
 									<img
 										src={getBookCoverUrl(book.cover_image)}
 										className="w-full h-full object-cover"
@@ -171,7 +171,10 @@ function BookDetails() {
 							></i>
 						</div>
 						<div className="w-full h-fit flex flex-col items-center p-5">
-							<h2 className="font-semibold text-2xl text-gray-400">
+							<div className="sm:hidden w-35 max-h-50 overflow-hidden rounded-xl">
+								<img src={getBookCoverUrl(book.cover_image)} alt={book.title} />
+							</div>
+							<h2 className="font-semibold text-2xl text-gray-400 mt-3">
 								About The Book
 							</h2>
 							<p className="text-center text-gray-300 mt-5">
