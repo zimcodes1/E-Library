@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUser, getToken, isAuthenticated } from "../utils/auth";
+import { getUser, isAuthenticated } from "../utils/auth";
 import { getAvatarUrl } from "../utils/avatarUtils";
 import API_BASE_URL from "../utils/auth/config";
 
