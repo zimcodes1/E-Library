@@ -19,10 +19,12 @@ export interface AuthResponse {
     username: string;
     email: string;
     avatar?: string;
+    avatar_url?: string;
     bio?: string;
     reading_hours: number;
     books_read: number;
     interests?: Array<{id: number; name: string; slug: string}>;
+    is_staff?: boolean;
   };
 }
 

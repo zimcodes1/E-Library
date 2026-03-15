@@ -1,14 +1,32 @@
 import { NavLink, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getUser, isAuthenticated } from "../utils/auth";
+import { getUser, isAuthenticated, getToken, getProfile } from "../utils/auth";
 
 function SideMenu() {
 	const [user, setUser] = useState<any>(null);
 
 	useEffect(() => {
-		if (isAuthenticated()) {
-			setUser(getUser());
-		}
+		const loadUser = async () => {
+			if (isAuthenticated()) {
+				const localUser = getUser();
+				// If user doesn't have is_staff, fetch fresh data
+				if (localUser && localUser.is_staff === undefined) {
+					try {
+						const token = getToken();
+						if (token) {
+							const freshUser = await getProfile(token);
+							localStorage.setItem('user', JSON.stringify(freshUser));
+							setUser(freshUser);
+							return;
+						}
+					} catch (error) {
+						console.error('Failed to fetch user profile:', error);
+					}
+				}
+				setUser(localUser);
+			}
+		};
+		loadUser();
 	}, []);
 
 	const isAdmin = user?.is_staff || false;
