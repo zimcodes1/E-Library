@@ -18,6 +18,8 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class UserBasicSerializer(serializers.ModelSerializer):
+    avatar_url = serializers.URLField(source='avatar', read_only=True)
+    
     class Meta:
         model = User
         fields = ['id', 'username', 'avatar_url']

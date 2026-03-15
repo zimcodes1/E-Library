@@ -60,7 +60,7 @@ const Shelve = () => {
                 <div className="w-full h-full flex mt-15 max-sm:mt-3 flex-col">
                     <span className="flex justify-start max-sm:justify-between max-sm:px-5 items-center">
                         <h2 className="text-lg max-sm:text-sm max-sm:font-normal font-semibold text-gray-300">Your Shelve ({shelveItems.length})</h2>
-                        <span className="flex max-sm:w-30 h-9 min-w-25 px-2 ml-10 rounded-4xl bg-[#4857605a] justify-center items-center border border-gray-700 shadow cursor-pointer">
+                        <span className="flex max-sm:w-30 h-9 min-w-25 px-2 ml-10 rounded-4xl bg-purple-500/5 justify-center items-center border border-purple-500/20 shadow cursor-pointer">
                             <CustomSelect 
                                 defaultValue="All Books" 
                                 options={[
