@@ -11,6 +11,7 @@ import { getBookCoverUrl } from "../utils/imageUtils";
 import truncate from "../utils/truncateText";
 import { uploadToCloudinary } from "../utils/cloudinary";
 import { uploadPDFToBlob } from "../utils/blobStorage";
+import CategoryIcon from "../components/ui/svgs/CategoryIcon";
 
 function UploadPage() {
 	useEffect(() => {
@@ -360,6 +361,7 @@ function UploadPage() {
 												onChange={(val) =>
 													setFormData({ ...formData, category: val })
 												}
+												icon={<CategoryIcon width={15} height={15} />}
 											></CustomSelect>
 										</span>
 										<span className="flex h-9 w-full max-sm:w-5/11 mt-5 px-2 rounded-4xl bg-purple-500/5 justify-center items-center border border-purple-500/20 shadow cursor-pointer">
@@ -380,6 +382,7 @@ function UploadPage() {
 												onChange={(val) =>
 													setFormData({ ...formData, language: val })
 												}
+												icon='fa fa-language'
 											></CustomSelect>
 										</span>
 									</span>

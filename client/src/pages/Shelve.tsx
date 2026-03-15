@@ -6,6 +6,7 @@ import Preloader from "../components/ui/Preloader"
 import Message from "../components/ui/Message"
 import { useEffect, useState } from "react"
 import { getUserShelves, removeFromShelf } from "../utils/books"
+import CategoryIcon from "../components/ui/svgs/CategoryIcon"
 
 const Shelve = () => {
     useEffect(()=>{document.title = 'Your Shelve | Libronet'}, [])
@@ -69,6 +70,7 @@ const Shelve = () => {
                                     {value:'bookmark', label:'Bookmarks'}
                                 ]}
                                 onChange={(val) => setFilter(val)}
+                                icon={<CategoryIcon width={20} height={20} />}
                             ></CustomSelect>
                         </span>
                     </span>

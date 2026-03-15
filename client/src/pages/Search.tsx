@@ -6,6 +6,7 @@ import { getBooks } from "../utils/books/bookService";
 import { getCategories } from "../utils/categoryService";
 import CustomSelect from "../components/ui/CustomSelect";
 import Preloader from "../components/ui/Preloader";
+import CategoryIcon from "../components/ui/svgs/CategoryIcon";
 
 function SearchPage() {
 	const [books, setBooks] = useState<any[]>([]);
@@ -87,6 +88,7 @@ function SearchPage() {
 									]}
 									onChange={(value) => setSelectedCategory(value)}
 									customStyles="border border-gray-700 max-sm:w-full"
+									icon={<CategoryIcon width={20} height={20}/>}
 								/>
 							</div>
 						</div>

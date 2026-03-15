@@ -18,7 +18,7 @@ function ReadAnywhere() {
                 </div>
 
                 {/* Right Side: Content Container */}
-                <div className="w-1/2 max-sm:w-full max-[900px]:h-fit flex flex-col justify-center items-start h-100 bg-purple-400/10 rounded-3xl border border-gray-800 p-10 max-sm:p-5 backdrop-blur-xl">
+                <div className="w-1/2 max-sm:w-full max-[900px]:h-fit flex flex-col justify-center items-start h-100 bg-purple-400/10 rounded-3xl border border-purple-500/20 p-10 max-sm:p-5 backdrop-blur-xl">
                     <span className="text-[#6842ae] font-bold uppercase tracking-widest text-sm mb-4">Seamless Experience</span>
                     <h2 className="text-gray-50 text-2xl max-[900px]:text-2xl font-bold mb-6">Your Library, Always in Your Pocket</h2>
                     
