@@ -7,6 +7,7 @@ import type { User } from '../components/admin/UserTable';
 import Button from '../components/ui/Button';
 import ConfirmModal from '../components/ui/ConfirmModal';
 import EditUserRoleModal from '../components/admin/EditUserRoleModal';
+import Message from '../components/ui/Message';
 
 const AdminUsers = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -17,11 +18,19 @@ const AdminUsers = () => {
 	const [error, setError] = useState('');
 	const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; user: User | null }>({ isOpen: false, user: null });
 	const [editModal, setEditModal] = useState<{ isOpen: boolean; user: User | null }>({ isOpen: false, user: null });
+	const [message, setMessage] = useState<{ type: string; text: string } | null>(null);
 
 	useEffect(() => {
 		document.title = 'Users Management | Libronet Admin';
 		fetchUsers();
 	}, []);
+
+	useEffect(() => {
+		if (message) {
+			const timer = setTimeout(() => setMessage(null), 3000);
+			return () => clearTimeout(timer);
+		}
+	}, [message]);
 
 	const fetchUsers = async () => {
 		try {
@@ -49,9 +58,10 @@ const AdminUsers = () => {
 		try {
 			await adminService.deleteUser(deleteModal.user.id);
 			setUsers(users.filter(u => u.id !== deleteModal.user!.id));
+			setMessage({ type: 'success', text: `User ${deleteModal.user.username} deleted successfully` });
 		} catch (err) {
 			console.error('Error deleting user:', err);
-			setError('Failed to delete user');
+			setMessage({ type: 'error', text: 'Failed to delete user' });
 		}
 	};
 
@@ -60,9 +70,10 @@ const AdminUsers = () => {
 		try {
 			await adminService.updateUser(editModal.user.id, { role, isActive });
 			setUsers(users.map(u => u.id === editModal.user!.id ? { ...u, role, isActive } : u));
+			setMessage({ type: 'success', text: `User ${editModal.user.username} updated successfully` });
 		} catch (err) {
 			console.error('Error updating user:', err);
-			setError('Failed to update user');
+			setMessage({ type: 'error', text: 'Failed to update user' });
 		}
 	};
 
@@ -86,6 +97,7 @@ const AdminUsers = () => {
 	return (
 		<>
 			<Preloader isLoading={isLoading} />
+			{message && <Message type={message.type} text={message.text} />}
 			<div className="min-h-screen bg-[#060410]">
 				<div className="max-w-7xl mx-auto px-4 py-8">
 					{/* Header */}

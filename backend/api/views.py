@@ -391,3 +391,26 @@ def reject_book(request, book_id):
         return Response({'status': 'Book rejected'}, status=status.HTTP_200_OK)
     except BookApprovalStatus.DoesNotExist:
         return Response({'error': 'Book not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def admin_delete_book(request, book_id):
+    if not request.user.is_staff:
+        return Response({'error': 'Admin access required'}, status=status.HTTP_403_FORBIDDEN)
+    
+    book = get_object_or_404(Book, id=book_id)
+    book.delete()
+    return Response({'status': 'Book deleted'}, status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def admin_toggle_book_visibility(request, book_id):
+    if not request.user.is_staff:
+        return Response({'error': 'Admin access required'}, status=status.HTTP_403_FORBIDDEN)
+    
+    book = get_object_or_404(Book, id=book_id)
+    book.is_published = not book.is_published
+    book.save()
+    return Response({'status': 'Visibility toggled', 'is_published': book.is_published}, status=status.HTTP_200_OK)

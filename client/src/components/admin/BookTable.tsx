@@ -1,13 +1,16 @@
+import { Link } from 'react-router-dom';
 import type { FormattedBook as Book } from "../../pages/AdminBooks";
+
 interface BookTableProps {
 	books: Book[];
 	onBookClick: (bookId: number) => void;
 	onApprove: (bookId: number) => void;
 	onReject: (bookId: number) => void;
-	onDelete: (bookId: number) => void;
+	onDelete: (book: Book) => void;
+	onToggleVisibility: (bookId: number) => void;
 }
 
-const BookTable = ({ books, onBookClick, onApprove, onReject, onDelete }: BookTableProps) => {
+const BookTable = ({ books, onBookClick, onApprove, onReject, onDelete, onToggleVisibility }: BookTableProps) => {
 	const getStatusColor = (status: string) => {
 		switch (status) {
 			case 'approved': return 'bg-green-500/20 text-green-400';
@@ -42,7 +45,7 @@ const BookTable = ({ books, onBookClick, onApprove, onReject, onDelete }: BookTa
 										<div className="w-10 h-10 rounded bg-blue-500/20 flex items-center justify-center">
 											<i className="fa fa-book text-blue-400"></i>
 										</div>
-										<span className="text-gray-50 font-medium">{book.title}</span>
+										<Link to={`/book/${book.id}`} onClick={(e) => e.stopPropagation()} className="text-gray-50 font-medium hover:text-purple-400 transition">{book.title}</Link>
 									</div>
 								</td>
 								<td className="px-6 py-4 text-gray-400 text-sm">{book.author}</td>
@@ -73,10 +76,10 @@ const BookTable = ({ books, onBookClick, onApprove, onReject, onDelete }: BookTa
 												</button>
 											</>
 										)}
-										<button onClick={(e) => { e.stopPropagation(); onBookClick(+book.id); }} className="text-purple-400 hover:text-purple-300" title="View">
-											<i className="fa fa-eye"></i>
+										<button onClick={(e) => { e.stopPropagation(); onToggleVisibility(+book.id); }} className={`${book.isPublished ? 'text-blue-400 hover:text-blue-300' : 'text-gray-400 hover:text-gray-300'}`} title={book.isPublished ? 'Hide' : 'Show'}>
+											<i className={`fa fa-eye${book.isPublished ? '' : '-slash'}`}></i>
 										</button>
-										<button onClick={(e) => { e.stopPropagation(); onDelete(+book.id); }} className="text-red-400 hover:text-red-300" title="Delete">
+										<button onClick={(e) => { e.stopPropagation(); onDelete(book); }} className="text-red-400 hover:text-red-300" title="Delete">
 											<i className="fa fa-trash"></i>
 										</button>
 									</div>

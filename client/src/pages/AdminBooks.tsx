@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import BookTable from "../components/admin/BookTable";
 import Preloader from "../components/ui/Preloader";
 import { adminService } from "../utils/admin/adminService";
+import ConfirmModal from "../components/ui/ConfirmModal";
+import Message from "../components/ui/Message";
 
 //Raw book types interface
 interface RawBook {
@@ -14,6 +16,7 @@ interface RawBook {
     upload_date: string;
     download_count?: number;
     average_rating?: number;
+    is_published?: boolean;
 }
 
 // Formatted books type definition
@@ -27,6 +30,7 @@ export interface FormattedBook {
     downloads: number;
     rating: number;
     status: "approved" | "pending" | "rejected";
+    isPublished: boolean;
 }
 
 
@@ -37,11 +41,20 @@ const AdminBooks = () => {
 	const [filterStatus, setFilterStatus] = useState("all");
 	const [books, setBooks] = useState<FormattedBook[]>([]);
 	const [error, setError] = useState("");
+	const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; book: FormattedBook | null }>({ isOpen: false, book: null });
+	const [message, setMessage] = useState<{ type: string; text: string } | null>(null);
 
 	useEffect(() => {
 		document.title = "Books Management | Libronet Admin";
 		fetchBooks();
 	}, []);
+
+	useEffect(() => {
+		if (message) {
+			const timer = setTimeout(() => setMessage(null), 3000);
+			return () => clearTimeout(timer);
+		}
+	}, [message]);
 
 	const fetchBooks = async () => {
 		try {
@@ -57,6 +70,7 @@ const AdminBooks = () => {
 				downloads: book.download_count || 0,
 				rating: book.average_rating || 0,
 				status: "approved" as const,
+				isPublished: book.is_published ?? true,
 			}));
 			setBooks(formattedBooks);
 		} catch (err) {
@@ -101,6 +115,29 @@ const AdminBooks = () => {
 		}
 	};
 
+	const handleDeleteBook = async () => {
+		if (!deleteModal.book) return;
+		try {
+			await adminService.deleteBook(+deleteModal.book.id);
+			setBooks(books.filter(b => b.id !== deleteModal.book!.id));
+			setMessage({ type: 'success', text: `Book "${deleteModal.book.title}" deleted successfully` });
+		} catch (err) {
+			console.error('Error deleting book:', err);
+			setMessage({ type: 'error', text: 'Failed to delete book' });
+		}
+	};
+
+	const handleToggleVisibility = async (bookId: number) => {
+		try {
+			const result = await adminService.toggleBookVisibility(bookId);
+			setBooks(books.map(b => b.id === bookId.toString() ? { ...b, isPublished: result.is_published } : b));
+			setMessage({ type: 'success', text: `Book visibility ${result.is_published ? 'enabled' : 'disabled'}` });
+		} catch (err) {
+			console.error('Error toggling visibility:', err);
+			setMessage({ type: 'error', text: 'Failed to toggle visibility' });
+		}
+	};
+
 	if (error) {
 		return (
 			<div className="min-h-screen bg-[#060410] flex items-center justify-center">
@@ -120,6 +157,7 @@ const AdminBooks = () => {
 	return (
 		<>
 			<Preloader isLoading={isLoading} />
+			{message && <Message type={message.type} text={message.text} />}
 			<div className="min-h-screen bg-[#060410]">
 				<div className="max-w-7xl mx-auto px-4 py-8">
 					{/* Header */}
@@ -244,10 +282,21 @@ const AdminBooks = () => {
 						onBookClick={() => {}}
 						onApprove={handleApprove}
 						onReject={handleReject}
-						onDelete={() => {}}
+						onDelete={(book) => setDeleteModal({ isOpen: true, book })}
+						onToggleVisibility={handleToggleVisibility}
 					/>
 				</div>
 			</div>
+
+			<ConfirmModal
+				isOpen={deleteModal.isOpen}
+				onClose={() => setDeleteModal({ isOpen: false, book: null })}
+				onConfirm={handleDeleteBook}
+				title="Delete Book"
+				message={`Are you sure you want to delete "${deleteModal.book?.title}"? This action cannot be undone.`}
+				confirmText="Delete"
+				type="danger"
+			/>
 		</>
 	);
 };

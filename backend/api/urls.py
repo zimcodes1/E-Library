@@ -25,4 +25,6 @@ urlpatterns = [
     path('admin/users/<int:user_id>/', views.admin_user_detail, name='admin-user-detail'),
     path('admin/books/<int:book_id>/approve/', views.approve_book, name='approve-book'),
     path('admin/books/<int:book_id>/reject/', views.reject_book, name='reject-book'),
+    path('admin/books/<int:book_id>/delete/', views.admin_delete_book, name='admin-delete-book'),
+    path('admin/books/<int:book_id>/toggle-visibility/', views.admin_toggle_book_visibility, name='admin-toggle-book-visibility'),
 ]

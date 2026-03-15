@@ -123,5 +123,23 @@ export const adminService = {
     });
     if (!response.ok) throw new Error('Failed to update user');
     return response.json();
+  },
+
+  deleteBook: async (bookId: number) => {
+    const response = await fetch(`${API_BASE_URL}/admin/books/${bookId}/delete/`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Token ${getAuthToken()}` }
+    });
+    if (!response.ok) throw new Error('Failed to delete book');
+    return response.json();
+  },
+
+  toggleBookVisibility: async (bookId: number) => {
+    const response = await fetch(`${API_BASE_URL}/admin/books/${bookId}/toggle-visibility/`, {
+      method: 'PATCH',
+      headers: { 'Authorization': `Token ${getAuthToken()}` }
+    });
+    if (!response.ok) throw new Error('Failed to toggle book visibility');
+    return response.json();
   }
 };
