@@ -25,6 +25,7 @@ function SignUp() {
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 	const [success, setSuccess] = useState(false);
+	const [acceptedTerms, setAcceptedTerms] = useState(false);
 	const navigate = useNavigate();
 
 	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,6 +55,10 @@ function SignUp() {
 		}
 		if (formData.password !== formData.confirmPassword) {
 			setError("Passwords do not match");
+			return false;
+		}
+		if (!acceptedTerms) {
+			setError("Please accept the Terms and Conditions");
 			return false;
 		}
 		return true;
@@ -255,11 +260,34 @@ function SignUp() {
 								<i className="fa fa-plus"></i>
 							</button>
 						</div>
+
+						{/* Terms and Conditions Checkbox */}
+						<div className="flex items-start gap-3 mt-4">
+							<input
+								type="checkbox"
+								id="terms"
+								checked={acceptedTerms}
+								onChange={(e) => setAcceptedTerms(e.target.checked)}
+								className="mt-1 w-4 h-4 text-purple-600 bg-transparent border-2 border-purple-500/30 rounded focus:ring-purple-500 focus:ring-2"
+							/>
+							<label htmlFor="terms" className="text-xs text-gray-400 leading-relaxed">
+								I agree to the{" "}
+								<Link 
+									to="/terms" 
+									target="_blank" 
+									rel="noopener noreferrer"
+									className="text-purple-400 hover:text-purple-300 underline"
+								>
+									Terms and Conditions
+								</Link>
+								{" "}and understand that my personal data will be processed according to our privacy policy.
+							</label>
+						</div>
 						<span className="w-full flex justify-between items-center mt-7">
 							<Button
 								text={loading ? "Creating..." : "Create Account"}
-								styles="w-fit rounded-md text-xs px-5.5 py-2.5 bg-linear-to-r from-purple-600 to-purple-400 text-gray-50 border-none"
-								disabled={loading}
+								styles={`w-fit rounded-md text-xs px-5.5 py-2.5 text-gray-50 border-none transition ${acceptedTerms ? 'bg-linear-to-r from-purple-600 to-purple-400 hover:from-purple-700 hover:to-purple-500' : 'bg-gray-600 cursor-not-allowed'}`}
+								disabled={loading || !acceptedTerms}
 							></Button>
 							<span className="flex justify-between items-center">
 								<img
