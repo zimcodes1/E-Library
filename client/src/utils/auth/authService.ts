@@ -145,3 +145,44 @@ export const clearAuth = (): void => {
   localStorage.removeItem('token');
   localStorage.removeItem('user');
 };
+
+export const changePassword = async (token: string, currentPassword: string, newPassword: string): Promise<{message: string; token: string}> => {
+  const response = await fetch(`${API_BASE_URL}/auth/change-password/`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Token ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      current_password: currentPassword,
+      new_password: newPassword,
+    }),
+  });
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.error || 'Failed to change password');
+  }
+
+  return result;
+};
+
+export const deleteAccount = async (token: string, password: string): Promise<{message: string}> => {
+  const response = await fetch(`${API_BASE_URL}/auth/delete-account/`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Token ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ password }),
+  });
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.error || 'Failed to delete account');
+  }
+
+  return result;
+};

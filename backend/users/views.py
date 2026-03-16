@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from django.contrib.auth import authenticate
+from django.contrib.auth.hashers import check_password
 from .serializers import SignupSerializer, LoginSerializer, UserSerializer
 
 
@@ -87,3 +88,46 @@ def profile(request):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_password(request):
+    current_password = request.data.get('current_password')
+    new_password = request.data.get('new_password')
+    
+    if not current_password or not new_password:
+        return Response({'error': 'Both current and new passwords are required'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if not check_password(current_password, request.user.password):
+        return Response({'error': 'Current password is incorrect'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if len(new_password) < 8:
+        return Response({'error': 'New password must be at least 8 characters long'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    request.user.set_password(new_password)
+    request.user.save()
+    
+    # Delete old token and create new one
+    request.user.auth_token.delete()
+    token, _ = Token.objects.get_or_create(user=request.user)
+    
+    return Response({
+        'message': 'Password changed successfully',
+        'token': token.key
+    }, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def delete_account(request):
+    password = request.data.get('password')
+    
+    if not password:
+        return Response({'error': 'Password is required'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if not check_password(password, request.user.password):
+        return Response({'error': 'Password is incorrect'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    request.user.delete()
+    return Response({'message': 'Account deleted successfully'}, status=status.HTTP_200_OK)
