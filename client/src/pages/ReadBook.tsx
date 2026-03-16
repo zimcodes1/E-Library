@@ -7,6 +7,7 @@ import { getBookDetail, getBookReviews, recordBookView, addToShelf, downloadBook
 import { getBookFileUrl } from "../utils/imageUtils"
 import { getAvatarUrl } from "../utils/avatarUtils"
 import truncate from "../utils/truncateText"
+import Message from "../components/ui/Message"
 
 import 'react-pdf/dist/Page/TextLayer.css'
 import 'react-pdf/dist/Page/AnnotationLayer.css'
@@ -31,6 +32,7 @@ function ReadBook() {
     const [bookmarkStatus, setBookmarkStatus] = useState<{isBookmarked: boolean, shelveId?: number}>({isBookmarked: false});
     const [favoriteStatus, setFavoriteStatus] = useState<{isFavorited: boolean, shelveId?: number}>({isFavorited: false});
     const [readingStartTime, setReadingStartTime] = useState<number>(Date.now());
+    const [message, setMessage] = useState<{ type: string; text: string } | null>(null);
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -40,6 +42,13 @@ function ReadBook() {
             checkShelveStatus();
         }
     }, [bookId]);
+
+    useEffect(() => {
+        if (message) {
+            const timer = setTimeout(() => setMessage(null), 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [message]);
 
     const loadBook = async () => {
         try {
@@ -80,14 +89,15 @@ function ReadBook() {
             if (bookmarkStatus.isBookmarked && bookmarkStatus.shelveId) {
                 await removeFromShelf(bookmarkStatus.shelveId);
                 setBookmarkStatus({isBookmarked: false});
-                alert('Removed from bookmarks!');
+                setMessage({ type: 'success', text: 'Removed from bookmarks!' });
             } else {
                 const result = await addToShelf(Number(bookId), 'bookmark');
                 setBookmarkStatus({isBookmarked: true, shelveId: result.id});
-                alert('Added to bookmarks!');
+                setMessage({ type: 'success', text: 'Added to bookmarks!' });
             }
         } catch (err) {
             console.error('Failed to bookmark:', err);
+            setMessage({ type: 'error', text: 'Failed to update bookmark' });
         }
     };
 
@@ -96,14 +106,15 @@ function ReadBook() {
             if (favoriteStatus.isFavorited && favoriteStatus.shelveId) {
                 await removeFromShelf(favoriteStatus.shelveId);
                 setFavoriteStatus({isFavorited: false});
-                alert('Removed from favorites!');
+                setMessage({ type: 'success', text: 'Removed from favorites!' });
             } else {
                 const result = await addToShelf(Number(bookId), 'favorite');
                 setFavoriteStatus({isFavorited: true, shelveId: result.id});
-                alert('Added to favorites!');
+                setMessage({ type: 'success', text: 'Added to favorites!' });
             }
         } catch (err) {
             console.error('Failed to favorite:', err);
+            setMessage({ type: 'error', text: 'Failed to update favorite' });
         }
     };
 
@@ -186,6 +197,7 @@ function ReadBook() {
 
     return (
         <div className="w-full flex justify-end items-start bg-[#060410] min-h-screen pb-10 max-sm:pb-25">
+            {message && <Message type={message.type} text={message.text} />}
             <SideMenu />
             <div className="w-6/7 max-[900px]:w-7/8 max-sm:w-full h-fit flex flex-col px-10 pt-5 max-sm:p-3 relative">
                 <TopBar />
