@@ -44,6 +44,8 @@ function UploadPage() {
 		file: null as File | null,
 		file_url: "",
 		cover_image: null as File | null,
+		attribution_name: "",
+		attribution_url: "",
 	});
 
 	useEffect(() => {
@@ -67,7 +69,7 @@ function UploadPage() {
 			setUserBooks(books);
 		} catch (err) {
 			console.error("Failed to fetch user books:", err);
-			showMessage("error", "Failed to load your books");
+			showMessage("error", "Books not loaded!");
 		}
 	};
 
@@ -139,6 +141,8 @@ function UploadPage() {
 				cover_image: coverUrl,
 				file_url: fileUrl,
 				...(formData.pages && { pages: formData.pages }),
+				...(formData.attribution_name && { attribution_name: formData.attribution_name }),
+				...(formData.attribution_url && { attribution_url: formData.attribution_url }),
 			};
 
 			await uploadBook(bookData);
@@ -155,6 +159,8 @@ function UploadPage() {
 				file: null,
 				file_url: "",
 				cover_image: null,
+				attribution_name: "",
+				attribution_url: "",
 			});
 			setCoverPreview(null);
 			fetchUserBooks();
@@ -259,6 +265,28 @@ function UploadPage() {
 											min="1"
 											placeholder="Number of Pages"
 											className="pl-3 mt-3 h-12 rounded-lg w-full bg-purple-500/5 border border-purple-500/20  focus:ring-0 text-gray-300 outline-0 ring-0"
+										/>
+										<div className="mt-4 mb-1">
+											<p className="text-gray-400 text-xs font-medium">
+												<i className="fa fa-link mr-1"></i>Attribution (Optional)
+											</p>
+											<p className="text-gray-500 text-xs mt-1">
+												Credit the original source if this book is from a free library.
+											</p>
+										</div>
+										<input
+											type="text"
+											value={formData.attribution_name}
+											onChange={(e) => setFormData({ ...formData, attribution_name: e.target.value })}
+											placeholder="Source name (e.g. Project Gutenberg)"
+											className="pl-3 mt-2 h-12 rounded-lg w-full bg-purple-500/5 border border-purple-500/20 focus:ring-0 text-gray-300 outline-0 ring-0"
+										/>
+										<input
+											type="url"
+											value={formData.attribution_url}
+											onChange={(e) => setFormData({ ...formData, attribution_url: e.target.value })}
+											placeholder="Source URL (e.g. https://gutenberg.org/...)"
+											className="pl-3 mt-2 h-12 rounded-lg w-full bg-purple-500/5 border border-purple-500/20 focus:ring-0 text-gray-300 outline-0 ring-0"
 										/>
 										<p className="text-gray-400 text-xs mt-3 text-center">
 											Do you have the URL or the PDF file to upload?

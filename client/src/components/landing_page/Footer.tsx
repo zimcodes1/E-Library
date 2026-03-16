@@ -25,7 +25,7 @@ function Footer() {
                 <span className="w-1/4 max-sm:w-1/2 max-sm:mt-5 max-sm:items-end flex flex-col items-start justify-center text-gray-200">
                     <h3 className="text-lg font-semibold text-gray-50">Contact</h3>
                     <a href="mailto:support@libronet.com" className="text-sm mt-2 hover:text-purple-400 transition"><i className="fa fa-envelope text-red-500"></i> Email Us</a>
-                    <p className="text-sm mt-2"><i className="fa fa-phone"></i> Call Us</p>
+                    <p className="text-sm mt-2"><i className="fa fa-phone"></i> Call Us: +2347071430030</p>
                     <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-sm mt-2 hover:text-purple-400 transition"><i className="fa fab fa-facebook text-blue-500"></i> Facebook</a>
                 </span>
             </div>

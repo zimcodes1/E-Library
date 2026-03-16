@@ -35,7 +35,7 @@ class BookSerializer(serializers.ModelSerializer):
                   'cover_image', 'file', 'file_url', 'publication_year', 'language', 
                   'uploaded_by', 'upload_date', 'updated_at', 'file_type', 'pages', 
                   'is_published', 'view_count', 'download_count', 'average_rating', 
-                  'total_reviews', 'is_featured']
+                  'total_reviews', 'is_featured', 'attribution_name', 'attribution_url']
         read_only_fields = ['uploaded_by', 'upload_date', 'updated_at', 'view_count', 
                             'download_count', 'average_rating', 'total_reviews']
 
@@ -44,7 +44,8 @@ class BookCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = ['title', 'author', 'description', 'category', 'cover_image', 
-                  'file', 'file_url', 'publication_year', 'language', 'file_type', 'pages']
+                  'file', 'file_url', 'publication_year', 'language', 'file_type', 'pages',
+                  'attribution_name', 'attribution_url']
 
     def validate(self, data):
         file_type = data.get('file_type', 'pdf')

@@ -68,6 +68,8 @@ class Book(models.Model):
     average_rating = models.FloatField(default=0.0)
     total_reviews = models.IntegerField(default=0)
     is_featured = models.BooleanField(default=False)
+    attribution_name = models.CharField(max_length=255, blank=True, null=True, help_text='Name or organization to attribute the book to')
+    attribution_url = models.URLField(max_length=500, blank=True, null=True, help_text='Link to the original source')
 
     class Meta:
         ordering = ['-upload_date']

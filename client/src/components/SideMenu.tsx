@@ -91,8 +91,8 @@ function SideMenu() {
 				<Link to="/about" className="hover:underline">
 					About
 				</Link>
-				<Link to="#" className="my-2 hover:underline">
-					Contact
+				<Link to="/feedback" className="my-2 hover:underline">
+					Feedback
 				</Link>
 				<Link to="/terms" className="hover:underline">
 					Terms & Conditions
