@@ -45,7 +45,7 @@ const BookTable = ({ books, onBookClick, onApprove, onReject, onDelete, onToggle
 										<div className="w-10 h-10 rounded bg-blue-500/20 flex items-center justify-center">
 											<i className="fa fa-book text-blue-400"></i>
 										</div>
-										<Link to={`/book/${book.id}`} onClick={(e) => e.stopPropagation()} className="text-gray-50 font-medium hover:text-purple-400 transition">{book.title}</Link>
+										<Link to={`/bookdetails/${book.id}`} onClick={(e) => e.stopPropagation()} className="text-gray-50 font-medium hover:text-purple-400 transition">{book.title}</Link>
 									</div>
 								</td>
 								<td className="px-6 py-4 text-gray-400 text-sm">{book.author}</td>

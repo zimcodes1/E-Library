@@ -69,6 +69,11 @@ function SideMenu() {
 					<p className="pl-2 max-[900px]:hidden">Upload</p>
 				</NavLink>
 
+				<NavLink to="/feedback" className={navLinkStyles + ' max-sm:hidden'}>
+					<i className="max-[900px]:text-2xl fa fa-comment-dots"></i>
+					<p className="pl-2 max-[900px]:hidden">Feedback</p>
+				</NavLink>
+
 				{isAdmin && (
 					<NavLink to="/admin" className={navLinkStyles}>
 						<i className="max-[900px]:text-2xl fa fa-shield-alt"></i>

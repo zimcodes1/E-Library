@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Book, Review, Shelve, ReadingProgress, BookDownload, Quote, AdminActivity, BookApprovalStatus
+from .models import Category, Book, Review, Shelve, ReadingProgress, BookDownload, Quote, AdminActivity, BookApprovalStatus, Feedback
 from django.contrib.auth import get_user_model
 import cloudinary.uploader
 
@@ -154,3 +154,14 @@ class BookApprovalStatusSerializer(serializers.ModelSerializer):
         model = BookApprovalStatus
         fields = ['id', 'book', 'book_title', 'status', 'reviewed_by', 'reviewed_by_username', 'review_date', 'rejection_reason', 'created_at', 'updated_at']
         read_only_fields = ['created_at', 'updated_at']
+
+
+class FeedbackSerializer(serializers.ModelSerializer):
+    user = UserBasicSerializer(read_only=True)
+    book_title = serializers.CharField(source='book.title', read_only=True, allow_null=True)
+
+    class Meta:
+        model = Feedback
+        fields = ['id', 'user', 'feedback_type', 'title', 'description', 'book', 'book_title', 
+                  'status', 'priority', 'created_at', 'updated_at', 'resolved_at', 'admin_response']
+        read_only_fields = ['user', 'status', 'created_at', 'updated_at', 'resolved_at', 'admin_response']

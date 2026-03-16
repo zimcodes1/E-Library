@@ -15,6 +15,7 @@ import ReadBook from './pages/ReadBook';
 import BookDetails from './pages/BookDetails';
 import About from './pages/About';
 import TermsAndConditions from './pages/TermsAndConditions';
+import FeedbackPage from './pages/Feedback';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminUsers from './pages/AdminUsers';
 import AdminBooks from './pages/AdminBooks';
@@ -39,6 +40,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path='/bookdetails/:bookId' element={<BookDetails />} />
         <Route path='/about' element={<About />} />
         <Route path='/terms' element={<TermsAndConditions />} />
+        <Route path='/feedback' element={<FeedbackPage />} />
         <Route path='/admin' element={<AdminLogin />} />
         <Route path='/admin/dashboard' element={<AdminProtectedRoute><AdminDashboard /></AdminProtectedRoute>} />
         <Route path='/admin/dashboard/users' element={<AdminProtectedRoute><AdminUsers /></AdminProtectedRoute>} />

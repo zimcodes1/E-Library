@@ -7,11 +7,11 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from django.db import models
-from .models import Category, Book, Review, Shelve, ReadingProgress, BookDownload, Quote, AdminActivity, BookApprovalStatus
+from .models import Category, Book, Review, Shelve, ReadingProgress, BookDownload, Quote, AdminActivity, BookApprovalStatus, Feedback
 from .serializers import (
     CategorySerializer, BookSerializer, BookCreateSerializer, ReviewSerializer,
     ShelveSerializer, ReadingProgressSerializer, BookDownloadSerializer, QuoteSerializer,
-    AdminActivitySerializer, BookApprovalStatusSerializer
+    AdminActivitySerializer, BookApprovalStatusSerializer, FeedbackSerializer
 )
 
 User = get_user_model()
@@ -433,3 +433,30 @@ def admin_toggle_book_visibility(request, book_id):
     book.is_published = not book.is_published
     book.save()
     return Response({'status': 'Visibility toggled', 'is_published': book.is_published}, status=status.HTTP_200_OK)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def user_feedbacks(request):
+    if request.method == 'GET':
+        feedbacks = Feedback.objects.filter(user=request.user)
+        serializer = FeedbackSerializer(feedbacks, many=True)
+        return Response(serializer.data)
+    
+    elif request.method == 'POST':
+        serializer = FeedbackSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def admin_all_feedbacks(request):
+    if not request.user.is_staff:
+        return Response({'error': 'Admin access required'}, status=status.HTTP_403_FORBIDDEN)
+    
+    feedbacks = Feedback.objects.all().select_related('user', 'book')
+    serializer = FeedbackSerializer(feedbacks, many=True)
+    return Response(serializer.data)

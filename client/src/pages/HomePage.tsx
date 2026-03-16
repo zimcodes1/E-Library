@@ -215,6 +215,15 @@ function HomePage() {
 							)}
 						</div>
 					</div>
+
+					{/* Floating Feedback Button - Mobile Only */}
+					<Link
+						to="/feedback"
+						className="fixed bottom-24 right-6 sm:hidden w-14 h-14 bg-purple-600 hover:bg-purple-700 text-white rounded-full flex items-center justify-center shadow-lg transition transform hover:scale-110 z-40"
+						title="Send Feedback"
+					>
+						<i className="fa fa-comment-dots text-xl"></i>
+					</Link>
 				</div>
 			</div>
 		</div>

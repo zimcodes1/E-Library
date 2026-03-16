@@ -249,3 +249,39 @@ class BookApprovalStatus(models.Model):
 
     def __str__(self):
         return f"{self.book.title} - {self.status}"
+
+
+class Feedback(models.Model):
+    FEEDBACK_TYPE_CHOICES = [
+        ('bug', 'Bug Report'),
+        ('plagiarism', 'Plagiarism Report'),
+        ('inappropriate', 'Inappropriate Content'),
+        ('feature_request', 'Feature Request'),
+        ('improvement', 'Improvement Suggestion'),
+        ('other', 'Other'),
+    ]
+
+    STATUS_CHOICES = [
+        ('open', 'Open'),
+        ('in_progress', 'In Progress'),
+        ('resolved', 'Resolved'),
+        ('closed', 'Closed'),
+    ]
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='feedbacks')
+    feedback_type = models.CharField(max_length=20, choices=FEEDBACK_TYPE_CHOICES)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True, blank=True, related_name='feedbacks')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')
+    priority = models.CharField(max_length=10, choices=[('low', 'Low'), ('medium', 'Medium'), ('high', 'High')], default='medium')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    resolved_at = models.DateTimeField(null=True, blank=True)
+    admin_response = models.TextField(blank=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user.username} - {self.feedback_type} - {self.title}"
