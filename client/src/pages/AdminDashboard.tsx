@@ -20,6 +20,10 @@ const AdminDashboard = () => {
 		totalBooks: 0,
 		totalDownloads: 0,
 		activeUsers: 0,
+		usersTrend: 0,
+		booksTrend: 0,
+		downloadsTrend: 0,
+		activeUsersTrend: 0,
 	});
 	const [activities, setActivities] = useState([]);
 	const [topBooks, setTopBooks] = useState([]);
@@ -47,6 +51,10 @@ const AdminDashboard = () => {
 				totalBooks: statsData?.total_books || 0,
 				totalDownloads: statsData?.total_downloads || 0,
 				activeUsers: statsData?.active_users || 0,
+				usersTrend: statsData?.users_trend || 0,
+				booksTrend: statsData?.books_trend || 0,
+				downloadsTrend: statsData?.downloads_trend || 0,
+				activeUsersTrend: statsData?.active_users_trend || 0,
 			});
 
 			const formattedActivities = (activitiesData || []).map((activity: any) => ({
@@ -121,7 +129,7 @@ const AdminDashboard = () => {
 								title="Total Users"
 								value={stats.totalUsers}
 								icon="users"
-								trend={{ value: 12, isPositive: true }}
+								trend={{ value: stats.usersTrend, isPositive: stats.usersTrend >= 0 }}
 								color="purple"
 							/>
 						</Link>
@@ -130,7 +138,7 @@ const AdminDashboard = () => {
 								title="Total Books"
 								value={stats.totalBooks}
 								icon="book"
-								trend={{ value: 8, isPositive: true }}
+								trend={{ value: stats.booksTrend, isPositive: stats.booksTrend >= 0 }}
 								color="blue"
 							/>
 						</Link>
@@ -139,7 +147,7 @@ const AdminDashboard = () => {
 								title="Total Downloads"
 								value={stats.totalDownloads}
 								icon="download"
-								trend={{ value: 15, isPositive: true }}
+								trend={{ value: stats.downloadsTrend, isPositive: stats.downloadsTrend >= 0 }}
 								color="green"
 							/>
 						</Link>
@@ -147,7 +155,7 @@ const AdminDashboard = () => {
 							title="Active Users"
 							value={stats.activeUsers}
 							icon="user-check"
-							trend={{ value: 3, isPositive: false }}
+							trend={{ value: stats.activeUsersTrend, isPositive: stats.activeUsersTrend >= 0 }}
 							color="yellow"
 						/>
 					</div>

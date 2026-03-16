@@ -19,6 +19,7 @@ urlpatterns = [
     path('recent-readings/', views.recent_readings, name='recent-readings'),
     path('user-reviews-count/', views.user_reviews_count, name='user-reviews-count'),
     path('admin/stats/', views.admin_dashboard_stats, name='admin-stats'),
+    path('admin/stats/detailed/', views.admin_dashboard_stats_detailed, name='admin-stats-detailed'),
     path('admin/activities/', views.admin_recent_activities, name='admin-activities'),
     path('admin/pending-books/', views.admin_pending_books, name='admin-pending-books'),
     path('admin/books/', views.admin_all_books, name='admin-all-books'),

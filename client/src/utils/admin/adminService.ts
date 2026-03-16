@@ -4,7 +4,7 @@ const getAuthToken = () => localStorage.getItem('token');
 
 export const adminService = {
   getStats: async () => {
-    const response = await fetch(`${API_BASE_URL}/admin/stats/`, {
+    const response = await fetch(`${API_BASE_URL}/admin/stats/detailed/`, {
       headers: { 'Authorization': `Token ${getAuthToken()}` }
     });
     if (!response.ok) throw new Error('Failed to fetch stats');

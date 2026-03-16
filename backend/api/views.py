@@ -460,3 +460,72 @@ def admin_all_feedbacks(request):
     feedbacks = Feedback.objects.all().select_related('user', 'book')
     serializer = FeedbackSerializer(feedbacks, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def admin_dashboard_stats_detailed(request):
+    if not request.user.is_staff:
+        return Response({'error': 'Admin access required'}, status=status.HTTP_403_FORBIDDEN)
+    
+    from datetime import timedelta
+    
+    # Current stats
+    total_users = User.objects.count()
+    total_books = Book.objects.count()
+    total_downloads = BookDownload.objects.count()
+    active_users = User.objects.filter(is_active=True).count()
+    
+    # Last 7 days stats for trend calculation
+    seven_days_ago = timezone.now() - timedelta(days=7)
+    
+    users_last_7_days = User.objects.filter(date_joined__gte=seven_days_ago).count()
+    books_last_7_days = Book.objects.filter(upload_date__gte=seven_days_ago).count()
+    downloads_last_7_days = BookDownload.objects.filter(download_date__gte=seven_days_ago).count()
+    active_users_last_7_days = User.objects.filter(
+        is_active=True,
+        last_login__gte=seven_days_ago
+    ).count()
+    
+    # Calculate percentage changes
+    def calculate_percentage_change(current, previous_period):
+        if previous_period == 0:
+            return 0 if current == 0 else 100
+        return round(((current - previous_period) / previous_period) * 100, 1)
+    
+    # Previous period (7-14 days ago)
+    fourteen_days_ago = timezone.now() - timedelta(days=14)
+    users_prev_period = User.objects.filter(
+        date_joined__gte=fourteen_days_ago,
+        date_joined__lt=seven_days_ago
+    ).count()
+    books_prev_period = Book.objects.filter(
+        upload_date__gte=fourteen_days_ago,
+        upload_date__lt=seven_days_ago
+    ).count()
+    downloads_prev_period = BookDownload.objects.filter(
+        download_date__gte=fourteen_days_ago,
+        download_date__lt=seven_days_ago
+    ).count()
+    active_users_prev_period = User.objects.filter(
+        is_active=True,
+        last_login__gte=fourteen_days_ago,
+        last_login__lt=seven_days_ago
+    ).count()
+    
+    users_trend = calculate_percentage_change(users_last_7_days, users_prev_period)
+    books_trend = calculate_percentage_change(books_last_7_days, books_prev_period)
+    downloads_trend = calculate_percentage_change(downloads_last_7_days, downloads_prev_period)
+    active_users_trend = calculate_percentage_change(active_users_last_7_days, active_users_prev_period)
+    
+    return Response({
+        'total_users': total_users,
+        'total_books': total_books,
+        'total_downloads': total_downloads,
+        'active_users': active_users,
+        'users_trend': users_trend,
+        'books_trend': books_trend,
+        'downloads_trend': downloads_trend,
+        'active_users_trend': active_users_trend,
+        'last_updated': timezone.now().isoformat(),
+    })
