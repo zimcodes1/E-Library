@@ -5,6 +5,8 @@ import Tabs from "../components/ui/Tabs";
 import InterestsModal from "../components/ui/InterestModal";
 import ConfirmModal from "../components/ui/ConfirmModal";
 import EditModal from "../components/ui/EditModal";
+import ChangePasswordModal from "../components/ui/ChangePasswordModal";
+import DeleteAccountModal from "../components/ui/DeleteAccountModal";
 import Preloader from "../components/ui/Preloader";
 import Message from "../components/ui/Message";
 import {
@@ -14,6 +16,8 @@ import {
 	clearAuth,
 	isAuthenticated,
 	updateProfile,
+	changePassword,
+	deleteAccount,
 } from "../utils/auth";
 import { saveUserInterests } from "../utils/user/interests";
 import { getAvatarUrl } from "../utils/avatarUtils";
@@ -38,6 +42,8 @@ const UserProfile = () => {
 	const [pendingChanges, setPendingChanges] = useState<any>({});
 	const [selectedAvatar, setSelectedAvatar] = useState<File | null>(null);
 	const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+	const [showChangePassword, setShowChangePassword] = useState(false);
+	const [showDeleteAccount, setShowDeleteAccount] = useState(false);
 	const [editValue, setEditValue] = useState('');
 	const avatarInputRef = useRef<HTMLInputElement>(null);
 	const navigate = useNavigate();
@@ -162,6 +168,45 @@ const UserProfile = () => {
 	const handleEditBook = (bookId: number) => {
 		console.log("Edit book:", bookId);
 		showMessage('info', 'Edit functionality coming soon!');
+	};
+
+	const handleChangePassword = async (currentPassword: string, newPassword: string) => {
+		setLoading(true);
+		try {
+			const token = getToken();
+			if (!token) throw new Error('Not authenticated');
+
+			const result = await changePassword(token, currentPassword, newPassword);
+			// Update token with new one
+			const user = getUser();
+			if (user) {
+				localStorage.setItem('token', result.token);
+			}
+			setShowChangePassword(false);
+			showMessage('success', 'Password changed successfully!');
+		} catch (error: any) {
+			showMessage('error', error.message || 'Failed to change password');
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const handleDeleteAccount = async (password: string) => {
+		setLoading(true);
+		try {
+			const token = getToken();
+			if (!token) throw new Error('Not authenticated');
+
+			await deleteAccount(token, password);
+			clearAuth();
+			setShowDeleteAccount(false);
+			showMessage('success', 'Account deleted successfully');
+			setTimeout(() => navigate('/login'), 2000);
+		} catch (error: any) {
+			showMessage('error', error.message || 'Failed to delete account');
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	const handleSaveInterests = async (newInterests: string[]) => {
@@ -292,6 +337,35 @@ const UserProfile = () => {
 											Save Changes
 										</button>
 									)}
+
+									<div className="mt-8 pt-6 border-t border-gray-700">
+										<h3 className="text-red-400 font-semibold mb-4 flex items-center gap-2">
+											<i className="fa fa-exclamation-circle"></i>
+											Danger Zone
+										</h3>
+										<div className="space-y-3">
+											<button
+												onClick={() => setShowChangePassword(true)}
+												className="w-full flex items-center justify-between p-4 rounded-lg bg-[#31303e] border border-gray-700 hover:border-orange-500/50 transition"
+											>
+												<div className="text-left">
+													<p className="text-gray-50 font-medium">Change Password</p>
+													<p className="text-gray-400 text-sm">Update your password to keep your account secure</p>
+												</div>
+												<i className="fa fa-chevron-right text-gray-400"></i>
+											</button>
+											<button
+												onClick={() => setShowDeleteAccount(true)}
+												className="w-full flex items-center justify-between p-4 rounded-lg bg-[#31303e] border border-red-500/30 hover:border-red-500 transition"
+											>
+												<div className="text-left">
+													<p className="text-red-400 font-medium">Delete Account</p>
+													<p className="text-gray-400 text-sm">Permanently delete your account and all associated data</p>
+												</div>
+												<i className="fa fa-chevron-right text-gray-400"></i>
+											</button>
+										</div>
+									</div>
 								</div>
 							)}
 
@@ -397,6 +471,20 @@ const UserProfile = () => {
 				message="Are you sure you want to logout?"
 				confirmText="Logout"
 				type="warning"
+			/>
+
+			<ChangePasswordModal
+				isOpen={showChangePassword}
+				onClose={() => setShowChangePassword(false)}
+				onConfirm={handleChangePassword}
+				loading={loading}
+			/>
+
+			<DeleteAccountModal
+				isOpen={showDeleteAccount}
+				onClose={() => setShowDeleteAccount(false)}
+				onConfirm={handleDeleteAccount}
+				loading={loading}
 			/>
 		</div>
 	);
