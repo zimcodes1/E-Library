@@ -12,6 +12,7 @@ urlpatterns = [
     path('shelves/', views.user_shelves, name='user-shelves'),
     path('shelves/<int:pk>/', views.remove_from_shelf, name='remove-from-shelf'),
     path('quote/today/', views.today_quote, name='today-quote'),
+    path('stats/', views.public_stats, name='public-stats'),
     path('my-books/', views.user_uploaded_books, name='user-uploaded-books'),
     path('new-arrivals/', views.new_arrivals, name='new-arrivals'),
     path('recent-books/', views.recent_books, name='recent-books'),

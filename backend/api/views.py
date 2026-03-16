@@ -244,6 +244,24 @@ def user_reviews_count(request):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
+def public_stats(request):
+    total_books = Book.objects.filter(is_published=True).count()
+    total_users = User.objects.filter(is_active=True).count()
+    total_downloads = BookDownload.objects.count()
+    avg_rating = Book.objects.filter(is_published=True, average_rating__gt=0).aggregate(
+        avg=models.Avg('average_rating')
+    )['avg'] or 0
+    
+    return Response({
+        'total_books': total_books,
+        'total_users': total_users,
+        'total_downloads': total_downloads,
+        'average_rating': round(avg_rating, 1) if avg_rating else 0,
+    })
+
+
+@api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def admin_dashboard_stats(request):
     if not request.user.is_staff:
