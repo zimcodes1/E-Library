@@ -533,8 +533,6 @@ def admin_dashboard_stats_detailed(request):
     })
 
 
-@api_view(['GET'])
-@permission_classes([AllowAny])
 def book_file_proxy(request, pk):
     """Proxy endpoint to stream PDFs from external URLs to bypass CORS issues"""
     book = get_object_or_404(Book, pk=pk)
@@ -553,6 +551,7 @@ def book_file_proxy(request, pk):
             content_type=response.headers.get('content-type', 'application/pdf')
         )
         streaming_response['Content-Disposition'] = f'inline; filename="{book.title}.pdf"'
+        streaming_response['Access-Control-Allow-Origin'] = '*'
         return streaming_response
     except requests.exceptions.RequestException as e:
         return Response(
