@@ -224,7 +224,7 @@ function UploadPage() {
 											required
 										/>
 										<textarea
-											maxLength={500}
+											maxLength={1500}
 											value={formData.description}
 											onChange={(e) =>
 												setFormData({
