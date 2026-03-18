@@ -17,8 +17,7 @@ function UploadPage() {
 	useEffect(() => {
 		document.title = "Upload Your Book | Libronet";
 	}, []);
-	const [fileUploadFormat, setFileUploadFormat] = useState("pdf");
-	setFileUploadFormat("pdf"); // Set default to PDF since it's the only supported format for file uploads
+	const fileUploadFormat = "pdf"; // Set default to PDF since it's the only supported format for file uploads
 	const [coverPreview, setCoverPreview] = useState<string | null>(null);
 	const [userBooks, setUserBooks] = useState<any[]>([]);
 	const [message, setMessage] = useState<{ type: string; text: string } | null>(
