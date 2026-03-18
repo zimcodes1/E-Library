@@ -279,14 +279,14 @@ function UploadPage() {
 											value={formData.attribution_name}
 											onChange={(e) => setFormData({ ...formData, attribution_name: e.target.value })}
 											placeholder="Source name (e.g. Project Gutenberg)"
-											className="pl-3 mt-2 h-12 rounded-lg w-full bg-purple-500/5 border border-purple-500/20 focus:ring-0 text-gray-300 outline-0 ring-0"
+											className="px-3 mt-2 h-12 rounded-lg w-full bg-purple-500/5 border border-purple-500/20 focus:ring-0 text-gray-300 outline-0 ring-0"
 										/>
 										<input
 											type="url"
 											value={formData.attribution_url}
 											onChange={(e) => setFormData({ ...formData, attribution_url: e.target.value })}
 											placeholder="Source URL (e.g. https://gutenberg.org/...)"
-											className="pl-3 mt-2 h-12 rounded-lg w-full bg-purple-500/5 border border-purple-500/20 focus:ring-0 text-gray-300 outline-0 ring-0"
+											className="x-3 mt-2 h-12 rounded-lg w-full bg-purple-500/5 border border-purple-500/20 focus:ring-0 text-gray-300 outline-0 ring-0"
 										/>
 										<p className="text-gray-400 text-xs mt-3 text-center">
 											Do you have the URL or the PDF file to upload?

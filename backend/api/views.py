@@ -7,12 +7,14 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.http import StreamingHttpResponse
 from .models import Category, Book, Review, Shelve, ReadingProgress, BookDownload, Quote, AdminActivity, BookApprovalStatus, Feedback
 from .serializers import (
     CategorySerializer, BookSerializer, BookCreateSerializer, ReviewSerializer,
     ShelveSerializer, ReadingProgressSerializer, BookDownloadSerializer, QuoteSerializer,
     AdminActivitySerializer, BookApprovalStatusSerializer, FeedbackSerializer
 )
+import requests
 
 User = get_user_model()
 
@@ -529,3 +531,31 @@ def admin_dashboard_stats_detailed(request):
         'active_users_trend': active_users_trend,
         'last_updated': timezone.now().isoformat(),
     })
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def book_file_proxy(request, pk):
+    """Proxy endpoint to stream PDFs from external URLs to bypass CORS issues"""
+    book = get_object_or_404(Book, pk=pk)
+    
+    file_url = book.file_url or book.file
+    
+    if not file_url:
+        return Response({'error': 'No file available'}, status=status.HTTP_404_NOT_FOUND)
+    
+    try:
+        response = requests.get(file_url, stream=True, timeout=30)
+        response.raise_for_status()
+        
+        streaming_response = StreamingHttpResponse(
+            response.iter_content(chunk_size=8192),
+            content_type=response.headers.get('content-type', 'application/pdf')
+        )
+        streaming_response['Content-Disposition'] = f'inline; filename="{book.title}.pdf"'
+        return streaming_response
+    except requests.exceptions.RequestException as e:
+        return Response(
+            {'error': f'Failed to fetch file: {str(e)}'}, 
+            status=status.HTTP_502_BAD_GATEWAY
+        )

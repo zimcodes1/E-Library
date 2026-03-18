@@ -191,7 +191,7 @@ function ReadBook() {
 
     if (!book) return null;
 
-    const fileUrl = book.file_url || getBookFileUrl(book.file);
+    const fileUrl = `/api/books/${bookId}/file/`;
     console.log('Book data:', book);
     console.log('File URL for PDF:', fileUrl);
 
