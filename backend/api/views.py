@@ -7,7 +7,8 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.http import StreamingHttpResponse
+from django.http import StreamingHttpResponse, HttpResponse
+from django.views.decorators.http import condition
 from .models import Category, Book, Review, Shelve, ReadingProgress, BookDownload, Quote, AdminActivity, BookApprovalStatus, Feedback
 from .serializers import (
     CategorySerializer, BookSerializer, BookCreateSerializer, ReviewSerializer,
@@ -15,6 +16,7 @@ from .serializers import (
     AdminActivitySerializer, BookApprovalStatusSerializer, FeedbackSerializer
 )
 import requests
+from urllib.parse import urlparse
 
 User = get_user_model()
 
@@ -534,27 +536,26 @@ def admin_dashboard_stats_detailed(request):
 
 
 def book_file_proxy(request, pk):
-    """Proxy endpoint to stream PDFs from external URLs to bypass CORS issues"""
+    """Proxy endpoint to stream PDFs from external URLs, bypassing CORS restrictions"""
     book = get_object_or_404(Book, pk=pk)
-    
     file_url = book.file_url or book.file
     
     if not file_url:
-        return Response({'error': 'No file available'}, status=status.HTTP_404_NOT_FOUND)
+        return HttpResponse('No file available', status=404)
     
     try:
-        response = requests.get(file_url, stream=True, timeout=30)
+        # Fetch PDF from source
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        }
+        response = requests.get(file_url, stream=True, timeout=30, headers=headers, allow_redirects=True)
         response.raise_for_status()
         
-        streaming_response = StreamingHttpResponse(
-            response.iter_content(chunk_size=8192),
-            content_type=response.headers.get('content-type', 'application/pdf')
-        )
-        streaming_response['Content-Disposition'] = f'inline; filename="{book.title}.pdf"'
-        streaming_response['Access-Control-Allow-Origin'] = '*'
-        return streaming_response
-    except requests.exceptions.RequestException as e:
-        return Response(
-            {'error': f'Failed to fetch file: {str(e)}'}, 
-            status=status.HTTP_502_BAD_GATEWAY
-        )
+        # Create response with proper headers
+        pdf_response = HttpResponse(response.content, content_type='application/pdf')
+        pdf_response['Content-Disposition'] = f'inline; filename="{book.title}.pdf"'
+        pdf_response['Access-Control-Allow-Origin'] = '*'
+        pdf_response['Cache-Control'] = 'public, max-age=3600'
+        return pdf_response
+    except Exception as e:
+        return HttpResponse(f'Error loading PDF: {str(e)}', status=502)
