@@ -186,3 +186,14 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = ['DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST', 'PUT']
 CORS_ALLOW_HEADERS = ['accept', 'accept-encoding', 'authorization', 'content-type', 'dnt', 'origin', 'user-agent', 'x-csrftoken', 'x-requested-with']
+
+# Allowed PDF sources for external URLs
+ALLOWED_PDF_SOURCES = [
+    'archive.org',
+    'gutenberg.org',
+    'standardebooks.org',
+    'librivox.org',
+    'smashwords.com',
+    'feedbooks.com',
+    'wattpad.com',
+]
