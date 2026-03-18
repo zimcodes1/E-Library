@@ -112,11 +112,6 @@ function UploadPage() {
 			return;
 		}
 
-		if (fileUploadFormat === "url" && !formData.file_url) {
-			showMessage("error", "Please provide a file URL");
-			return;
-		}
-
 		try {
 			setLoading(true);
 			
@@ -289,63 +284,28 @@ function UploadPage() {
 											className="x-3 mt-2 h-12 rounded-lg w-full bg-purple-500/5 border border-purple-500/20 focus:ring-0 text-gray-300 outline-0 ring-0"
 										/>
 										<p className="text-gray-400 text-xs mt-3 text-center">
-											Do you have the URL or the PDF file to upload?
+											Upload your PDF file
 										</p>
-										<span className="flex justify-between items-center mt-2 text-sm text-gray-400 px-5">
-											<span>
-												URL{" "}
-												<input
-													type="radio"
-													value="url"
-													name="format"
-                          className="accent-purple-500"
-													onChange={() => setFileUploadFormat("url")}
-												/>
-											</span>
-											<span>
-												PDF{" "}
-												<input
-													type="radio"
-													value="pdf"
-													name="format"
-                          className="accent-purple-500"
-													onChange={() => setFileUploadFormat("pdf")}
-													defaultChecked
-												/>
-											</span>
-										</span>
-										{fileUploadFormat === "url" ? (
+										<div
+											onClick={() =>
+											document.getElementById("fileInput")?.click()
+										}
+											className="flex flex-col justify-center items-center mt-2 rounded-lg w-full h-25 bg-purple-500/5 border border-purple-500/20  cursor-pointer"
+										>
+											<i className="fa fa-file text-4xl text-[#6842ae3a]"></i>
+											<p className="text-gray-300 text-xs mt-1">
+												{formData.file
+													? formData.file.name
+													: "Click to Upload PDF"}
+											</p>
 											<input
-												type="url"
-												value={formData.file_url}
-												onChange={(e) =>
-													setFormData({ ...formData, file_url: e.target.value })
-												}
-												placeholder="Link to file..."
-												className="pl-3 mt-3 h-12 rounded-lg w-full bg-purple-500/5 border border-purple-500/20  text-gray-300 outline-0 ring-0"
+												type="file"
+												accept=".pdf"
+												onChange={handleFileChange}
+												className="hidden"
+												id="fileInput"
 											/>
-										) : (
-											<div
-												onClick={() =>
-													document.getElementById("fileInput")?.click()
-												}
-												className="flex flex-col justify-center items-center mt-2 rounded-lg w-full h-25 bg-purple-500/5 border border-purple-500/20  cursor-pointer"
-											>
-												<i className="fa fa-file text-4xl text-[#6842ae3a]"></i>
-												<p className="text-gray-300 text-xs mt-1">
-													{formData.file
-														? formData.file.name
-														: "Click to Upload PDF"}
-												</p>
-												<input
-													type="file"
-													accept=".pdf"
-													onChange={handleFileChange}
-													className="hidden"
-													id="fileInput"
-												/>
-											</div>
-										)}
+										</div>
 									</span>
 								</div>
 								<div className="w-3/10 max-sm:w-9/10 max-sm:h-fit h-full flex flex-col justify-start items-center">

@@ -57,23 +57,6 @@ class BookCreateSerializer(serializers.ModelSerializer):
         if file_type == 'url' and not data.get('file_url'):
             raise serializers.ValidationError("URL is required when file_type is 'url'")
         
-        # Validate external URL against whitelist
-        if file_type == 'url' and data.get('file_url'):
-            from django.conf import settings
-            from urllib.parse import urlparse
-            
-            file_url = data.get('file_url')
-            parsed_url = urlparse(file_url)
-            domain = parsed_url.netloc.lower()
-            
-            allowed_sources = getattr(settings, 'ALLOWED_PDF_SOURCES', [])
-            is_allowed = any(allowed_domain in domain for allowed_domain in allowed_sources)
-            
-            if not is_allowed:
-                raise serializers.ValidationError(
-                    f"PDF source '{domain}' is not allowed. Allowed sources: {', '.join(allowed_sources)}"
-                )
-        
         return data
     
     def update(self, instance, validated_data):

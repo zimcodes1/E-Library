@@ -544,18 +544,26 @@ def book_file_proxy(request, pk):
         return HttpResponse('No file available', status=404)
     
     try:
-        # Fetch PDF from source
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+            'Accept': 'application/pdf',
+            'Referer': 'https://archive.org/',
         }
-        response = requests.get(file_url, stream=True, timeout=30, headers=headers, allow_redirects=True)
+        response = requests.get(file_url, stream=True, timeout=30, headers=headers, allow_redirects=True, verify=False)
         response.raise_for_status()
         
-        # Create response with proper headers
+        # Check if response is actually a PDF
+        content_type = response.headers.get('content-type', '').lower()
+        if 'html' in content_type or response.content[:4] != b'%PDF':
+            return HttpResponse('Invalid PDF source or access denied', status=400)
+        
         pdf_response = HttpResponse(response.content, content_type='application/pdf')
         pdf_response['Content-Disposition'] = f'inline; filename="{book.title}.pdf"'
         pdf_response['Access-Control-Allow-Origin'] = '*'
         pdf_response['Cache-Control'] = 'public, max-age=3600'
         return pdf_response
     except Exception as e:
+        import traceback
+        print(f'PDF proxy error: {str(e)}')
+        print(traceback.format_exc())
         return HttpResponse(f'Error loading PDF: {str(e)}', status=502)
