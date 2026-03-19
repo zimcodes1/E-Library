@@ -160,6 +160,25 @@ const AdminDashboard = () => {
 						/>
 					</div>
 
+					{/* Quick Links */}
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+						<Link to="/admin/dashboard/users" className="bg-[#4857605a] border border-gray-700 rounded-lg p-6 hover:border-purple-500 transition">
+							<i className="fa fa-users text-2xl text-purple-400 mb-3 block"></i>
+							<h3 className="text-lg font-semibold text-gray-50 mb-1">Manage Users</h3>
+							<p className="text-gray-400 text-sm">View and manage user accounts</p>
+						</Link>
+						<Link to="/admin/dashboard/books" className="bg-[#4857605a] border border-gray-700 rounded-lg p-6 hover:border-blue-500 transition">
+							<i className="fa fa-book text-2xl text-blue-400 mb-3 block"></i>
+							<h3 className="text-lg font-semibold text-gray-50 mb-1">Manage Books</h3>
+							<p className="text-gray-400 text-sm">Review and manage book uploads</p>
+						</Link>
+						<Link to="/admin/dashboard/feedbacks" className="bg-[#4857605a] border border-gray-700 rounded-lg p-6 hover:border-green-500 transition">
+							<i className="fa fa-comments text-2xl text-green-400 mb-3 block"></i>
+							<h3 className="text-lg font-semibold text-gray-50 mb-1">Manage Feedback</h3>
+							<p className="text-gray-400 text-sm">Review and respond to user feedback</p>
+						</Link>
+					</div>
+
 					{/* Charts Row */}
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
 						<UserActivityChart

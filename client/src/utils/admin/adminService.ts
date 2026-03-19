@@ -141,5 +141,35 @@ export const adminService = {
     });
     if (!response.ok) throw new Error('Failed to toggle book visibility');
     return response.json();
+  },
+
+  getAllFeedbacks: async () => {
+    const response = await fetch(`${API_BASE_URL}/admin/feedbacks/`, {
+      headers: { 'Authorization': `Token ${getAuthToken()}` }
+    });
+    if (!response.ok) throw new Error('Failed to fetch feedbacks');
+    return response.json();
+  },
+
+  updateFeedback: async (feedbackId: number, data: { status?: string; admin_response?: string }) => {
+    const response = await fetch(`${API_BASE_URL}/feedbacks/${feedbackId}/`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Token ${getAuthToken()}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    if (!response.ok) throw new Error('Failed to update feedback');
+    return response.json();
+  },
+
+  deleteFeedback: async (feedbackId: number) => {
+    const response = await fetch(`${API_BASE_URL}/feedbacks/${feedbackId}/`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Token ${getAuthToken()}` }
+    });
+    if (!response.ok) throw new Error('Failed to delete feedback');
+    return response.json();
   }
 };

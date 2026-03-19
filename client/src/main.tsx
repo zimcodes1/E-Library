@@ -19,6 +19,7 @@ import FeedbackPage from './pages/Feedback';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminUsers from './pages/AdminUsers';
 import AdminBooks from './pages/AdminBooks';
+import AdminFeedback from './pages/AdminFeedback';
 import AdminLogin from './pages/AdminLogin';
 import AdminProtectedRoute from './components/AdminProtectedRoute';
 import ScrollToTop from './components/ScrollToTop';
@@ -45,6 +46,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path='/admin/dashboard' element={<AdminProtectedRoute><AdminDashboard /></AdminProtectedRoute>} />
         <Route path='/admin/dashboard/users' element={<AdminProtectedRoute><AdminUsers /></AdminProtectedRoute>} />
         <Route path='/admin/dashboard/books' element={<AdminProtectedRoute><AdminBooks /></AdminProtectedRoute>} />
+        <Route path='/admin/dashboard/feedbacks' element={<AdminProtectedRoute><AdminFeedback /></AdminProtectedRoute>} />
         <Route path='*' element={<Lost />} />
       </Routes>
     </BrowserRouter>
