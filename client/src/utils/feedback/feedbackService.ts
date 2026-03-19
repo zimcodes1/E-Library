@@ -29,7 +29,7 @@ export interface Feedback {
 }
 
 export const submitFeedback = async (token: string, data: FeedbackData): Promise<Feedback> => {
-  const response = await fetch(`${API_BASE_URL}/api/feedbacks/`, {
+  const response = await fetch(`${API_BASE_URL}/feedbacks/`, {
     method: 'POST',
     headers: {
       'Authorization': `Token ${token}`,
@@ -47,7 +47,7 @@ export const submitFeedback = async (token: string, data: FeedbackData): Promise
 };
 
 export const getUserFeedbacks = async (token: string): Promise<Feedback[]> => {
-  const response = await fetch(`${API_BASE_URL}/api/feedbacks/`, {
+  const response = await fetch(`${API_BASE_URL}/feedbacks/`, {
     method: 'GET',
     headers: {
       'Authorization': `Token ${token}`,
