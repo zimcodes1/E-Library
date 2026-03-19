@@ -564,7 +564,7 @@ def admin_dashboard_stats_detailed(request):
 
 
 def book_file_proxy(request, pk):
-    """Proxy endpoint to stream PDFs from external URLs, bypassing CORS restrictions"""
+    """Proxy endpoint to stream PDFs from Vercel Blob storage"""
     book = get_object_or_404(Book, pk=pk)
     file_url = book.file_url or book.file
     
@@ -574,21 +574,28 @@ def book_file_proxy(request, pk):
     try:
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-            'Accept': 'application/pdf',
-            'Referer': 'https://archive.org/',
         }
         response = requests.get(file_url, stream=True, timeout=30, headers=headers, allow_redirects=True, verify=False)
         response.raise_for_status()
         
-        # Check if response is actually a PDF
         content_type = response.headers.get('content-type', '').lower()
-        if 'html' in content_type or response.content[:4] != b'%PDF':
+        content_length = response.headers.get('content-length')
+        
+        # Check if it's HTML (error page)
+        if 'html' in content_type:
             return HttpResponse('Invalid PDF source or access denied', status=400)
         
+        # For Vercel Blob, content-type might be application/octet-stream
+        if 'octet-stream' not in content_type and 'pdf' not in content_type:
+            return HttpResponse('Invalid file type', status=400)
+        
+        # Stream the PDF
         pdf_response = HttpResponse(response.content, content_type='application/pdf')
         pdf_response['Content-Disposition'] = f'inline; filename="{book.title}.pdf"'
         pdf_response['Access-Control-Allow-Origin'] = '*'
         pdf_response['Cache-Control'] = 'public, max-age=3600'
+        if content_length:
+            pdf_response['Content-Length'] = content_length
         return pdf_response
     except Exception as e:
         import traceback

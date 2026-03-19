@@ -7,6 +7,7 @@ import { getBookDetail, getBookReviews, recordBookView, addToShelf, downloadBook
 import { getAvatarUrl } from "../utils/avatarUtils"
 import truncate from "../utils/truncateText"
 import Message from "../components/ui/Message"
+import API_BASE_URL from "../utils/auth/config"
 import 'react-pdf/dist/Page/TextLayer.css'
 import 'react-pdf/dist/Page/AnnotationLayer.css'
 
@@ -189,7 +190,7 @@ function ReadBook() {
 
     if (!book) return null;
 
-    const fileUrl = `/api/books/${bookId}/file/`;
+    const fileUrl = `${API_BASE_URL}/books/${bookId}/file/`;
     console.log('Book data:', book);
     console.log('File URL for PDF:', fileUrl);
 
