@@ -165,4 +165,4 @@ class FeedbackSerializer(serializers.ModelSerializer):
         model = Feedback
         fields = ['id', 'user', 'feedback_type', 'title', 'description', 'book', 'book_title', 
                   'status', 'priority', 'created_at', 'updated_at', 'resolved_at', 'admin_response']
-        read_only_fields = ['user', 'status', 'created_at', 'updated_at', 'resolved_at', 'admin_response']
+        read_only_fields = ['user', 'created_at', 'updated_at', 'resolved_at', 'admin_response']

@@ -30,6 +30,7 @@ urlpatterns = [
     path('admin/books/<int:book_id>/delete/', views.admin_delete_book, name='admin-delete-book'),
     path('admin/books/<int:book_id>/toggle-visibility/', views.admin_toggle_book_visibility, name='admin-toggle-book-visibility'),
     path('feedbacks/', views.user_feedbacks, name='user-feedbacks'),
+    path('feedbacks/<int:pk>/', views.feedback_detail, name='feedback-detail'),
     path('admin/feedbacks/', views.admin_all_feedbacks, name='admin-all-feedbacks'),
     path('books/<int:pk>/file/', views.book_file_proxy, name='book-file-proxy'),
 ]

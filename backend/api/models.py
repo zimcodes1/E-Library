@@ -285,5 +285,11 @@ class Feedback(models.Model):
     class Meta:
         ordering = ['-created_at']
 
+    def save(self, *args, **kwargs):
+        from django.utils import timezone
+        if self.status == 'resolved' and not self.resolved_at:
+            self.resolved_at = timezone.now()
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.user.username} - {self.feedback_type} - {self.title}"

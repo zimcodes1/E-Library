@@ -466,6 +466,34 @@ def admin_all_feedbacks(request):
     return Response(serializer.data)
 
 
+@api_view(['GET', 'PATCH', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def feedback_detail(request, pk):
+    feedback = get_object_or_404(Feedback, pk=pk)
+    
+    if request.method == 'GET':
+        if request.user != feedback.user and not request.user.is_staff:
+            return Response({'error': 'Permission denied'}, status=status.HTTP_403_FORBIDDEN)
+        serializer = FeedbackSerializer(feedback)
+        return Response(serializer.data)
+    
+    elif request.method == 'PATCH':
+        if not request.user.is_staff:
+            return Response({'error': 'Admin access required'}, status=status.HTTP_403_FORBIDDEN)
+        
+        serializer = FeedbackSerializer(feedback, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'DELETE':
+        if request.user != feedback.user and not request.user.is_staff:
+            return Response({'error': 'Permission denied'}, status=status.HTTP_403_FORBIDDEN)
+        feedback.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def admin_dashboard_stats_detailed(request):
