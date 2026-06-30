@@ -29,7 +29,7 @@ function Categories() {
                 </div>
                 <div className="hover:scale-105 transition duration-300 w-1/4 max-sm:w-full max-[900px]:w-[48%] max-sm:mt-3 h-fit flex relative rounded-3xl flex-col backdrop-blur-2xl overflow-hidden px-5 py-6 border bg-[#48576019] border-gray-800">
                     <h2 className="text-gray-100 text-2xl font-semibold"> <i className="fas fa-microscope text-blue-500"></i> Educational</h2>
-                    <p className="text-sm text-gray-400 leading-relaxed my-5">Journey through time with meticulously researched accounts of human heritage. Discover the true stories, pivotal moments, and remarkable figures that have shaped our global landscape.</p>
+                    <p className="text-sm text-gray-400 leading-relaxed my-5">Expand your mind and build new skills. Our curated educational textbooks, study guides, and reference materials cover a wide array of academic subjects and practical skills.</p>
                     <Button text="Search Category"></Button>
                 </div>
             </div>
