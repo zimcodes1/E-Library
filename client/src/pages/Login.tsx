@@ -45,7 +45,7 @@ function LoginPage() {
 				className="w-[80%] max-sm:w-full max-sm:h-full max-sm:bg-transparent max-sm:rounded-none max-sm:m-0 max-[900px]:flex-col-reverse h-[90%] sm:border bg-[#48576019] border-purple-600/10 rounded-3xl max-sm:justify-center flex justify-between items-center max-sm:items-start overflow-hidden p-7 sm:p-2"
 			>
 				<div className="w-1/2 max-[900px]:w-full max-[900px]:h-fit h-full flex flex-col items-start justify-start max-sm:justify-center pt-10 max-[900px]:pt-0 pl-20 max-[900px]:pl-0">
-					<span className="w-full h-fit flex gap-2 justify-start">
+					<span className="w-full h-fit flex gap-2 justify-start items-center">
 						<img
 							src="/images/logo.png"
 							alt="Logo"
@@ -73,7 +73,7 @@ function LoginPage() {
 								setFormData({ ...formData, username: e.target.value })
 							}
 							required
-							className="h-13 text-gray-300 rounded-lg pl-2 w-full bg-purple-500/5 border-2 border-purple-500/20 focus:ring-0 outline-0 caret-purple-500"
+							className="h-13 text-gray-300 rounded-xl pl-2 w-full bg-purple-500/5 border-2 border-purple-500/20 focus:ring-0 outline-0 caret-purple-500"
 						/>
 						<div className="relative mt-4">
 							<input
@@ -84,7 +84,7 @@ function LoginPage() {
 									setFormData({ ...formData, password: e.target.value })
 								}
 								required
-								className="h-13 text-gray-300 rounded-lg pl-2 w-full bg-purple-500/5 border-2 border-purple-500/20 focus:ring-0 outline-0 caret-purple-500"
+								className="h-13 text-gray-300 rounded-xl pl-2 w-full bg-purple-500/5 border-2 border-purple-500/20 focus:ring-0 outline-0 caret-purple-500"
 							/>
 							<i
 								onClick={() => setShowPassword(!showPassword)}
